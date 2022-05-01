@@ -421,6 +421,7 @@ def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_
         tk.messagebox.showinfo('Feilmelding', '- Fyll inn alle felt \n- Bruk punktum som desimalskille'
                                               '\n- Utfyllbare felt skal bare inneholde tall',
                                master=window)
+        print('feil, df filtering')
 
 
 def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_dict, tykk_pick, tykk_dict, fast_pick):
@@ -473,7 +474,7 @@ def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
         else:
             pass
     except:
-        pass
+        print('feil, df2filtering')
 
 
 def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_dict, tykk_pick, tykk_dict,
@@ -481,7 +482,8 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
     try:
         global df_3_temp
         if str(fast_pick.get()) == 'Fastholdt gulv':
-            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(rebar_pick.get()) != 0:
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and \
+                    len(rebar_pick.get()) != 0 and len(fiber_pick.get()) != 0 and len(duct_pick.get()) != 0:
                 gk_valg = int(gk_pick.get())
                 gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
                            2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
@@ -509,7 +511,8 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                 tk.messagebox.showinfo('Feilmelding', 'Fiberarmerings klasse eller duktilitet er ikke fylt ut!',
                                        master=window)
         elif str(fast_pick.get()) == 'Flytende gulv':
-            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(rebar_pick.get()) != 0:
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and \
+                    len(rebar_pick.get()) != 0 and len(fiber_pick.get()) != 0 and len(duct_pick.get()) != 0:
                 gk_valg = int(gk_pick.get())
                 gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
                            2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
@@ -537,7 +540,7 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
         else:
             pass
     except:
-        pass
+        print('feil, df3filtering')
 
 
 def df_filtering_load(last_plassering_pick, lasttilfelle_pick):
@@ -602,7 +605,7 @@ def df_2_filtering_load(last_plassering_pick, lasttilfelle_pick):
             df_2_temp2 = df_2_temp[(df_2_temp['westergaard_corner'] >= q_ed) & (df_2_temp['meyerhof_corner'] >= q_ed * 1.5) &
                                (df_2_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_corner'] >= q_ed * 1.5)]
     except:
-        pass
+        print('feil, df 2 filtering load')
 
 
 def df_3_filtering_load(last_plassering_pick, lasttilfelle_pick):
@@ -627,7 +630,7 @@ def df_3_filtering_load(last_plassering_pick, lasttilfelle_pick):
             df_3_temp2 = df_3_temp[(df_3_temp['westergaard_corner'] >= q_ed) & (df_3_temp['meyerhof_corner'] >= q_ed * 1.5) &
                                (df_3_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_corner'] >= q_ed * 1.5)]
     except:
-        pass
+        print('feil, df 3 filtering load')
 
 
 def df_sorting_price_gwp(sort_pick):
@@ -640,7 +643,7 @@ def df_sorting_price_gwp(sort_pick):
         else:
             tk.messagebox.showinfo('Feilmelding', 'Sorterings kriteriet må fylles ut!', master=window)
     except NameError:
-        print('test')
+        print('feil df sorting')
 
 
 def df_2_sorting_price_gwp(sort_pick):
@@ -651,7 +654,7 @@ def df_2_sorting_price_gwp(sort_pick):
         elif sort_pick.get() == 'GWP':
             df_2_final = df_2_temp2.sort_values(by='gwp_sum', ascending=True)
     except:
-        pass
+        print('feil df2 sorting')
 
 
 def df_3_sorting_price_gwp(sort_pick):
@@ -662,7 +665,7 @@ def df_3_sorting_price_gwp(sort_pick):
         elif sort_pick.get() == 'GWP':
             df_3_final = df_3_temp2.sort_values(by='gwp_sum', ascending=True)
     except:
-        pass
+        print('feil df3 sorting')
 
 
 def load_next_frames():
@@ -688,8 +691,7 @@ def show_result():
                                                                     f'{df_final.iloc[0]["cc_lower"]}mm ', font=('Calibri', 11))
             armering_resultat_uk_df.grid(row=4, column=1, sticky='e')
         else:
-            armering_resultat_uk_df = tk.Label(master=frame31, text='Ingen armering i underkant ',
-                                               font=('Calibri', 11))
+            armering_resultat_uk_df = tk.Label(master=frame31, text='Ingen ', font=('Calibri', 11))
             armering_resultat_uk_df.grid(row=4, column=1, sticky='e')
         global betongkvalitet_resultat_df
         betongkvalitet_resultat_df = tk.Label(master=frame31, text=f'{df_final.iloc[0]["concrete_quality"]} ',
@@ -704,7 +706,7 @@ def show_result():
                                    font=('Calibri', 11))
         gwp_resultat_df.grid(row=7, column=1, sticky='e')
     except:
-        pass
+        print('feil result')
 
 
 def show_result_2():
@@ -716,11 +718,11 @@ def show_result_2():
         armering_resultat_ok_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_upper"]} ', font=('Calibri', 11))
         armering_resultat_ok_df_2.grid(row=3, column=1, sticky='e')
         global armering_resultat_uk_df_2
-        if df_2_final.iloc[0]["rebar_name_lower"] != 0:
+        if df_2_final.iloc[0]["rebar_name_lower"] != '0':
             armering_resultat_uk_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_lower"]} ', font=('Calibri', 11))
             armering_resultat_uk_df_2.grid(row=4, column=1, sticky='e')
         else:
-            armering_resultat_uk_df_2 = tk.Label(master=frame33, text='Ingen armering i underkant', font=('Calibri', 11))
+            armering_resultat_uk_df_2 = tk.Label(master=frame33, text='Ingen ', font=('Calibri', 11))
             armering_resultat_uk_df_2.grid(row=4, column=1, sticky='e')
         global betongkvalitet_resultat_df_2
         betongkvalitet_resultat_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["concrete_quality"]} ',
@@ -735,7 +737,7 @@ def show_result_2():
                                    font=('Calibri', 11))
         gwp_resultat_df_2.grid(row=7, column=1, sticky='e')
     except:
-        pass
+        print('feil result2')
 
 
 def show_result_3():
@@ -753,7 +755,7 @@ def show_result_3():
                                                                     f'{df_3_final.iloc[0]["cc_lower"]}mm ', font=('Calibri', 11))
             armering_resultat_uk_df_3.grid(row=5, column=1, sticky='e')
         else:
-            armering_resultat_uk_df_3 = tk.Label(master=frame32, text='Ingen armering i underkant ', font=('Calibri', 11))
+            armering_resultat_uk_df_3 = tk.Label(master=frame32, text='Ingen ', font=('Calibri', 11))
             armering_resultat_uk_df_3.grid(row=5, column=1, sticky='e')
         global armering_resultat_fiber_df_3
         armering_resultat_fiber_df_3 = tk.Label(master=frame32, text=f'R {df_3_final.iloc[0]["f_r_1_k"]},0 '
@@ -772,7 +774,7 @@ def show_result_3():
                                    font=('Calibri', 11))
         gwp_resultat_df_3.grid(row=9, column=1, sticky='e')
     except:
-        pass
+        print('feil result3')
 
 
 def clear_frames():
@@ -936,8 +938,8 @@ slakkarmeringsdiameter_dict = {'8': [8], '10': [10], '12': [12], '14': [14], '16
 armeringsnett_options = ['K131', 'K189', 'K257', 'K335', 'K402', 'K503', 'Ingen krav']
 armeringsnett_pick = tk.StringVar(frame1)
 armeringsnett_option_menu = tk.OptionMenu(frame1, armeringsnett_pick, *armeringsnett_options)
-armeringsnett_dict = {'K131': ['K131'], 'K189': ['K189'], 'K257': ['K257'], 'K335': ['K335'], 'K402': ['K402'],
-                      'K503': ['K503'], 'Ingen krav': 'K131|K189|K257|K335|K402|K503|0'}
+armeringsnett_dict = {'K131': 'K131', 'K189': 'K189', 'K257': 'K257', 'K335': 'K335', 'K402': 'K402',
+                      'K503': 'K503', 'Ingen krav': 'K131|K189|K257|K335|K402|K503|0'}
 fiberarmering_options = ['2,0', '3,0', '4,0', '5,0', 'Ingen krav']
 fiberarmering_pick = tk.StringVar(frame14)
 fiberarmering_option_menu = tk.OptionMenu(frame14, fiberarmering_pick, *fiberarmering_options)
@@ -945,7 +947,7 @@ fiberarmering_dict = {'2,0': [2], '3,0': [3], '4,0': [4], '5,0': [5], 'Ingen kra
 duktilitet_options = ['b', 'd', 'Ingen krav']
 duktilitet_pick = tk.StringVar(frame14)
 duktilitet_option_menu = tk.OptionMenu(frame14, duktilitet_pick, *duktilitet_options)
-duktilitet_dict = {'b': ['b'], 'd': ['d'], 'Ingen krav': 'b|d'}
+duktilitet_dict = {'b': 'b', 'd': 'd', 'Ingen krav': 'b|d'}
 rissvidde_options = ['≤ 0,2', '≤ 0,3', '≤ 0,4', '≤ 0,5', '≤ 0,6', '≤ 0,7', '≤ 0,8', '≤ 0,9', '≤ 1,0', 'Ingen krav']
 rissvidde_pick = tk.StringVar(frame1)
 rissvidde_option_menu = tk.OptionMenu(frame1, rissvidde_pick, *rissvidde_options)
@@ -1592,7 +1594,7 @@ window.mainloop()
 
 #df_temp2.to_csv('Steg 11.csv', sep=';')
 #df_2_temp2.to_csv('Steg 12.csv', sep=';')
-df_3_temp2.to_csv('Steg 13.csv', sep=';')
+#df_3_temp2.to_csv('Steg 13.csv', sep=';')
 #df_2_temp.to_csv('Steg 2.csv', sep=';')
 #df_2_temp2.to_csv('Steg 3.csv', sep=';')
 #df_2_final.to_csv('Final.csv', sep=';')
