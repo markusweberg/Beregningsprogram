@@ -40,7 +40,7 @@ def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytt
     except ValueError:
         tk.messagebox.showinfo('Feilmelding', '- Fyll inn alle felt \n- Bruk punktum som desimalskille'
                                               '\n- Utfyllbare felt skal bare inneholde tall', master=window)
-
+        print('feil, loads')
 
 def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
     global q_ed
@@ -65,7 +65,7 @@ def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
             q_ed = float(egendef_last.get()) * 1000
             df_2['r'] = float(rd.get())
     except:
-        pass
+        print('feil, loads2')
 
 
 def loads_3(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
@@ -91,7 +91,33 @@ def loads_3(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
             q_ed = float(egendef_last.get()) * 1000
             df_3['r'] = float(rd.get())
     except:
-        pass
+        print('feil, loads3')
+
+
+def loads_4(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
+    global q_ed
+    try:
+        if len(dekk_pick.get()) != 0 and len(truck_pick.get()) != 0 and truck_dict[truck_pick.get()] != 0:
+            dekk_faktor = float(dekk_dict[dekk_pick.get()])
+            truck_q = float(truck_dict[truck_pick.get()])
+            q_ed = truck_q * (dekk_faktor * 1000 / 2)
+            df_4['r'] = (200 / np.pi**(1 / 2))
+        elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
+            bil_last = float(bil_dict[bil_pick.get()])
+            q_ed = bil_last * 1000 / 2
+            if bil_pick.get() == 'Kategori F':
+                df_4['r'] = (100 / np.pi**(1 / 2))
+            if bil_pick.get() == 'Kategori G':
+                df_4['r'] = (200 / np.pi**(1 / 2))
+        elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
+            nytte_last = float(nytte_dict[nytte_pick.get()])
+            q_ed = nytte_last * 1000
+            df_4['r'] = (50 / np.pi**(1 / 2))
+        else:
+            q_ed = float(egendef_last.get()) * 1000
+            df_4['r'] = float(rd.get())
+    except:
+        print('feil, loads4')
 
 
 def input_calc(concrete_price_m40, concrete_price_m45, concrete_price_m60, concrete_gwp_m40,
@@ -263,7 +289,7 @@ def input_calc_2(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
                                                                      (df_2['l_e'] - df_2['a'] / 2))) * \
                                                                       (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
     except:
-        pass
+        print('feil, input2')
 
 
 def input_calc_3(concrete_price_m40, concrete_price_m45, concrete_price_m60, concrete_gwp_m40,
@@ -355,7 +381,99 @@ def input_calc_3(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
                                                                       (df_3['m_p'] / 10**3 + df_3['m_n'] / 10**3
                                                                        + 2 * df_3['m_f'] / 10**3)
     except:
-        pass
+        print('feil, input3')
+
+
+def input_calc_4(concrete_price_m40, concrete_price_m45, concrete_price_m60, concrete_gwp_m40,
+               concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
+               x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness, fiber_price, fiber_gwp):
+    try:
+        # User input
+        df_4.loc[df_4['concrete_quality'] == 'B45 M40', 'concrete_price_input'] = float(concrete_price_m40.get())
+        df_4.loc[df_4['concrete_quality'] == 'B35 M45', 'concrete_price_input'] = float(concrete_price_m45.get())
+        df_4.loc[df_4['concrete_quality'] == 'B30 M60', 'concrete_price_input'] = float(concrete_price_m60.get())
+        df_4['rebar_price_input'] = float(rebar_price.get())
+        df_4.loc[df_4['concrete_quality'] == 'B45 M40', 'concrete_gwp_input'] = float(concrete_gwp_m40.get())
+        df_4.loc[df_4['concrete_quality'] == 'B35 M45', 'concrete_gwp_input'] = float(concrete_gwp_m45.get())
+        df_4.loc[df_4['concrete_quality'] == 'B30 M60', 'concrete_gwp_input'] = float(concrete_gwp_m60.get())
+        df_4['rebar_gwp_input'] = float(rebar_gwp.get())
+        df_4['fiber_price_input'] = float(fiber_price.get())
+        df_4['fiber_gwp_input'] = float(fiber_gwp.get())
+        df_4['reduction_factor_sigma_s2'] = float(red_factor.get())
+        df_4['x'] = float(x.get())
+        df_4['y'] = float(y.get())
+        df_4['c_nom'] = float(c_nom.get())
+        if len(k_pick.get()) == 0 or float(k_dict[k_pick.get()]) == 0:
+            df_4['k'] = float(stiffness.get())
+            if len(iso_pick.get()) == 0 or float(iso_dict[iso_pick.get()]) == 0 or float(iso_thickness.get()) == 0:
+                df_4['k'] = float(stiffness.get())
+            else:
+                df_4['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+        else:
+            df_4['k'] = float(k_dict[k_pick.get()])
+        # Calculations, filling the csv file with data
+        df_4['rebar_price'] = df_4['rebar_price_input'] * df_4['rebar_per_square_meter_sum']
+        df_4['concrete_price'] = df_4['concrete_price_input'] * df_4['concrete_per_square_meter']
+        df_4['fiber_price'] = df_4['fiber_price_input'] * df_4['fiber_per_square_meter']
+        df_4['price_sum'] = df_4['rebar_price'] + df_4['concrete_price'] + df_4['fiber_price']
+        df_4['concrete_gwp'] = df_4['concrete_gwp_input'] * df_4['concrete_per_square_meter']
+        df_4['rebar_gwp'] = df_4['rebar_gwp_input'] * df_4['rebar_per_square_meter_sum']
+        df_4['fiber_gwp'] = df_4['fiber_gwp_input'] * df_4['fiber_per_square_meter']
+        df_4['gwp_sum'] = df_4['concrete_gwp'] + df_4['rebar_gwp'] + df_4['fiber_gwp']
+        df_4.loc[df_4['r'] < df_4['r_limit'], 'a'] = (1.6*df_4['r']**2+df_4['thickness']**2)**(1 / 2) - (0.675*df_4['thickness'])
+        df_4.loc[df_4['r'] >= df_4['r_limit'], 'a'] = df_4['r']
+        df_4.loc[df_4['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_4['w'] * (df_4['reduction_factor_sigma_s2'])**2
+        df_4.loc[df_4['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_4['w']
+        df_4['l_e'] = (df_4['capital_d'] / df_4['k'])**(1 / 4)
+        df_4['westergaard_center'] = df_4['f_ck'] * df_4['thickness']**2 / (1.32 * np.log10(1.43 * df_4['l_e'] / df_4['a']))
+        df_4['westergaard_edge'] = df_4['f_ck'] * df_4['thickness']**2 / (2.34 * np.log10(1.23 * df_4['l_e'] / df_4['a']))
+        df_4['westergaard_corner'] = df_4['f_ck'] * df_4['thickness']**2 / (3 * (1 - (1.23 * (df_4['a'] / df_4['l_e'])**0.6)))
+        df_4.loc[df_4['rebar_size_lower'] == 0, 'd_eff'] = df_4['c_nom'] + df_4['rebar_size_upper']
+        df_4.loc[df_4['rebar_size_lower'] != 0, 'd_eff'] = df_4['thickness'] - df_4['c_nom'] - df_4['rebar_size_lower']
+        df_4['ro_l'] = df_4['a_s_total'] / (df_4['d_eff'] * 1000)
+        df_4['k_ec2'] = 1 + (200 / df_4['d_eff'])**(1 / 2)
+        df_4.loc[df_4['k_ec2'] > 2, 'k_ec2'] = 2
+        df_4['u_1_center'] = 2 * np.pi * (df_4['r'] + 2 * df_4['d_eff'])
+        df_4['u_1_edge'] = np.pi * (df_4['r'] + 2 * df_4['d_eff'])
+        df_4['u_1_corner'] = np.pi * (df_4['r'] + 2 * df_4['d_eff']) / 2
+        df_4['c_rdc'] = 0.1
+        df_4['v_rd'] = 0.75 * df_4['c_rdc'] * df_4['k_ec2'] * (100 * df_4['ro_l'] * df_4['f_ck'])**(1 / 3) + 0.6 * \
+                       df_4['f_ftdr25'] * (df_4['a'] + df_4['d_eff']) / (df_4['a'] + 4 * df_4['d_eff'])
+        df_4['v_min'] = 0.035 * df_4['k_ec2']**(3 / 2) * df_4['f_ck']**(1 / 2)
+        df_4.loc[df_4['v_rd'] > df_4['v_min'], 'v_rd_2'] = df_4['v_rd']
+        df_4.loc[df_4['v_rd'] <= df_4['v_min'], 'v_rd_2'] = df_4['v_min']
+        df_4['v_ed_1_center'] = df_4['v_rd_2'] * df_4['u_1_center'] *df_4['d_eff']
+        df_4['v_ed_1_edge'] = df_4['v_rd_2'] * df_4['u_1_edge'] *df_4['d_eff']
+        df_4['v_ed_1_corner'] = df_4['v_rd_2'] * df_4['u_1_corner'] *df_4['d_eff']
+        df_4['u_0_center'] = 2 * np.pi * df_4['r']
+        df_4['u_0_edge'] = np.pi * df_4['r']
+        df_4['u_0_corner'] = np.pi * df_4['r'] / 2
+        df_4['v_ed_0_center'] = df_4['v_rd_max'] * df_4['u_0_center'] * df_4['d_eff']
+        df_4['v_ed_0_edge'] = df_4['v_rd_max'] * df_4['u_0_edge'] * df_4['d_eff']
+        df_4['v_ed_0_corner'] = df_4['v_rd_max'] * df_4['u_0_corner'] * df_4['d_eff']
+        df_4['meyerhof_center'] = 6 * (1 + 2 * df_4['a'] / df_4['l_e']) * (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3
+                                                                           + 2 * df_4['m_f'] / 10**3)
+        df_4['meyerhof_edge'] = 3.5 * (1 + 3 * df_4['a'] / df_4['l_e']) * (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3
+                                                                           + 2 * df_4['m_f'] / 10**3)
+        df_4['meyerhof_corner'] = 2 * (1 + 4 * df_4['a'] / df_4['l_e']) * (df_4['m_n'] / 10**3 + df_4['m_f'] / 10**3)
+        df_4['a_l_e_limit'] = df_4['a'] / df_4['l_e']
+        df_4.loc[df_4['a_l_e_limit'] < 0.2, 'dual_point_load'] = (2 * np.pi + 1.8 * df_4['x'] / df_4['l_e']) * \
+                                                             (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3 + 2 *
+                                                              df_4['m_f'] / 10**3)
+        df_4.loc[df_4['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_4['a'] / 3 * df_4['l_e'])) +
+                                                              (1.8 * df_4['x'] / (df_4['l_e'] - df_4['a'] / 2))) * \
+                                                              (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3 + 2 *
+                                                               df_4['m_f'] / 10**3)
+        df_4.loc[df_4['a_l_e_limit'] < 0.2, 'quadruple_point_load'] = (2 * np.pi + 1.8 * (df_4['x'] + df_4['y']) /
+                                                                   df_4['l_e']) * (df_4['m_p'] / 10**3 + df_4['m_n'] /
+                                                                                   10**3 + 2 * df_4['m_f'] / 10**3)
+        df_4.loc[df_4['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (1 - df_4['a'] / 3 * df_4['l_e'])) +
+                                                                    (1.8 * (df_4['x'] + df_4['y']) /
+                                                                     (df_4['l_e'] - df_4['a'] / 2))) * \
+                                                                      (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3
+                                                                       + 2 * df_4['m_f'] / 10**3)
+    except:
+        print('feil, input4')
 
 
 def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_dict, tykk_pick, tykk_dict, fast_pick):
@@ -435,19 +553,19 @@ def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                            3: {'riss': 1.0, 'as': 1, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'},
                            4: {'riss': 100, 'as': 0, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'}}
                 df_2_temp = df_2[(df_2['thickness'] >= gk_data[gk_valg]['t']) &
-                             (df_2['w_2'] <= gk_data[gk_valg]['riss']) &
-                             (df_2['a_s_upper'] >= gk_data[gk_valg]['as'] * df_2['a_s_min']) &
-                             (df_2['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
-                             (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['a_s_total'] >= df_2['a_s_min'])]
+                                 (df_2['w_2'] <= gk_data[gk_valg]['riss']) &
+                                 (df_2['a_s_upper'] >= gk_data[gk_valg]['as'] * df_2['a_s_min']) &
+                                 (df_2['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
+                                 (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['a_s_total'] >= df_2['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_2_temp = df_2[(df_2['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
-                             (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['w_2'] <= rv_dict[rv_pick.get()]) &
-                             (df_2['thickness'].isin(tykk_dict[tykk_pick.get()])) &
-                             (df_2['a_s_total'] >= df_2['a_s_min'])]
+                                 (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['w_2'] <= rv_dict[rv_pick.get()]) &
+                                 (df_2['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_2['a_s_total'] >= df_2['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Armeringsnett er ikke fylt ut!', master=window)
         elif str(fast_pick.get()) == 'Flytende gulv':
@@ -458,17 +576,17 @@ def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                            3: {'riss': 1.0, 'as': 1, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'},
                            4: {'riss': 100, 'as': 0, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'}}
                 df_2_temp = df_2[(df_2['thickness'] >= gk_data[gk_valg]['t']) &
-                             (df_2['a_s_upper'] >= gk_data[gk_valg]['as'] * df_2['a_s_min']) &
-                             (df_2['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
-                             (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['a_s_total'] >= df_2['a_s_min'])]
+                                 (df_2['a_s_upper'] >= gk_data[gk_valg]['as'] * df_2['a_s_min']) &
+                                 (df_2['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
+                                 (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['a_s_total'] >= df_2['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_2_temp = df_2[(df_2['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
-                             (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
-                             (df_2['thickness'].isin(tykk_dict[tykk_pick.get()])) &
-                             (df_2['a_s_total'] >= df_2['a_s_min'])]
+                                 (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_2['a_s_total'] >= df_2['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Armeringsnett er ikke fylt ut!', master=window)
         else:
@@ -490,23 +608,23 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                            3: {'riss': 1.0, 'as': 1, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'},
                            4: {'riss': 100, 'as': 0, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'}}
                 df_3_temp = df_3[(df_3['thickness'] >= gk_data[gk_valg]['t']) &
-                             (df_3['w_2'] <= gk_data[gk_valg]['riss']) &
-                             (df_3['a_s_upper'] >= gk_data[gk_valg]['as'] * df_3['a_s_min']) &
-                             (df_3['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
-                             (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
-                             (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
-                             (df_3['a_s_total'] >= df_3['a_s_min'])]
+                                 (df_3['w_2'] <= gk_data[gk_valg]['riss']) &
+                                 (df_3['a_s_upper'] >= gk_data[gk_valg]['as'] * df_3['a_s_min']) &
+                                 (df_3['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
+                                 (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_3['a_s_total'] >= df_3['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_3_temp = df_3[(df_3['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
-                             (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
-                             (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
-                             (df_3['w_2'] <= rv_dict[rv_pick.get()]) &
-                             (df_3['thickness'].isin(tykk_dict[tykk_pick.get()])) &
-                             (df_3['a_s_total'] >= df_3['a_s_min'])]
+                                 (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_3['w_2'] <= rv_dict[rv_pick.get()]) &
+                                 (df_3['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_3['a_s_total'] >= df_3['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Fiberarmerings klasse eller duktilitet er ikke fylt ut!',
                                        master=window)
@@ -519,21 +637,21 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                            3: {'riss': 1.0, 'as': 1, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'},
                            4: {'riss': 100, 'as': 0, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'}}
                 df_3_temp = df_3[(df_3['thickness'] >= gk_data[gk_valg]['t']) &
-                             (df_3['a_s_upper'] >= gk_data[gk_valg]['as'] * df_3['a_s_min']) &
-                             (df_3['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
-                             (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
-                             (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
-                             (df_3['a_s_total'] >= df_3['a_s_min'])]
+                                 (df_3['a_s_upper'] >= gk_data[gk_valg]['as'] * df_3['a_s_min']) &
+                                 (df_3['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
+                                 (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_3['a_s_total'] >= df_3['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_3_temp = df_3[(df_3['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
-                             (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
-                             (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
-                             (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
-                             (df_3['thickness'].isin(tykk_dict[tykk_pick.get()])) &
-                             (df_3['a_s_total'] >= df_3['a_s_min'])]
+                                 (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
+                                 (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_3['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_3['a_s_total'] >= df_3['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Fiberarmerings klasse eller duktilitet er ikke fylt ut!',
                                        master=window)
@@ -541,6 +659,70 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
             pass
     except:
         print('feil, df3filtering')
+
+
+def df_4_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_dict, tykk_pick, tykk_dict,
+                   fast_pick, fiber_pick, fiber_dict, duct_pick, duct_dict):
+    try:
+        global df_4_temp
+        if str(fast_pick.get()) == 'Fastholdt gulv':
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and \
+                    len(rebar_pick.get()) != 0 and len(fiber_pick.get()) != 0 and len(duct_pick.get()) != 0:
+                gk_valg = int(gk_pick.get())
+                gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
+                           2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
+                           3: {'riss': 1.0, 'as': 1, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'},
+                           4: {'riss': 100, 'as': 0, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'}}
+                df_4_temp = df_4[(df_4['thickness'] >= gk_data[gk_valg]['t']) &
+                                 (df_4['w_2'] <= gk_data[gk_valg]['riss']) &
+                                 (df_4['a_s_upper'] >= gk_data[gk_valg]['as'] * df_4['a_s_min']) &
+                                 (df_4['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
+                                 (df_4['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_4['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_4['a_s_total'] >= df_4['a_s_min'])]
+            elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
+                df_4_temp = df_4[(df_4['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
+                                 (df_4['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_4['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_4['w_2'] <= rv_dict[rv_pick.get()]) &
+                                 (df_4['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_4['a_s_total'] >= df_4['a_s_min'])]
+            else:
+                pass
+        elif str(fast_pick.get()) == 'Flytende gulv':
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and \
+                    len(rebar_pick.get()) != 0 and len(fiber_pick.get()) != 0 and len(duct_pick.get()) != 0:
+                gk_valg = int(gk_pick.get())
+                gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
+                           2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
+                           3: {'riss': 1.0, 'as': 1, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'},
+                           4: {'riss': 100, 'as': 0, 't': 100, 'betong': 'B30 M60|B45 M40|B35 M45'}}
+                df_4_temp = df_4[(df_4['thickness'] >= gk_data[gk_valg]['t']) &
+                                 (df_4['a_s_upper'] >= gk_data[gk_valg]['as'] * df_4['a_s_min']) &
+                                 (df_4['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
+                                 (df_4['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_4['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_4['a_s_total'] >= df_4['a_s_min'])]
+            elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
+                df_4_temp = df_4[(df_4['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
+                                 (df_4['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_4['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
+                                 (df_4['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_4['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_4['a_s_total'] >= df_4['a_s_min'])]
+            else:
+                pass
+        else:
+            pass
+    except:
+        print('feil, df4filtering')
 
 
 def df_filtering_load(last_plassering_pick, lasttilfelle_pick):
@@ -633,6 +815,31 @@ def df_3_filtering_load(last_plassering_pick, lasttilfelle_pick):
         print('feil, df 3 filtering load')
 
 
+def df_4_filtering_load(last_plassering_pick, lasttilfelle_pick):
+    global df_4_temp2
+    try:
+        if last_plassering_pick.get() == 'Senter':
+            if lasttilfelle_pick.get() == 'Single-point' or len(lasttilfelle_pick.get()) == 0:
+                df_4_temp2 = df_4_temp[(df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['meyerhof_center'] >= q_ed * 1.5) &
+                                   (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5)]
+            elif lasttilfelle_pick.get() == 'Dual-point':
+                df_4_temp2 = df_4_temp[(df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['dual_point_load'] >= q_ed * 1.5) &
+                                   (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                                   (df_4_temp['meyerhof_center'] >= q_ed * 1.5)]
+            elif lasttilfelle_pick.get() == 'Quadruple-point':
+                df_4_temp2 = df_4_temp[(df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['quadruple_point_load'] >= q_ed * 1.5)
+                                   & (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                                   (df_4_temp['meyerhof_center'] >= q_ed * 1.5)]
+        elif last_plassering_pick.get() == 'Kant':
+            df_4_temp2 = df_4_temp[(df_4_temp['westergaard_edge'] >= q_ed) & (df_4_temp['meyerhof_edge'] >= q_ed * 1.5) &
+                               (df_4_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_edge'] >= q_ed * 1.5)]
+        elif last_plassering_pick.get() == 'Hjørne':
+            df_4_temp2 = df_4_temp[(df_4_temp['westergaard_corner'] >= q_ed) & (df_4_temp['meyerhof_corner'] >= q_ed * 1.5) &
+                               (df_4_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_corner'] >= q_ed * 1.5)]
+    except:
+        print('feil, df 4 filtering load')
+
+
 def df_sorting_price_gwp(sort_pick):
     try:
         global df_final
@@ -668,11 +875,23 @@ def df_3_sorting_price_gwp(sort_pick):
         print('feil df3 sorting')
 
 
+def df_4_sorting_price_gwp(sort_pick):
+    global df_4_final
+    try:
+        if sort_pick.get() == 'Pris':
+            df_4_final = df_4_temp2.sort_values(by='price_sum', ascending=True)
+        elif sort_pick.get() == 'GWP':
+            df_4_final = df_4_temp2.sort_values(by='gwp_sum', ascending=True)
+    except:
+        print('feil df4 sorting')
+
+
 def load_next_frames():
     if q_ed != 0 and 'check' in globals() and 'df_temp' in globals() and 'df_temp2' in globals() \
             and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals()\
             and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals()\
-            and 'df_3_final' in globals():
+            and 'df_3_final' in globals() and 'df_4' in globals() and 'df_4_temp' in globals() and 'df_4_temp2' in globals()\
+            and 'df_4_final' in globals():
         raise_frame(frame3, frame4)
 
 
@@ -777,7 +996,42 @@ def show_result_3():
         print('feil result3')
 
 
-def clear_frames():
+def show_result_4():
+    try:
+        global tykkelse_resultat_df_4
+        tykkelse_resultat_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
+        tykkelse_resultat_df_4.grid(row=3, column=1, sticky='e')
+        global armering_resultat_ok_df_4
+        armering_resultat_ok_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["rebar_name_upper"]} ', font=('Calibri', 11))
+        armering_resultat_ok_df_4.grid(row=4, column=1, sticky='e')
+        global armering_resultat_uk_df_4
+        if df_4_final.iloc[0]["rebar_size_lower"] != 0:
+            armering_resultat_uk_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["rebar_name_lower"]} ', font=('Calibri', 11))
+            armering_resultat_uk_df_4.grid(row=5, column=1, sticky='e')
+        else:
+            armering_resultat_uk_df_4 = tk.Label(master=frame34, text='Ingen ', font=('Calibri', 11))
+            armering_resultat_uk_df_4.grid(row=5, column=1, sticky='e')
+        global armering_resultat_fiber_df_4
+        armering_resultat_fiber_df_4 = tk.Label(master=frame34, text=f'R {df_4_final.iloc[0]["f_r_1_k"]},0 '
+                                                                     f'{df_4_final.iloc[0]["ductility"]} ', font=('Calibri', 11))
+        armering_resultat_fiber_df_4.grid(row=6, column=1, sticky='e')
+        global betongkvalitet_resultat_df_4
+        betongkvalitet_resultat_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["concrete_quality"]} ',
+                                              font=('Calibri', 11))
+        betongkvalitet_resultat_df_4.grid(row=7, column=1, sticky='e')
+        global pris_resultat_df_4
+        pris_resultat_df_4 = tk.Label(master=frame34, text=f'{round(df_4_final.iloc[0]["price_sum"], 1)} NOK ',
+                                    font=('Calibri', 11))
+        pris_resultat_df_4.grid(row=8, column=1, sticky='e')
+        global gwp_resultat_df_4
+        gwp_resultat_df_4 = tk.Label(master=frame34, text=f'{round(df_4_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
+                                   font=('Calibri', 11))
+        gwp_resultat_df_4.grid(row=9, column=1, sticky='e')
+    except:
+        print('feil result4')
+
+
+def clear_frames1():
     try:
         # Frame 31
         tykkelse_resultat_df.destroy()
@@ -786,6 +1040,12 @@ def clear_frames():
         betongkvalitet_resultat_df.destroy()
         pris_resultat_df.destroy()
         gwp_resultat_df.destroy()
+    except:
+        print('feil, clear1')
+
+
+def clear_frames2():
+    try:
         # Frame 32
         tykkelse_resultat_df_3.destroy()
         armering_resultat_ok_df_3.destroy()
@@ -794,6 +1054,12 @@ def clear_frames():
         betongkvalitet_resultat_df_3.destroy()
         pris_resultat_df_3.destroy()
         gwp_resultat_df_3.destroy()
+    except:
+        print('feil, clear2')
+
+
+def clear_frames3():
+    try:
         # Frame 33
         tykkelse_resultat_df_2.destroy()
         armering_resultat_ok_df_2.destroy()
@@ -802,7 +1068,21 @@ def clear_frames():
         pris_resultat_df_2.destroy()
         gwp_resultat_df_2.destroy()
     except:
-        pass
+        print('feil, clear3')
+
+
+def clear_frames4():
+    try:
+        # Frame 34
+        tykkelse_resultat_df_4.destroy()
+        armering_resultat_ok_df_4.destroy()
+        armering_resultat_uk_df_4.destroy()
+        armering_resultat_fiber_df_4.destroy()
+        betongkvalitet_resultat_df_4.destroy()
+        pris_resultat_df_4.destroy()
+        gwp_resultat_df_4.destroy()
+    except:
+        print('feil, clear4')
 
 
 def get_df_value(dataf, arg):
@@ -822,6 +1102,7 @@ def raise_frame(f1, f2):
 df = pd.read_csv('data\\csv\\slakkarmering.csv', sep=';')
 df_2 = pd.read_csv('data\\csv\\nettarmering.csv', sep=';')
 df_3 = pd.read_csv('data\\csv\\slakk- + fiberarmering.csv', sep=';')
+df_4 = pd.read_csv('data\\csv\\nett- + fiberarmering.csv', sep=';')
 
 window = tk.Tk()
 window.title('Beregningsverktøy - Gulv på grunn')
@@ -1167,6 +1448,7 @@ nettarmering_fib_resultat2 = tk.Label(master=frame34, text='fiberarmering:', fon
 tykkelse4_resultat = tk.Label(master=frame34, text='Tykkelse', font=('Calibri', 11))
 armering4_resultat_ok = tk.Label(master=frame34, text='Armering O.K', font=('Calibri', 11))
 armering4_resultat_uk = tk.Label(master=frame34, text='Armering U.K', font=('Calibri', 11))
+armering4_resultat_fiber = tk.Label(master=frame34, text='Armering fiber', font=('Calibri', 11))
 betongkvalitet4_resultat = tk.Label(master=frame34, text='Betongkvalitet', font=('Calibri', 11))
 pris4_resultat = tk.Label(master=frame34, text='Pris ', font=('Calibri', 11))
 gwp4_resultat = tk.Label(master=frame34, text='GWP', font=('Calibri', 11))
@@ -1314,40 +1596,41 @@ frame34.grid(row=13, rowspan=8, column=2, sticky='news')
 resultat_lbl.grid(row=0, column=0, columnspan=3, sticky='w')
 resultat2_lbl.grid(row=1, column=0, columnspan=3, sticky='w')
 slakkarmering_resultat.grid(row=0, column=0, sticky='w')
-tykkelse_resultat.grid(row=2, column=0, stick='w')
-armering_resultat_ok.grid(row=3, column=0, stick='w')
-armering_resultat_uk.grid(row=4, column=0, stick='w')
-betongkvalitet_resultat.grid(row=5, column=0, stick='w')
-pris_resultat.grid(row=6, column=0, stick='w')
-gwp_resultat.grid(row=7, column=0, stick='w')
+tykkelse_resultat.grid(row=2, column=0, sticky='w')
+armering_resultat_ok.grid(row=3, column=0, sticky='w')
+armering_resultat_uk.grid(row=4, column=0, sticky='w')
+betongkvalitet_resultat.grid(row=5, column=0, sticky='w')
+pris_resultat.grid(row=6, column=0, sticky='w')
+gwp_resultat.grid(row=7, column=0, sticky='w')
 slakkarmering_fib_resultat.grid(row=0, column=0, sticky='w')
 slakkarmering_fib_resultat2.grid(row=1, column=0, sticky='w')
-tykkelse2_resultat.grid(row=3, column=0, stick='w')
-armering2_resultat_ok.grid(row=4, column=0, stick='w')
-armering2_resultat_uk.grid(row=5, column=0, stick='w')
-armering2_resultat_fiber.grid(row=6, column=0, stick='w')
-betongkvalitet2_resultat.grid(row=7, column=0, stick='w')
-pris2_resultat.grid(row=8, column=0, stick='w')
-gwp2_resultat.grid(row=9, column=0, stick='w')
+tykkelse2_resultat.grid(row=3, column=0, sticky='w')
+armering2_resultat_ok.grid(row=4, column=0, sticky='w')
+armering2_resultat_uk.grid(row=5, column=0, sticky='w')
+armering2_resultat_fiber.grid(row=6, column=0, sticky='w')
+betongkvalitet2_resultat.grid(row=7, column=0, sticky='w')
+pris2_resultat.grid(row=8, column=0, sticky='w')
+gwp2_resultat.grid(row=9, column=0, sticky='w')
 nettarmering_resultat.grid(row=0, column=0, sticky='w')
-tykkelse3_resultat.grid(row=2, column=0, stick='w')
-armering3_resultat_ok.grid(row=3, column=0, stick='w')
-armering3_resultat_uk.grid(row=4, column=0, stick='w')
-betongkvalitet3_resultat.grid(row=5, column=0, stick='w')
-pris3_resultat.grid(row=6, column=0, stick='w')
-gwp3_resultat.grid(row=7, column=0, stick='w')
+tykkelse3_resultat.grid(row=2, column=0, sticky='w')
+armering3_resultat_ok.grid(row=3, column=0, sticky='w')
+armering3_resultat_uk.grid(row=4, column=0, sticky='w')
+betongkvalitet3_resultat.grid(row=5, column=0, sticky='w')
+pris3_resultat.grid(row=6, column=0, sticky='w')
+gwp3_resultat.grid(row=7, column=0, sticky='w')
 nettarmering_fib_resultat.grid(row=0, column=0, sticky='w')
 nettarmering_fib_resultat2.grid(row=1, column=0, sticky='w')
-tykkelse4_resultat.grid(row=3, column=0, stick='w')
-armering4_resultat_ok.grid(row=4, column=0, stick='w')
-armering4_resultat_uk.grid(row=5, column=0, stick='w')
-betongkvalitet4_resultat.grid(row=6, column=0, stick='w')
-pris4_resultat.grid(row=7, column=0, stick='w')
-gwp4_resultat.grid(row=8, column=0, stick='w')
+tykkelse4_resultat.grid(row=3, column=0, sticky='w')
+armering4_resultat_ok.grid(row=4, column=0, sticky='w')
+armering4_resultat_uk.grid(row=5, column=0, sticky='w')
+armering4_resultat_fiber.grid(row=6, column=0, sticky='w')
+betongkvalitet4_resultat.grid(row=7, column=0, stick='w')
+pris4_resultat.grid(row=8, column=0, sticky='w')
+gwp4_resultat.grid(row=9, column=0, sticky='w')
 gruppe_navn_lbl2.place(x=0, y=745)
 
 # Frame 4 frame.grid
-frame41.grid(row=3, rowspan=9, column=1, sticky='news', padx=5)
+# frame41.grid(row=3, rowspan=9, column=1, sticky='news', padx=5)
 
 # Frame 4 label.grid
 fiberarmering_resultat.grid(row=0, column=0, columnspan=3, sticky='w')
@@ -1368,6 +1651,9 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                           loads_3(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
                                                   egendef_punktlast_pick, lastflate_pick),
+                                          loads_4(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
+                                                  billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
+                                                  egendef_punktlast_pick, lastflate_pick),
                                           input_calc(betong_pris_m40_pick, betong_pris_m45_pick, betong_pris_m60_pick,
                                                      betong_gwp_m40_pick, betong_gwp_m45_pick, betong_gwp_m60_pick,
                                                      slakkarmering_pris_pick,
@@ -1385,6 +1671,14 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                                        grunnforhold_pick, isolasjon_option_dict, isolasjon_pick,
                                                        isolasjon_tykkelse_pick),
                                           input_calc_3(betong_pris_m40_pick, betong_pris_m45_pick, betong_pris_m60_pick,
+                                                       betong_gwp_m40_pick, betong_gwp_m45_pick, betong_gwp_m60_pick,
+                                                       slakkarmering_pris_pick,
+                                                       slakkarmering_gwp_pick, reduksjonsfaktor_pick,
+                                                       grunnstivhet_pick, x_pick, y_pick,
+                                                       nominell_overdekning_pick, grunnforhold_options_dict,
+                                                       grunnforhold_pick, isolasjon_option_dict, isolasjon_pick,
+                                                       isolasjon_tykkelse_pick, staalfiber_pris_pick, staalfiber_gwp_pick),
+                                          input_calc_4(betong_pris_m40_pick, betong_pris_m45_pick, betong_pris_m60_pick,
                                                        betong_gwp_m40_pick, betong_gwp_m45_pick, betong_gwp_m60_pick,
                                                        nettarmering_pris_pick,
                                                        nettarmering_gwp_pick, reduksjonsfaktor_pick,
@@ -1409,16 +1703,26 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                                          tykkelse_pick, tykkelse_dict, fastholding_pick,
                                                          fiberarmering_pick, fiberarmering_dict, duktilitet_pick,
                                                          duktilitet_dict),
+                                          df_4_filtering(gulvklasse_pick, bestandighetsklasse_pick,
+                                                         bestandighetsklasse_dict,
+                                                         armeringsnett_pick, armeringsnett_dict,
+                                                         rissvidde_pick, rissvidde_dict,
+                                                         tykkelse_pick, tykkelse_dict, fastholding_pick,
+                                                         fiberarmering_pick, fiberarmering_dict, duktilitet_pick,
+                                                         duktilitet_dict),
                                           df_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
                                           df_2_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
                                           df_3_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
+                                          df_4_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
                                           df_sorting_price_gwp(gulv_sortering_pick),
                                           df_2_sorting_price_gwp(gulv_sortering_pick),
                                           df_3_sorting_price_gwp(gulv_sortering_pick),
+                                          df_4_sorting_price_gwp(gulv_sortering_pick),
                                           load_next_frames(),
                                           show_result(),
                                           show_result_2(),
-                                          show_result_3()])
+                                          show_result_3(),
+                                          show_result_4()])
 # raise_frame(frame3, frame4)
 fortsett_btn.place(x=260, y=700)
 frame1.grid(row=0, column=0)
@@ -1582,7 +1886,8 @@ resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), 
 resultat4_btn = tk.Button(master=frame34, text='Rapport', font=('Calibri', 14), padx=40, pady=5)
 resultat5_btn = tk.Button(master=frame41, text='Rapport', font=('Calibri', 14), padx=40, pady=5)
 tilbake_btn = tk.Button(master=frame4, text='Tilbake  ', font=('Calibri', 14), padx=25, pady=8,
-                        command=lambda: [raise_frame(frame1, frame2), clear_frames()])
+                        command=lambda: [raise_frame(frame1, frame2), clear_frames1(), clear_frames2(),
+                                         clear_frames3(), clear_frames4()])
 resultat1_btn.grid(row=10, columnspan=2)
 resultat2_btn.grid(row=10, columnspan=2)
 resultat3_btn.grid(row=10, columnspan=2)
@@ -1598,3 +1903,4 @@ window.mainloop()
 #df_2_temp.to_csv('Steg 2.csv', sep=';')
 #df_2_temp2.to_csv('Steg 3.csv', sep=';')
 #df_2_final.to_csv('Final.csv', sep=';')
+#df_4_final.to_csv('test.csv', sep=';')
