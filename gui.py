@@ -605,6 +605,31 @@ def df_2_filtering_load(last_plassering_pick, lasttilfelle_pick):
         pass
 
 
+def df_3_filtering_load(last_plassering_pick, lasttilfelle_pick):
+    global df_3_temp2
+    try:
+        if last_plassering_pick.get() == 'Senter':
+            if lasttilfelle_pick.get() == 'Single-point' or len(lasttilfelle_pick.get()) == 0:
+                df_3_temp2 = df_3_temp[(df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['meyerhof_center'] >= q_ed * 1.5) &
+                                   (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5)]
+            elif lasttilfelle_pick.get() == 'Dual-point':
+                df_3_temp2 = df_3_temp[(df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['dual_point_load'] >= q_ed * 1.5) &
+                                   (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                                   (df_3_temp['meyerhof_center'] >= q_ed * 1.5)]
+            elif lasttilfelle_pick.get() == 'Quadruple-point':
+                df_3_temp2 = df_3_temp[(df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['quadruple_point_load'] >= q_ed * 1.5)
+                                   & (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                                   (df_3_temp['meyerhof_center'] >= q_ed * 1.5)]
+        elif last_plassering_pick.get() == 'Kant':
+            df_3_temp2 = df_3_temp[(df_3_temp['westergaard_edge'] >= q_ed) & (df_3_temp['meyerhof_edge'] >= q_ed * 1.5) &
+                               (df_3_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_edge'] >= q_ed * 1.5)]
+        elif last_plassering_pick.get() == 'Hjørne':
+            df_3_temp2 = df_3_temp[(df_3_temp['westergaard_corner'] >= q_ed) & (df_3_temp['meyerhof_corner'] >= q_ed * 1.5) &
+                               (df_3_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_corner'] >= q_ed * 1.5)]
+    except:
+        pass
+
+
 def df_sorting_price_gwp(sort_pick):
     try:
         global df_final
@@ -629,10 +654,22 @@ def df_2_sorting_price_gwp(sort_pick):
         pass
 
 
+def df_3_sorting_price_gwp(sort_pick):
+    global df_3_final
+    try:
+        if sort_pick.get() == 'Pris':
+            df_3_final = df_3_temp2.sort_values(by='price_sum', ascending=True)
+        elif sort_pick.get() == 'GWP':
+            df_3_final = df_3_temp2.sort_values(by='gwp_sum', ascending=True)
+    except:
+        pass
+
+
 def load_next_frames():
     if q_ed != 0 and 'check' in globals() and 'df_temp' in globals() and 'df_temp2' in globals() \
             and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals()\
-            and 'df_2_final' in globals():
+            and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals()\
+            and 'df_3_final' in globals():
         raise_frame(frame3, frame4)
 
 
@@ -641,23 +678,31 @@ def show_result():
         global tykkelse_resultat_df
         tykkelse_resultat_df = tk.Label(master=frame31, text=f'{df_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
         tykkelse_resultat_df.grid(row=2, column=1, sticky='e')
-        global armering_resultat_df
-        armering_resultat_df = tk.Label(master=frame31, text=f'{df_final.iloc[0]["rebar_type"].split()[1].capitalize()}'
-                                                             f' Ø {df_final.iloc[0]["rebar_size_upper"]} C '
-                                                             f'{df_final.iloc[0]["cc_upper"]}mm ', font=('Calibri', 11))
-        armering_resultat_df.grid(row=3, column=1, sticky='e')
+        global armering_resultat_ok_df
+        armering_resultat_ok_df = tk.Label(master=frame31, text=f'Ø {df_final.iloc[0]["rebar_size_upper"]} C '
+                                                                f'{df_final.iloc[0]["cc_upper"]}mm ', font=('Calibri', 11))
+        armering_resultat_ok_df.grid(row=3, column=1, sticky='e')
+        global armering_resultat_uk_df
+        if df_final.iloc[0]["rebar_size_lower"] != 0:
+            armering_resultat_uk_df = tk.Label(master=frame31, text=f'Ø {df_final.iloc[0]["rebar_size_lower"]} C '
+                                                                    f'{df_final.iloc[0]["cc_lower"]}mm ', font=('Calibri', 11))
+            armering_resultat_uk_df.grid(row=4, column=1, sticky='e')
+        else:
+            armering_resultat_uk_df = tk.Label(master=frame31, text='Ingen armering i underkant ',
+                                               font=('Calibri', 11))
+            armering_resultat_uk_df.grid(row=4, column=1, sticky='e')
         global betongkvalitet_resultat_df
         betongkvalitet_resultat_df = tk.Label(master=frame31, text=f'{df_final.iloc[0]["concrete_quality"]} ',
                                               font=('Calibri', 11))
-        betongkvalitet_resultat_df.grid(row=4, column=1, sticky='e')
+        betongkvalitet_resultat_df.grid(row=5, column=1, sticky='e')
         global pris_resultat_df
         pris_resultat_df = tk.Label(master=frame31, text=f'{round(df_final.iloc[0]["price_sum"], 1)} NOK ',
                                     font=('Calibri', 11))
-        pris_resultat_df.grid(row=5, column=1, sticky='e')
+        pris_resultat_df.grid(row=6, column=1, sticky='e')
         global gwp_resultat_df
         gwp_resultat_df = tk.Label(master=frame31, text=f'{round(df_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
                                    font=('Calibri', 11))
-        gwp_resultat_df.grid(row=6, column=1, sticky='e')
+        gwp_resultat_df.grid(row=7, column=1, sticky='e')
     except:
         pass
 
@@ -667,22 +712,65 @@ def show_result_2():
         global tykkelse_resultat_df_2
         tykkelse_resultat_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
         tykkelse_resultat_df_2.grid(row=2, column=1, sticky='e')
-        global armering_resultat_df_2
-        armering_resultat_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_type"].split()[1].capitalize()} '
-                                                             f'{df_2_final.iloc[0]["rebar_name_upper"]} ', font=('Calibri', 11))
-        armering_resultat_df_2.grid(row=3, column=1, sticky='e')
+        global armering_resultat_ok_df_2
+        armering_resultat_ok_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_upper"]} ', font=('Calibri', 11))
+        armering_resultat_ok_df_2.grid(row=3, column=1, sticky='e')
+        global armering_resultat_uk_df_2
+        if df_2_final.iloc[0]["rebar_name_lower"] != 0:
+            armering_resultat_uk_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_lower"]} ', font=('Calibri', 11))
+            armering_resultat_uk_df_2.grid(row=4, column=1, sticky='e')
+        else:
+            armering_resultat_uk_df_2 = tk.Label(master=frame33, text='Ingen armering i underkant', font=('Calibri', 11))
+            armering_resultat_uk_df_2.grid(row=4, column=1, sticky='e')
         global betongkvalitet_resultat_df_2
         betongkvalitet_resultat_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["concrete_quality"]} ',
-                                              font=('Calibri', 11))
-        betongkvalitet_resultat_df_2.grid(row=4, column=1, sticky='e')
+                                                font=('Calibri', 11))
+        betongkvalitet_resultat_df_2.grid(row=5, column=1, sticky='e')
         global pris_resultat_df_2
         pris_resultat_df_2 = tk.Label(master=frame33, text=f'{round(df_2_final.iloc[0]["price_sum"], 1)} NOK ',
-                                    font=('Calibri', 11))
-        pris_resultat_df_2.grid(row=5, column=1, sticky='e')
+                                      font=('Calibri', 11))
+        pris_resultat_df_2.grid(row=6, column=1, sticky='e')
         global gwp_resultat_df_2
         gwp_resultat_df_2 = tk.Label(master=frame33, text=f'{round(df_2_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
                                    font=('Calibri', 11))
-        gwp_resultat_df_2.grid(row=6, column=1, sticky='e')
+        gwp_resultat_df_2.grid(row=7, column=1, sticky='e')
+    except:
+        pass
+
+
+def show_result_3():
+    try:
+        global tykkelse_resultat_df_3
+        tykkelse_resultat_df_3 = tk.Label(master=frame32, text=f'{df_3_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
+        tykkelse_resultat_df_3.grid(row=3, column=1, sticky='e')
+        global armering_resultat_ok_df_3
+        armering_resultat_ok_df_3 = tk.Label(master=frame32, text=f'Ø {df_3_final.iloc[0]["rebar_size_upper"]} C '
+                                                                f'{df_3_final.iloc[0]["cc_upper"]}mm ', font=('Calibri', 11))
+        armering_resultat_ok_df_3.grid(row=4, column=1, sticky='e')
+        global armering_resultat_uk_df_3
+        if df_3_final.iloc[0]["rebar_size_lower"] != 0:
+            armering_resultat_uk_df_3 = tk.Label(master=frame32, text=f'Ø {df_3_final.iloc[0]["rebar_size_lower"]} C '
+                                                                    f'{df_3_final.iloc[0]["cc_lower"]}mm ', font=('Calibri', 11))
+            armering_resultat_uk_df_3.grid(row=5, column=1, sticky='e')
+        else:
+            armering_resultat_uk_df_3 = tk.Label(master=frame32, text='Ingen armering i underkant ', font=('Calibri', 11))
+            armering_resultat_uk_df_3.grid(row=5, column=1, sticky='e')
+        global armering_resultat_fiber_df_3
+        armering_resultat_fiber_df_3 = tk.Label(master=frame32, text=f'R {df_3_final.iloc[0]["f_r_1_k"]},0 '
+                                                                     f'{df_3_final.iloc[0]["ductility"]} ', font=('Calibri', 11))
+        armering_resultat_fiber_df_3.grid(row=6, column=1, sticky='e')
+        global betongkvalitet_resultat_df_3
+        betongkvalitet_resultat_df_3 = tk.Label(master=frame32, text=f'{df_3_final.iloc[0]["concrete_quality"]} ',
+                                              font=('Calibri', 11))
+        betongkvalitet_resultat_df_3.grid(row=7, column=1, sticky='e')
+        global pris_resultat_df_3
+        pris_resultat_df_3 = tk.Label(master=frame32, text=f'{round(df_3_final.iloc[0]["price_sum"], 1)} NOK ',
+                                    font=('Calibri', 11))
+        pris_resultat_df_3.grid(row=8, column=1, sticky='e')
+        global gwp_resultat_df_3
+        gwp_resultat_df_3 = tk.Label(master=frame32, text=f'{round(df_3_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
+                                   font=('Calibri', 11))
+        gwp_resultat_df_3.grid(row=9, column=1, sticky='e')
     except:
         pass
 
@@ -691,13 +779,23 @@ def clear_frames():
     try:
         # Frame 31
         tykkelse_resultat_df.destroy()
-        armering_resultat_df.destroy()
+        armering_resultat_ok_df.destroy()
+        armering_resultat_uk_df.destroy()
         betongkvalitet_resultat_df.destroy()
         pris_resultat_df.destroy()
         gwp_resultat_df.destroy()
         # Frame 32
+        tykkelse_resultat_df_3.destroy()
+        armering_resultat_ok_df_3.destroy()
+        armering_resultat_uk_df_3.destroy()
+        armering_resultat_fiber_df_3.destroy()
+        betongkvalitet_resultat_df_3.destroy()
+        pris_resultat_df_3.destroy()
+        gwp_resultat_df_3.destroy()
+        # Frame 33
         tykkelse_resultat_df_2.destroy()
-        armering_resultat_df_2.destroy()
+        armering_resultat_ok_df_2.destroy()
+        armering_resultat_uk_df_2.destroy()
         betongkvalitet_resultat_df_2.destroy()
         pris_resultat_df_2.destroy()
         gwp_resultat_df_2.destroy()
@@ -719,9 +817,9 @@ def raise_frame(f1, f2):
     f2.tkraise()
 
 
-df = pd.read_csv('csv\\slakkarmering.csv', sep=';')
-df_2 = pd.read_csv('csv\\nettarmering.csv', sep=';')
-df_3 = pd.read_csv('csv\\slakk- + fiberarmering.csv', sep=';')
+df = pd.read_csv('data\\csv\\slakkarmering.csv', sep=';')
+df_2 = pd.read_csv('data\\csv\\nettarmering.csv', sep=';')
+df_3 = pd.read_csv('data\\csv\\slakk- + fiberarmering.csv', sep=';')
 
 window = tk.Tk()
 window.title('Beregningsverktøy - Gulv på grunn')
@@ -1041,27 +1139,32 @@ resultat2_lbl = tk.Label(master=frame3,
                          font=('Calibri', 12))
 slakkarmering_resultat = tk.Label(master=frame31, text='Slakkarmering:', font=('Calibri', 11))
 tykkelse_resultat = tk.Label(master=frame31, text='Tykkelse', font=('Calibri', 11))
-armering_resultat = tk.Label(master=frame31, text='Armering', font=('Calibri', 11))
+armering_resultat_ok = tk.Label(master=frame31, text='Armering O.K', font=('Calibri', 11))
+armering_resultat_uk = tk.Label(master=frame31, text='Armering U.K', font=('Calibri', 11))
 betongkvalitet_resultat = tk.Label(master=frame31, text='Betongkvalitet', font=('Calibri', 11))
 pris_resultat = tk.Label(master=frame31, text='Pris ', font=('Calibri', 11))
 gwp_resultat = tk.Label(master=frame31, text='GWP', font=('Calibri', 11))
 slakkarmering_fib_resultat = tk.Label(master=frame32, text='Slakkarmering og', font=('Calibri', 11))
 slakkarmering_fib_resultat2 = tk.Label(master=frame32, text='fiberarmering:', font=('Calibri', 11))
 tykkelse2_resultat = tk.Label(master=frame32, text='Tykkelse', font=('Calibri', 11))
-armering2_resultat = tk.Label(master=frame32, text='Armering', font=('Calibri', 11))
+armering2_resultat_ok = tk.Label(master=frame32, text='Armering O.K', font=('Calibri', 11))
+armering2_resultat_uk = tk.Label(master=frame32, text='Armering U.K', font=('Calibri', 11))
+armering2_resultat_fiber = tk.Label(master=frame32, text='Armering fiber', font=('Calibri', 11))
 betongkvalitet2_resultat = tk.Label(master=frame32, text='Betongkvalitet', font=('Calibri', 11))
 pris2_resultat = tk.Label(master=frame32, text='Pris ', font=('Calibri', 11))
 gwp2_resultat = tk.Label(master=frame32, text='GWP', font=('Calibri', 11))
 nettarmering_resultat = tk.Label(master=frame33, text='Nettarmering:', font=('Calibri', 11))
 tykkelse3_resultat = tk.Label(master=frame33, text='Tykkelse', font=('Calibri', 11))
-armering3_resultat = tk.Label(master=frame33, text='Armering', font=('Calibri', 11))
+armering3_resultat_ok = tk.Label(master=frame33, text='Armering O.K', font=('Calibri', 11))
+armering3_resultat_uk = tk.Label(master=frame33, text='Armering U.K', font=('Calibri', 11))
 betongkvalitet3_resultat = tk.Label(master=frame33, text='Betongkvalitet', font=('Calibri', 11))
 pris3_resultat = tk.Label(master=frame33, text='Pris ', font=('Calibri', 11))
 gwp3_resultat = tk.Label(master=frame33, text='GWP', font=('Calibri', 11))
 nettarmering_fib_resultat = tk.Label(master=frame34, text='Nettarmering og', font=('Calibri', 11))
 nettarmering_fib_resultat2 = tk.Label(master=frame34, text='fiberarmering:', font=('Calibri', 11))
 tykkelse4_resultat = tk.Label(master=frame34, text='Tykkelse', font=('Calibri', 11))
-armering4_resultat = tk.Label(master=frame34, text='Armering', font=('Calibri', 11))
+armering4_resultat_ok = tk.Label(master=frame34, text='Armering O.K', font=('Calibri', 11))
+armering4_resultat_uk = tk.Label(master=frame34, text='Armering U.K', font=('Calibri', 11))
 betongkvalitet4_resultat = tk.Label(master=frame34, text='Betongkvalitet', font=('Calibri', 11))
 pris4_resultat = tk.Label(master=frame34, text='Pris ', font=('Calibri', 11))
 gwp4_resultat = tk.Label(master=frame34, text='GWP', font=('Calibri', 11))
@@ -1210,30 +1313,35 @@ resultat_lbl.grid(row=0, column=0, columnspan=3, sticky='w')
 resultat2_lbl.grid(row=1, column=0, columnspan=3, sticky='w')
 slakkarmering_resultat.grid(row=0, column=0, sticky='w')
 tykkelse_resultat.grid(row=2, column=0, stick='w')
-armering_resultat.grid(row=3, column=0, stick='w')
-betongkvalitet_resultat.grid(row=4, column=0, stick='w')
-pris_resultat.grid(row=5, column=0, stick='w')
-gwp_resultat.grid(row=6, column=0, stick='w')
+armering_resultat_ok.grid(row=3, column=0, stick='w')
+armering_resultat_uk.grid(row=4, column=0, stick='w')
+betongkvalitet_resultat.grid(row=5, column=0, stick='w')
+pris_resultat.grid(row=6, column=0, stick='w')
+gwp_resultat.grid(row=7, column=0, stick='w')
 slakkarmering_fib_resultat.grid(row=0, column=0, sticky='w')
 slakkarmering_fib_resultat2.grid(row=1, column=0, sticky='w')
 tykkelse2_resultat.grid(row=3, column=0, stick='w')
-armering2_resultat.grid(row=4, column=0, stick='w')
-betongkvalitet2_resultat.grid(row=5, column=0, stick='w')
-pris2_resultat.grid(row=6, column=0, stick='w')
-gwp2_resultat.grid(row=7, column=0, stick='w')
+armering2_resultat_ok.grid(row=4, column=0, stick='w')
+armering2_resultat_uk.grid(row=5, column=0, stick='w')
+armering2_resultat_fiber.grid(row=6, column=0, stick='w')
+betongkvalitet2_resultat.grid(row=7, column=0, stick='w')
+pris2_resultat.grid(row=8, column=0, stick='w')
+gwp2_resultat.grid(row=9, column=0, stick='w')
 nettarmering_resultat.grid(row=0, column=0, sticky='w')
 tykkelse3_resultat.grid(row=2, column=0, stick='w')
-armering3_resultat.grid(row=3, column=0, stick='w')
-betongkvalitet3_resultat.grid(row=4, column=0, stick='w')
-pris3_resultat.grid(row=5, column=0, stick='w')
-gwp3_resultat.grid(row=6, column=0, stick='w')
+armering3_resultat_ok.grid(row=3, column=0, stick='w')
+armering3_resultat_uk.grid(row=4, column=0, stick='w')
+betongkvalitet3_resultat.grid(row=5, column=0, stick='w')
+pris3_resultat.grid(row=6, column=0, stick='w')
+gwp3_resultat.grid(row=7, column=0, stick='w')
 nettarmering_fib_resultat.grid(row=0, column=0, sticky='w')
 nettarmering_fib_resultat2.grid(row=1, column=0, sticky='w')
 tykkelse4_resultat.grid(row=3, column=0, stick='w')
-armering4_resultat.grid(row=4, column=0, stick='w')
-betongkvalitet4_resultat.grid(row=5, column=0, stick='w')
-pris4_resultat.grid(row=6, column=0, stick='w')
-gwp4_resultat.grid(row=7, column=0, stick='w')
+armering4_resultat_ok.grid(row=4, column=0, stick='w')
+armering4_resultat_uk.grid(row=5, column=0, stick='w')
+betongkvalitet4_resultat.grid(row=6, column=0, stick='w')
+pris4_resultat.grid(row=7, column=0, stick='w')
+gwp4_resultat.grid(row=8, column=0, stick='w')
 gruppe_navn_lbl2.place(x=0, y=745)
 
 # Frame 4 frame.grid
@@ -1301,11 +1409,14 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                                          duktilitet_dict),
                                           df_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
                                           df_2_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
+                                          df_3_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
                                           df_sorting_price_gwp(gulv_sortering_pick),
                                           df_2_sorting_price_gwp(gulv_sortering_pick),
+                                          df_3_sorting_price_gwp(gulv_sortering_pick),
                                           load_next_frames(),
                                           show_result(),
-                                          show_result_2()])
+                                          show_result_2(),
+                                          show_result_3()])
 # raise_frame(frame3, frame4)
 fortsett_btn.place(x=260, y=700)
 frame1.grid(row=0, column=0)
@@ -1479,9 +1590,9 @@ tilbake_btn.place(x=260, y=700)
 
 window.mainloop()
 
-df_temp.to_csv('Steg 11.csv', sep=';')
-df_2_temp.to_csv('Steg 12.csv', sep=';')
-df_3_temp.to_csv('Steg 13.csv', sep=';')
+#df_temp2.to_csv('Steg 11.csv', sep=';')
+#df_2_temp2.to_csv('Steg 12.csv', sep=';')
+df_3_temp2.to_csv('Steg 13.csv', sep=';')
 #df_2_temp.to_csv('Steg 2.csv', sep=';')
 #df_2_temp2.to_csv('Steg 3.csv', sep=';')
 #df_2_final.to_csv('Final.csv', sep=';')
