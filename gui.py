@@ -42,6 +42,7 @@ def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytt
                                               '\n- Utfyllbare felt skal bare inneholde tall', master=window)
         print('feil, loads')
 
+
 def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
     global q_ed
     try:
@@ -1738,7 +1739,8 @@ resultat1_btn = tk.Button(master=frame31, text='Rapport', font=('Calibri', 14), 
                                   tykkelse=get_df_value(df_final, "thickness"),
                                   betong=get_df_value(df_final, "concrete_quality"),
                                   armeringstype=get_df_value(df_final, "rebar_type"),
-                                  senteravstand=get_df_value(df_final, "cc"),
+                                  senteravstand_over=get_df_value(df_final, "cc_upper"),
+                                  senteravstand_under=get_df_value(df_final, "cc_lower"),
                                   last=q_ed,
                                   grunnstivhet=get_df_value(df_final, "k"),
                                   radius=get_df_value(df_final, "r"),
@@ -1747,11 +1749,13 @@ resultat1_btn = tk.Button(master=frame31, text='Rapport', font=('Calibri', 14), 
                                   y=get_df_value(df_final, "y"),
                                   l_b=get_df_value(df_final, "l_b"),
                                   sigma_s2=get_df_value(df_final, "sigma_s2"),
-                                  e_s=get_df_value(df_final, "rebar_e_modulus"),
-                                  rebar_size=get_df_value(df_final, "rebar_size"),
+                                  rebar_size_over=get_df_value(df_final, "rebar_size_upper"),
+                                  rebar_size_under=get_df_value(df_final, "rebar_size_lower"),
                                   f_ctm=get_df_value(df_final, "f_ctm"),
                                   a_c=get_df_value(df_final, "a_c"),
-                                  a_s=get_df_value(df_final, "a_s"),
+                                  a_s_upper=get_df_value(df_final, "a_s_upper"),
+                                  a_s_lower=get_df_value(df_final, "a_s_lower"),
+                                  a_s_total=get_df_value(df_final, "a_s_total"),
                                   w=get_df_value(df_final, "w_2"),
                                   f_ck=get_df_value(df_final, "f_ck"),
                                   l_e=get_df_value(df_final, "l_e"),
@@ -1877,7 +1881,8 @@ resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), 
                                   price_sum=get_df_value(df_2_final, 'price_sum'),
                                   gwp_sum=get_df_value(df_2_final, 'gwp_sum'),
                                   gulvklasse=gulvklasse_pick.get(),
-                                  armeringsnavn=get_df_value(df_2_final, 'rebar_name'),
+                                  armeringsnavn_over=get_df_value(df_2_final, 'rebar_name_upper'),
+                                  armeringsnavn_under=get_df_value(df_2_final, 'rebar_name_lower'),
                                   f_ctd=get_df_value(df_2_final, 'f_ctd'),
                                   fastholding=fastholding_pick.get(),
                                   lastplassering=plassering_last_pick.get()

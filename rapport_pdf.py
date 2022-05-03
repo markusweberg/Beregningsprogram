@@ -3,17 +3,17 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 import tkinter.messagebox
 
-def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, senteravstand=0, last=0,
-               grunnstivhet=0, radius=0, reduksjonsfaktor=0, overdekning=0, x=0, y=0, l_b=0, sigma_s2=0, e_s=0,
-               rebar_size=0, f_ctm=0, a_c=0, a_s=0, w=0, f_ck=0, l_e=1, a=1, westergaard_senter=0, westergaard_kant=0,
-               westergaard_hjorne=0, stor_d=0, e_cm=0, m_n=0, m_p=0, meyerhof_senter=0, meyerhof_kant=0,
-               meyerhof_hjorne=0, d_eff=0, z=0, rho=0, dual_point=0,
-               quadruple_point=0, v_rd_2=0, u_1_senter=0, u_1_kant=0, u_1_hjorne=0, v_ed_1_senter=0,
-               v_ed_1_kant=0, v_ed_1_hjorne=0, c_rdc=0, v_min=0, k_ec2=0, v_rd_max=0, v_ed_0_senter=0,
-               v_ed_0_kant=0, v_ed_0_hjorne=0, u_0_senter=0, u_0_kant=0, u_0_hjorne=0, v_2=0, f_cd=0, a_s_min=1,
-               as_per_square_meter=0, concrete_per_square_meter=0, rebar_price_input=0, concrete_price_input=0,
-               rebar_gwp_input=0, concrete_gwp_input=0, price_sum=0, gwp_sum=0, gulvklasse=0, armeringsnavn=0, f_ctd=0,
-               fastholding=0, lastplassering=0):
+
+def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, senteravstand_over=0, senteravstand_under=0,
+               last=0, grunnstivhet=0, radius=0, reduksjonsfaktor=0, overdekning=0, x=0, y=0, l_b=0, sigma_s2=0,
+               rebar_size_over=0, rebar_size_under=0, f_ctm=0, a_c=0, a_s_upper=0, a_s_lower=0, a_s_total=0, w=0, f_ck=0,
+               l_e=1, a=1, westergaard_senter=0, westergaard_kant=0, westergaard_hjorne=0, stor_d=0, e_cm=0, m_n=0, m_p=0,
+               meyerhof_senter=0, meyerhof_kant=0, meyerhof_hjorne=0, d_eff=0, z=0, rho=0, dual_point=0, quadruple_point=0,
+               v_rd_2=0, u_1_senter=0, u_1_kant=0, u_1_hjorne=0, v_ed_1_senter=0, v_ed_1_kant=0, v_ed_1_hjorne=0, c_rdc=0,
+               v_min=0, k_ec2=0, v_rd_max=0, v_ed_0_senter=0, v_ed_0_kant=0, v_ed_0_hjorne=0, u_0_senter=0, u_0_kant=0,
+               u_0_hjorne=0, v_2=0, f_cd=0, a_s_min=1, as_per_square_meter=0, concrete_per_square_meter=0,
+               rebar_price_input=0, concrete_price_input=0, rebar_gwp_input=0, concrete_gwp_input=0, price_sum=0,
+               gwp_sum=0, gulvklasse=0, armeringsnavn_over=0, armeringsnavn_under=0, f_ctd=0, fastholding=0, lastplassering=0):
     try:
         c = canvas.Canvas(tittel, bottomup=0)
 
@@ -21,12 +21,16 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
         linje1.setTextOrigin(20 * mm, 20 * mm)
         linje1.setFont('Helvetica', 12)
 
-        if armeringstype == 'nettarmering enkel' or armeringstype == 'nettarmering dobbel':
-            linje1_name = 'Nettarmeringstype'
-            linje1_name2 = f'{armeringsnavn}'
+        if armeringstype == 'nettarmering':
+            linje1_name = 'Nettarmering over'
+            linje1_name2 = f'{armeringsnavn_over}'
+            linje1_name3 = 'Nettarmering under'
+            linje1_name4 = f'{armeringsnavn_under}'
         else:
             linje1_name = ''
             linje1_name2 = ''
+            linje1_name3 = ''
+            linje1_name4 = ''
 
         if fastholding == 'Fastholdt gulv':
             riss11 = 'w'
@@ -37,13 +41,13 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             riss16 = ''
             riss17 = 'sigma_s2'
             riss21 = '= l_b * sigma_s2 / E_s'
-            riss22 = f'= {round(l_b, 2)} * {round(sigma_s2, 2)} / {e_s}'
+            riss22 = f'= {round(l_b, 2)} * {round(sigma_s2, 2)} / 200000'
             riss23 = ''
             riss24 = '= sigma_s2 * Ø / ( 7.2 * f_ctm )'
-            riss25 = f'= {round(sigma_s2, 2)} * {rebar_size} / ( 7.2 * {f_ctm} )'
+            riss25 = f'= {round(sigma_s2, 2)} * {rebar_size_over} / ( 7.2 * {f_ctm} )'
             riss26 = ''
             riss27 = '= A_c * 0.8 * f_ctm * b / A_s'
-            riss28 = f'= {a_c} * 0.8 * {f_ctm} * {reduksjonsfaktor} / {round(a_s, 2)}'
+            riss28 = f'= {a_c} * 0.8 * {f_ctm} * {reduksjonsfaktor} / {round(a_s_upper, 2)}'
             riss31 = f'= {round(w, 4)} mm'
             riss32 = ''
             riss33 = ''
@@ -52,25 +56,25 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             riss36 = ''
             riss37 = f'= {round(sigma_s2, 2)} N/mm^2'
         else:
-            riss11 = 'For flytende gulv: Kontroll av rissvidde er OK hvis A_s tilfredstiller kravene til gulvklassen.'
+            riss11 = 'For flytende gulv: Kontroll av rissvidde er OK hvis A_s i overkant tilfredstiller kravene til gulvklassen.'
             riss12 = ''
-            riss13 = 'Forhold mellom A_s og A_s,min finnes på side 4 i rapporten.'
+            riss13 = 'Kontroller forholdet mellom A_s,overkant og A_s,min mot gulvklassen iht. NB 15.'
             riss14 = ''
-            riss15 = ''
+            riss15 = 'A_s,overkant / A_s,min'
             riss16 = ''
             riss17 = ''
             riss21 = ''
             riss22 = ''
             riss23 = ''
             riss24 = ''
-            riss25 = ''
+            riss25 = f'  = {round(a_s_upper, 2)} / {round(a_s_min, 2)}'
             riss26 = ''
             riss27 = ''
             riss28 = ''
             riss31 = ''
             riss32 = ''
             riss33 = ''
-            riss34 = ''
+            riss34 = f'= {round(a_s_upper / a_s_min, 2)} '
             riss35 = ''
             riss36 = ''
             riss37 = ''
@@ -84,11 +88,11 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             'Tykkelse:',
             'Betongkvalitet:',
             'Armeringstype',
-            'Armeringsstørrelse',
-            'Senteravstand',
+            'Armering overkant',
+            'Armering underkant',
             'Gulvklasse',
             linje1_name,
-            '',
+            linje1_name3,
             '',
             '',
             'Kontroll i bruksgrensetilstand:',
@@ -154,11 +158,11 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             f'{tykkelse} mm',
             f'{betong}',
             f'{armeringstype}',
-            f'{rebar_size} mm',
-            f'{senteravstand} mm',
+            f'Ø {rebar_size_over} C {senteravstand_over}mm',
+            f'Ø {rebar_size_under} C {senteravstand_under}mm',
             f'{gulvklasse}',
             linje1_name2,
-            '',
+            linje1_name4,
             '',
             '',
             '',
@@ -166,10 +170,10 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '',
             '',
             '= f_ck * t^2 / ( 1.32 * log ( 1.43 * l_e / a ))',
-            f'= {f_ck} * {tykkelse}^2 / ( 1.32 * log ( 1.43 * {round(l_e, 2)} / {round(a, 2)} ))',
+            f'= {f_ck} * {tykkelse}^2 / ( 1.32 * log ( 1.43 * {round(l_e, 1)} / {round(a, 1)} ))',
             '',
             '= f_ck * t^2 / ( 2.34 * log ( 1.23 * l_e / a ))',
-            f'= {f_ck} * {tykkelse}^2 / ( 2.34 * log ( 1.23 * {round(l_e, 2)} / {round(a, 2)} ))',
+            f'= {f_ck} * {tykkelse}^2 / ( 2.34 * log ( 1.23 * {round(l_e, 1)} / {round(a, 1)} ))',
             '',
             '= f_ck * t^2 / ( 3 * ( 1 - 1.23 * ( a / l_e )^0.6 ))',
             f'= {f_ck} * {tykkelse}^2 / ( 3 * ( 1 - 1.23 * ',
@@ -242,7 +246,6 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             f'{overdekning} mm',
             f'{x} mm',
             f'{y} mm',
-            '',
             '',
             '',
             '',
@@ -323,7 +326,13 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             'z',
             '',
             '',
-            'A_s',
+            'A_s,overkant',
+            '',
+            '',
+            'A_s,underkant',
+            '',
+            '',
+            'A_s,total',
             '',
             '',
             '',
@@ -359,33 +368,13 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             quad2 = f'= ( 4pi / ( 1 - {round(a, 2)} / 3 * {round(l_e, 2)} ) + 1.8 * ( {x} + {y} ) / '
             quad21 = f'   ( 1 - {round(a, 2)} / 2 )) * ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} )'
 
-        if armeringstype == 'slakkarmering enkel' or armeringstype == 'nettarmering enkel':
-            linje6_as = '= pi * ( Ø / 2 )^2 * 1000 / cc'
-            linje6_as2 = f'= 3.142 * ( {rebar_size} / 2 )^2 * 1000 / {senteravstand}'
-        elif armeringstype == 'slakkarmering dobbel' or armeringstype == 'nettarmering dobbel':
-            linje6_as = '= pi * ( Ø / 2 )^2 * 1000 / cc * 2'
-            linje6_as2 = f'= 3.142 * ( {rebar_size} / 2 )^2 * 1000 / {senteravstand} * 2'
-        else:
-            linje6_as = ''
-            linje6_as2 = ''
-
-        if armeringstype == 'slakkarmering enkel' or armeringstype == 'nettarmering enkel':
-            linje6_mn = '= f_sd * A_s * z'
-            linje6_mn2 = f'= {round(500 / 1.15, 2)} * {round(a_s, 2)} * {z}'
-        elif armeringstype == 'slakkarmering dobbel' or armeringstype == 'nettarmering dobbel':
-            linje6_mn = '= f_sd * A_s / 2 * z'
-            linje6_mn2 = f'= {round(500 / 1.15, 2)} * {round(a_s, 2)} / 2 * {z}'
-        else:
-            linje6_mn = ''
-            linje6_mn2 = ''
-
-        if armeringstype == 'slakkarmering enkel' or armeringstype == 'nettarmering enkel':
+        if rebar_size_under == 0:
             linje6_mp = '= f_ctd * ( t^2 / 6 )'
             linje6_mp2 = f'= {round(f_ctd, 3)} * ( {tykkelse}^2 / 6 )'
             linje7_mp = f'= {"{:.3e}".format(m_p / 1000000)} kNm'
-        elif armeringstype == 'slakkarmering dobbel' or armeringstype == 'nettarmering dobbel':
-            linje6_mp = '= f_sd * A_s / 2 * z'
-            linje6_mp2 = f'= {round(500 / 1.15, 2)} * {round(a_s, 2)} / 2 * {z}'
+        elif rebar_size_under != 0:
+            linje6_mp = '= f_sd * A_s,underkant * z'
+            linje6_mp2 = f'= {round(500 / 1.15, 2)} * {round(a_s_lower, 2)} / 2 * {z}'
             linje7_mp = f'= {round(m_p / 1000000, 2)} kNm'
         else:
             linje6_mp = ''
@@ -408,20 +397,26 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '= 2 * ( 1 + 4a / l_e ) * M_n',
             f'= 2 * ( 1 + 4 * {round(a, 2)} / {round(l_e, 2)} ) * {"{:.3e}".format(m_n)}',
             '',
-            linje6_mn,
-            linje6_mn2,
+            '= f_sd * A_s,overkant * z',
+            f'= {round(500/1.15, 2)} * {a_s_upper} * {z}',
             '',
             linje6_mp,
             linje6_mp2,
             '',
             '= A_s / ( b * d_eff )',
-            f'= {round(a_s, 2)} / ( 1000 * {d_eff}',
+            f'= {round(a_s_total, 2)} / ( 1000 * {d_eff}',
             '',
             '= 0.6 * t',
             f'= 0.6 * {tykkelse}',
             '',
-            linje6_as,
-            linje6_as2,
+            '= pi * ( Ø_overkant / 2 )^2 * 1000 / cc_overkant',
+            f'= 3.142 * ( {rebar_size_over} / 2 )^2 * 1000 / {senteravstand_over}',
+            '',
+            '= pi * ( Ø_underkant / 2 )^2 * 1000 / cc_underkant',
+            f'= 3.142 * ( {rebar_size_under} / 2 )^2 * 1000 / {senteravstand_under}',
+            '',
+            '= A_s,overkant + A_s,underkant',
+            f'= {round(a_s_upper, 2)} + {round(a_s_lower, 2)}',
             '',
             '',
             '',
@@ -483,7 +478,13 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             f'= {round(z, 2)} mm',
             '',
             '',
-            f'= {round(a_s, 2)} mm^2',
+            f'= {round(a_s_upper, 2)} mm^2',
+            '',
+            '',
+            f'= {round(a_s_lower, 2)} mm^2',
+            '',
+            '',
+            f'= {round(a_s_total, 2)} mm^2',
             '',
             '',
             '',
@@ -558,12 +559,12 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
         linje10.setTextOrigin(62.5 * mm, 20 * mm)
         linje10.setFont('Helvetica', 12)
 
-        if armeringstype == 'slakkarmering enkel' or armeringstype == 'nettarmering enkel':
+        if rebar_size_under == 0:
             d_eff_linje = '= c_nom + Ø'
-            d_eff_linje2 = f'= {overdekning} + {rebar_size}'
-        elif armeringstype == 'slakkarmering dobbel' or armeringstype == 'nettarmering dobbel':
+            d_eff_linje2 = f'= {overdekning} + {rebar_size_over}'
+        elif rebar_size_under != 0:
             d_eff_linje = '= t - c_nom - Ø'
-            d_eff_linje2 = f'= {tykkelse} - {overdekning} - {rebar_size}'
+            d_eff_linje2 = f'= {tykkelse} - {overdekning} - {rebar_size_under}'
         else:
             d_eff_linje = ''
             d_eff_linje2 = ''
@@ -717,7 +718,7 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             'A_s,min',
             '',
             '',
-            'A_s / A_s,min',
+            'A_s,total / A_s,min',
             '',
             '',
             '',
@@ -773,7 +774,7 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '= 0.26 * f_ctm / f_yk * b * t',
             f'= 0.26 * {f_ctm} / 500 * 1000 * {tykkelse}',
             '',
-            f'= {round(a_s, 2)} / {round(a_s_min, 2)}',
+            f'= {round(a_s_total, 2)} / {round(a_s_min, 2)}',
             '',
             '',
             '',
@@ -833,7 +834,7 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '',
             f'= {round(a_s_min, 2)} mm^2',
             '',
-            f'= {round(a_s / a_s_min, 2)}',
+            f'= {round(a_s_total / a_s_min, 2)}',
             '',
             '',
             '',
