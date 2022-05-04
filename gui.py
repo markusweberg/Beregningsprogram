@@ -1159,6 +1159,20 @@ def get_df_value(dataf, arg):
         return value
 
 
+def alternatives():
+    try:
+        df_final_head = df_final.head(n=100)
+        df_final_head.to_csv('Alternativer\\Slakkarmering, alternativer.csv', sep=';')
+        df_2_final_head = df_2_final.head(n=100)
+        df_2_final_head.to_csv('Alternativer\\Nettarmering, alternativer.csv', sep=';')
+        df_3_final_head = df_3_final.head(n=100)
+        df_3_final_head.to_csv('Alternativer\\Slakk- + fiberarmering, alternativer.csv', sep=';')
+        df_4_final_head = df_4_final.head(n=100)
+        df_4_final_head.to_csv('Alternativer\\Nett- + fiberarmering, alternativer.csv', sep=';')
+    except:
+        tk.messagebox.showinfo('Feilmelding', 'Vennligst lukk åpne excel ark!', master=window)
+
+
 def raise_frame(f1, f2):
     f1.tkraise()
     f2.tkraise()
@@ -1449,10 +1463,10 @@ nettarmering_gwp_entry = tk.Entry(master=frame2, font=('Calibri', 12), textvaria
 nettarmering_gwp_entry.insert(0, '0.4')
 staalfiber_pris_pick = tk.StringVar(frame2)
 staalfiber_pris_entry = tk.Entry(master=frame2, font=('Calibri', 12), textvariable=staalfiber_pris_pick)
-staalfiber_pris_entry.insert(0, '700')
+staalfiber_pris_entry.insert(0, '100')
 staalfiber_gwp_pick = tk.StringVar(frame2)
 staalfiber_gwp_entry = tk.Entry(master=frame2, font=('Calibri', 12), textvariable=staalfiber_gwp_pick)
-staalfiber_gwp_entry.insert(0, '0.02')
+staalfiber_gwp_entry.insert(0, '0.1')
 
 # Creating frames for frame 3
 frame31 = tk.Frame(master=frame3, bd=5, relief=tk.RAISED)
@@ -1807,7 +1821,7 @@ frame4.grid(row=0, column=1, sticky='news')
 resultat1_btn = tk.Button(master=frame31, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
                           command=lambda: [
                               create_pdf(
-                                  tittel='Rapport for slakkarmert gulv på grunn.pdf',
+                                  tittel='Rapporter\\Rapport for slakkarmert gulv på grunn.pdf',
                                   tykkelse=get_df_value(df_final, "thickness"),
                                   betong=get_df_value(df_final, "concrete_quality"),
                                   armeringstype=get_df_value(df_final, "rebar_type"),
@@ -1885,7 +1899,7 @@ resultat1_btn = tk.Button(master=frame31, text='Rapport', font=('Calibri', 14), 
 resultat2_btn = tk.Button(master=frame32, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
                           command=lambda: [
                               create_pdf_fiber(
-                                  tittel='Rapport for slakk- + fiberarmert gulv på grunn.pdf',
+                                  tittel='Rapporter\\Rapport for slakk- + fiberarmert gulv på grunn.pdf',
                                   tykkelse=get_df_value(df_3_final, "thickness"),
                                   betong=get_df_value(df_3_final, "concrete_quality"),
                                   armeringstype=get_df_value(df_3_final, "rebar_type"),
@@ -1970,7 +1984,7 @@ resultat2_btn = tk.Button(master=frame32, text='Rapport', font=('Calibri', 14), 
 resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
                           command=lambda: [
                               create_pdf(
-                                  tittel='Rapport for nettarmert gulv på grunn.pdf',
+                                  tittel='Rapporter\\Rapport for nettarmert gulv på grunn.pdf',
                                   tykkelse=get_df_value(df_2_final, "thickness"),
                                   betong=get_df_value(df_2_final, "concrete_quality"),
                                   armeringstype=get_df_value(df_2_final, "rebar_type"),
@@ -2050,7 +2064,7 @@ resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), 
 resultat4_btn = tk.Button(master=frame34, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
                           command=lambda: [
                               create_pdf_fiber(
-                                  tittel='Rapport for nett- + fiberarmert gulv på grunn.pdf',
+                                  tittel='Rapporter\\Rapport for nett- + fiberarmert gulv på grunn.pdf',
                                   tykkelse=get_df_value(df_4_final, "thickness"),
                                   betong=get_df_value(df_4_final, "concrete_quality"),
                                   armeringstype=get_df_value(df_4_final, "rebar_type"),
@@ -2138,12 +2152,15 @@ resultat5_btn = tk.Button(master=frame41, text='Rapport', font=('Calibri', 14), 
 tilbake_btn = tk.Button(master=frame4, text='Tilbake  ', font=('Calibri', 14), padx=25, pady=8,
                         command=lambda: [raise_frame(frame1, frame2), clear_frames1(), clear_frames2(),
                                          clear_frames3(), clear_frames4()])
+alternativer_btn = tk.Button(master=frame4, text='Alternativer', font=('Calibri', 14), padx=25, pady=8,
+                             command=lambda: [alternatives()])
 resultat1_btn.grid(row=10, columnspan=2)
 resultat2_btn.grid(row=10, columnspan=2)
 resultat3_btn.grid(row=10, columnspan=2)
 resultat4_btn.grid(row=10, columnspan=2)
 resultat5_btn.grid(row=10, columnspan=2)
 tilbake_btn.place(x=260, y=700)
+alternativer_btn.place(x=400, y=700)
 
 window.mainloop()
 

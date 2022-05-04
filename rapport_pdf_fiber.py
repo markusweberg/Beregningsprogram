@@ -939,7 +939,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
         c.save()
         os.startfile(tittel)
     except PermissionError:
-        tkinter.messagebox.showinfo('Feilmelding', 'Vennligst lukk pdf dokumenter som er åpne!')
+        tkinter.messagebox.showinfo('Feilmelding', 'Vennligst lukk åpne pdf dokumenter!')
     except ZeroDivisionError:
         pass
 
