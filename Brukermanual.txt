@@ -1,0 +1,43 @@
+Beregningsprogram for gulv på grunn, utviklet av: B22B02, bacheloroppgave ved Hiof.
+
+Brukermanual:
+
+Programmet er i stor grad basert på NB 15 (Norsk Betongforenings publikasjon nr. 15). Dette kommer frem ved at det første valget du får er å velge gulvklasse. Det er anbefalt å bruke gulvklassene fra publikasjonen ved dimensjonering av flytende gulv. 
+
+Regler for utfylling av ønskede egenskaper er som følgende:
+
+Enten skal gulvklasse, slakkarmeringsdiameter, armeringsnett, fiber restfasthetsklasse, duktilitet og forhold mellom gulv og grunn fylles ut eller (hvis du ikke ønsker å benytte gulvklasser) så skal alle egenskaper utenom gulvklasse fylles inn. 
+
+Grunnen for dette er at gulvklassene setter krav til betongkvalitet, riss og tykkelse, derfor er det ikke nødvendig å fylle ut disse ved bruk av gulvklasser. 
+
+Merk at armeringsegenskaper må fylles ut uavhengig av gulvklasser. Dette kan gjøres hvis du ønsker å benytte en spesifik armeringtype. Et eksempel kan være at entreprenøren har mange K402 armeringnett på lager og ønsker å bruke opp disse. Legg merke til at dette låser armeringstype i overkant og underkant av tverrsnittet, derfor er det anbefalt å velge "ingen krav" i disse boksene. Da vil programmet velge optimal størrelse i overkant og underkant.
+
+Under forhold mellom gulv og grunn kan du velge mellom flytende- og fastholdt gulv. Forskjellen mellom disse valgene er at rissvidden blir utregnet for fastholdt gulv og ikke for flytende gulv. Ikke tolk dette som at programmet ikke har kontroll på rissvidder ved flytende gulv, tvert imot! NB15 anbefaler å benytte gulvklasser for å ha kontroll på riss i slike gulv. Du velger krav til rissvidder fra gulvklassene, så vil programmet velge gulv med stor nok armeringsmengde i overkant av tverrsnittet for å ha kontroll på riss. Det er også krav til friksjonskoeffisient mellom gulv og grunn når denne metoden benyttes, henviser dermed til publikasjonen for detaljer rundt dette.
+
+Videre skal dimensjonerende last fylles ut. Fyll ut bare den dimensjonerende lasten. Gaffeltruck-klasser, billast- og nyttelast kategorier er laster som er hentet fra Eurokode 1 og består av en punktlast og en lastflate. Lastflatens radius er derfor ikke nødvendig å fylle ut hvis kategoriene fra eurokoden benyttes. 
+
+"Last plassering" må fylles ut sammen med en dimensjonerende last. Programmet kontrollerer kapasitet i senter, kant og hjørne av gulvet. Ditt valg ved "last plassering" vil bestemme hvilken av disse kapasitetene som gulvene blir filtrert etter. 
+
+Hvis du ønsker å benytte egendefinert last så må du fylle ut lasttilfelle for punktlasten. Vanligvis bruker du "single point" for en enkel punktlast, men har du store punktlaster nærme hverandre så kan "dual point" og "quadruple point" benyttes. Navnene er selvforklarende, men for nærmere forklaring henviser vi til "Technical Report 34" side 34. 
+
+Reduksjonsfaktor for armeringsspenning kan fylles ut hvis du har valgt fastholdt gulv. Denne faktoren blir ganget med armeringsspenning i kalkulasjonen og kan benyttes hvis du har et delvis fastholdt gulv.
+
+Nominell overdekning må fylles ut. Merk at nominell overdekning er minimum overdekning + avvik.
+
+Grunnforhold kan velges fra listen. Listen er der som en enkelt måte å bestemme grunnstivheten uten å blande inn k-verdier. Listen bestemmer k-verdi utifra tabell 3.3 i NB15. Hvis k-verdi er kjent kan denne fylles inn under "Egendefinert k-verdi".
+
+Videre kan priser og gwp fylles inn. Det ligger verdier klare når programmet åpnes, men det er anbefalt å fylle inn riktig verdier fra din egen leverandør. For betong blir verdier lagt inn for hver enkelt betongkvalitet mens for armering blir det lagt inn pris og gwp per kg armering. 
+
+Neste og siste valg er hvilken parameter som gulvene skal sorteres etter. Her kan du velge pris eller gwp. De henger naturligvis litt sammen men avhengig av input så kan du se forskjeller på resultatet.
+
+Når alt er klart trykker du på fortsett og kalkulasjonen starter. Merk at denne prosessen kan ta noen sekunder og programmet kan få status som "svarer ikke". Dette går helt fint, la programmet jobbe seg ferdig.
+
+Neste side viser det optimale gulvet basert på din input. Vi har valgt å dele opp armeringstypene så du enkelt kan se forskjellene i pris og gwp mellom disse. 
+
+Videre kan du trykke på "Rapport" og en pdf vil åpnes som viser alle utregninger for det gitte gulvet. Rapporten går gjennom alle kontroller i detalj og viser mellomutregninger. Merk at rapporten også blir lagret i mappen sammen med programmet under "Rapporter" hvis du ønsker å ta vare på filen.
+
+Videre kan du velge å gå tilbake eller se flere alternativer. "Tilbake"-knappen tar deg tilbake til forsiden og du kan repetere prosessen for et annet gulv. "Alternativer" kan trykkes hvis du ønsker å se flere gulv som tilfredsstiller kravene. Etter å ha trykket på knappen vil du finne 4 *.csv filer i programmets mappe under "Alternativer". Disse filene inneholder en tabell med de øverste 100 gulvene sortert etter pris eller gwp, for hver armeringstype. Filene kan åpnes i excel
+
+Hvis feil blir funnet i utregninger eller du har eventuelle tilbakemeldinger på programmet så er det bare å ta kontakt på epost: markus.weberg@gmail.com
+
+Takk for at du bruker programmet vårt!
