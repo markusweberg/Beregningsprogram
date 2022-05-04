@@ -4,6 +4,7 @@ import tkinter.messagebox
 import pandas as pd
 import numpy as np
 from rapport_pdf import create_pdf
+from rapport_pdf_fiber import create_pdf_fiber
 
 
 def velkomst():
@@ -21,18 +22,18 @@ def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytt
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df['r'] = (200 / np.pi**(1 / 2))
+            df['r'] = (200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df['r'] = (100 / np.pi**(1 / 2))
+                df['r'] = (100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df['r'] = (200 / np.pi**(1 / 2))
+                df['r'] = (200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df['r'] = (50 / np.pi**(1 / 2))
+            df['r'] = (50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df['r'] = float(rd.get())
@@ -50,18 +51,18 @@ def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df_2['r'] = (200 / np.pi**(1 / 2))
+            df_2['r'] = (200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df_2['r'] = (100 / np.pi**(1 / 2))
+                df_2['r'] = (100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df_2['r'] = (200 / np.pi**(1 / 2))
+                df_2['r'] = (200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df_2['r'] = (50 / np.pi**(1 / 2))
+            df_2['r'] = (50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df_2['r'] = float(rd.get())
@@ -76,18 +77,18 @@ def loads_3(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df_3['r'] = (200 / np.pi**(1 / 2))
+            df_3['r'] = (200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df_3['r'] = (100 / np.pi**(1 / 2))
+                df_3['r'] = (100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df_3['r'] = (200 / np.pi**(1 / 2))
+                df_3['r'] = (200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df_3['r'] = (50 / np.pi**(1 / 2))
+            df_3['r'] = (50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df_3['r'] = float(rd.get())
@@ -102,18 +103,18 @@ def loads_4(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df_4['r'] = (200 / np.pi**(1 / 2))
+            df_4['r'] = (200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df_4['r'] = (100 / np.pi**(1 / 2))
+                df_4['r'] = (100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df_4['r'] = (200 / np.pi**(1 / 2))
+                df_4['r'] = (200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df_4['r'] = (50 / np.pi**(1 / 2))
+            df_4['r'] = (50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df_4['r'] = float(rd.get())
@@ -154,51 +155,53 @@ def input_calc(concrete_price_m40, concrete_price_m45, concrete_price_m60, concr
         df['concrete_gwp'] = df['concrete_gwp_input'] * df['concrete_per_square_meter']
         df['rebar_gwp'] = df['rebar_gwp_input'] * df['rebar_per_square_meter_sum']
         df['gwp_sum'] = df['concrete_gwp'] + df['rebar_gwp']
-        df.loc[df['r'] < df['r_limit'], 'a'] = (1.6*df['r']**2+df['thickness']**2)**(1 / 2) - (0.675*df['thickness'])
+        df.loc[df['r'] < df['r_limit'], 'a'] = (1.6 * df['r'] ** 2 + df['thickness'] ** 2) ** (1 / 2) - (
+                    0.675 * df['thickness'])
         df.loc[df['r'] >= df['r_limit'], 'a'] = df['r']
-        df.loc[df['reduction_factor_sigma_s2'] != 1, 'w_2'] = df['w'] * (df['reduction_factor_sigma_s2'])**2
+        df.loc[df['reduction_factor_sigma_s2'] != 1, 'w_2'] = df['w'] * (df['reduction_factor_sigma_s2']) ** 2
         df.loc[df['reduction_factor_sigma_s2'] == 1, 'w_2'] = df['w']
-        df['l_e'] = (df['capital_d'] / df['k'])**(1 / 4)
-        df['westergaard_center'] = df['f_ck'] * df['thickness']**2 / (1.32 * np.log10(1.43 * df['l_e'] / df['a']))
-        df['westergaard_edge'] = df['f_ck'] * df['thickness']**2 / (2.34 * np.log10(1.23 * df['l_e'] / df['a']))
-        df['westergaard_corner'] = df['f_ck'] * df['thickness']**2 / (3 * (1 - (1.23 * (df['a'] / df['l_e'])**0.6)))
+        df['l_e'] = (df['capital_d'] / df['k']) ** (1 / 4)
+        df['westergaard_center'] = df['f_ck'] * df['thickness'] ** 2 / (1.32 * np.log10(1.43 * df['l_e'] / df['a']))
+        df['westergaard_edge'] = df['f_ck'] * df['thickness'] ** 2 / (2.34 * np.log10(1.23 * df['l_e'] / df['a']))
+        df['westergaard_corner'] = df['f_ck'] * df['thickness'] ** 2 / (3 * (1 - (1.23 * (df['a'] / df['l_e']) ** 0.6)))
         df.loc[df['rebar_size_lower'] == 0, 'd_eff'] = df['c_nom'] + df['rebar_size_upper']
         df.loc[df['rebar_size_lower'] != 0, 'd_eff'] = df['thickness'] - df['c_nom'] - df['rebar_size_lower']
         df['ro_l'] = df['a_s_total'] / (df['d_eff'] * 1000)
-        df['k_ec2'] = 1 + (200 / df['d_eff'])**(1 / 2)
+        df['k_ec2'] = 1 + (200 / df['d_eff']) ** (1 / 2)
         df.loc[df['k_ec2'] > 2, 'k_ec2'] = 2
         df['u_1_center'] = 2 * np.pi * (df['r'] + 2 * df['d_eff'])
         df['u_1_edge'] = np.pi * (df['r'] + 2 * df['d_eff'])
         df['u_1_corner'] = np.pi * (df['r'] + 2 * df['d_eff']) / 2
         df['c_rdc'] = 0.1
-        df['v_rd'] = df['c_rdc'] * df['k_ec2'] * (100 * df['ro_l'] * df['f_ck'])**(1 / 3)
-        df['v_min'] = 0.035 * df['k_ec2']**(3 / 2) * df['f_ck']**(1 / 2)
+        df['v_rd'] = df['c_rdc'] * df['k_ec2'] * (100 * df['ro_l'] * df['f_ck']) ** (1 / 3)
+        df['v_min'] = 0.035 * df['k_ec2'] ** (3 / 2) * df['f_ck'] ** (1 / 2)
         df.loc[df['v_rd'] > df['v_min'], 'v_rd_2'] = df['v_rd']
         df.loc[df['v_rd'] <= df['v_min'], 'v_rd_2'] = df['v_min']
-        df['v_ed_1_center'] = df['v_rd_2'] * df['u_1_center'] *df['d_eff']
-        df['v_ed_1_edge'] = df['v_rd_2'] * df['u_1_edge'] *df['d_eff']
-        df['v_ed_1_corner'] = df['v_rd_2'] * df['u_1_corner'] *df['d_eff']
+        df['v_ed_1_center'] = df['v_rd_2'] * df['u_1_center'] * df['d_eff']
+        df['v_ed_1_edge'] = df['v_rd_2'] * df['u_1_edge'] * df['d_eff']
+        df['v_ed_1_corner'] = df['v_rd_2'] * df['u_1_corner'] * df['d_eff']
         df['u_0_center'] = 2 * np.pi * df['r']
         df['u_0_edge'] = np.pi * df['r']
         df['u_0_corner'] = np.pi * df['r'] / 2
         df['v_ed_0_center'] = df['v_rd_max'] * df['u_0_center'] * df['d_eff']
         df['v_ed_0_edge'] = df['v_rd_max'] * df['u_0_edge'] * df['d_eff']
         df['v_ed_0_corner'] = df['v_rd_max'] * df['u_0_corner'] * df['d_eff']
-        df['meyerhof_center'] = 6 * (1 + 2 * df['a'] / df['l_e']) * (df['m_p'] / 10**3 + df['m_n'] / 10**3)
-        df['meyerhof_edge'] = 3.5 * (1 + 3 * df['a'] / df['l_e']) * (df['m_p'] / 10**3 + df['m_n'] / 10**3)
-        df['meyerhof_corner'] = 2 * (1 + 4 * df['a'] / df['l_e']) * df['m_n'] / 10**3
+        df['meyerhof_center'] = 6 * (1 + 2 * df['a'] / df['l_e']) * (df['m_p'] / 10 ** 3 + df['m_n'] / 10 ** 3)
+        df['meyerhof_edge'] = 3.5 * (1 + 3 * df['a'] / df['l_e']) * (df['m_p'] / 10 ** 3 + df['m_n'] / 10 ** 3)
+        df['meyerhof_corner'] = 2 * (1 + 4 * df['a'] / df['l_e']) * df['m_n'] / 10 ** 3
         df['a_l_e_limit'] = df['a'] / df['l_e']
         df.loc[df['a_l_e_limit'] < 0.2, 'dual_point_load'] = (2 * np.pi + 1.8 * df['x'] / df['l_e']) * \
-                                                             (df['m_p'] / 10**3 + df['m_n'] / 10**3)
-        df.loc[df['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df['a'] / 3 * df['l_e'])) +
-                                                              (1.8 * df['x'] / (df['l_e'] - df['a'] / 2))) * \
-                                                              (df['m_p'] / 10**3 + df['m_n'] / 10**3)
+                                                             (df['m_p'] / 10 ** 3 + df['m_n'] / 10 ** 3)
+        df.loc[df['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df['a'] / (3 * df['l_e']))) +
+                                                               (1.8 * df['x'] / (df['l_e'] - df['a'] / 2))) * \
+                                                              (df['m_p'] / 10 ** 3 + df['m_n'] / 10 ** 3)
         df.loc[df['a_l_e_limit'] < 0.2, 'quadruple_point_load'] = (2 * np.pi + 1.8 * (df['x'] + df['y']) /
-                                                                   df['l_e']) * (df['m_p'] / 10**3 + df['m_n'] / 10**3)
-        df.loc[df['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (1 - df['a'] / 3 * df['l_e'])) +
+                                                                   df['l_e']) * (
+                                                                              df['m_p'] / 10 ** 3 + df['m_n'] / 10 ** 3)
+        df.loc[df['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (1 - df['a'] / (3 * df['l_e']))) +
                                                                     (1.8 * (df['x'] + df['y']) /
                                                                      (df['l_e'] - df['a'] / 2))) * \
-                                                                      (df['m_p'] / 10**3 + df['m_n'] / 10**3)
+                                                                   (df['m_p'] / 10 ** 3 + df['m_n'] / 10 ** 3)
     except _tkinter.TclError:
         tk.messagebox.showinfo('Feilmelding', '- Fyll inn alle felt \n- Bruk punktum som desimalskille'
                                               '\n- Utfyllbare felt skal bare inneholde tall', master=window)
@@ -213,8 +216,8 @@ def input_calc(concrete_price_m40, concrete_price_m45, concrete_price_m60, concr
 
 
 def input_calc_2(concrete_price_m40, concrete_price_m45, concrete_price_m60, concrete_gwp_m40,
-               concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
-               x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness):
+                 concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
+                 x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness):
     try:
         # User input
         df_2.loc[df_2['concrete_quality'] == 'B45 M40', 'concrete_price_input'] = float(concrete_price_m40.get())
@@ -244,58 +247,66 @@ def input_calc_2(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
         df_2['concrete_gwp'] = df_2['concrete_gwp_input'] * df_2['concrete_per_square_meter']
         df_2['rebar_gwp'] = df_2['rebar_gwp_input'] * df_2['rebar_per_square_meter_sum']
         df_2['gwp_sum'] = df_2['concrete_gwp'] + df_2['rebar_gwp']
-        df_2.loc[df_2['r'] < df_2['r_limit'], 'a'] = (1.6*df_2['r']**2+df_2['thickness']**2)**(1 / 2) - (0.675*df_2['thickness'])
+        df_2.loc[df_2['r'] < df_2['r_limit'], 'a'] = (1.6 * df_2['r'] ** 2 + df_2['thickness'] ** 2) ** (1 / 2) - (
+                    0.675 * df_2['thickness'])
         df_2.loc[df_2['r'] >= df_2['r_limit'], 'a'] = df_2['r']
-        df_2.loc[df_2['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_2['w'] * (df_2['reduction_factor_sigma_s2'])**2
+        df_2.loc[df_2['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_2['w'] * (df_2['reduction_factor_sigma_s2']) ** 2
         df_2.loc[df_2['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_2['w']
-        df_2['l_e'] = (df_2['capital_d'] / df_2['k'])**(1 / 4)
-        df_2['westergaard_center'] = df_2['f_ck'] * df_2['thickness']**2 / (1.32 * np.log10(1.43 * df_2['l_e'] / df_2['a']))
-        df_2['westergaard_edge'] = df_2['f_ck'] * df_2['thickness']**2 / (2.34 * np.log10(1.23 * df_2['l_e'] / df_2['a']))
-        df_2['westergaard_corner'] = df_2['f_ck'] * df_2['thickness']**2 / (3 * (1 - (1.23 * (df_2['a'] / df_2['l_e'])**0.6)))
+        df_2['l_e'] = (df_2['capital_d'] / df_2['k']) ** (1 / 4)
+        df_2['westergaard_center'] = df_2['f_ck'] * df_2['thickness'] ** 2 / (
+                    1.32 * np.log10(1.43 * df_2['l_e'] / df_2['a']))
+        df_2['westergaard_edge'] = df_2['f_ck'] * df_2['thickness'] ** 2 / (
+                    2.34 * np.log10(1.23 * df_2['l_e'] / df_2['a']))
+        df_2['westergaard_corner'] = df_2['f_ck'] * df_2['thickness'] ** 2 / (
+                    3 * (1 - (1.23 * (df_2['a'] / df_2['l_e']) ** 0.6)))
         df_2.loc[df_2['rebar_size_lower'] == 0, 'd_eff'] = df_2['c_nom'] + df_2['rebar_size_upper']
         df_2.loc[df_2['rebar_size_lower'] != 0, 'd_eff'] = df_2['thickness'] - df_2['c_nom'] - df_2['rebar_size_lower']
         df_2['ro_l'] = df_2['a_s_total'] / (df_2['d_eff'] * 1000)
-        df_2['k_ec2'] = 1 + (200 / df_2['d_eff'])**(1 / 2)
+        df_2['k_ec2'] = 1 + (200 / df_2['d_eff']) ** (1 / 2)
         df_2.loc[df_2['k_ec2'] > 2, 'k_ec2'] = 2
         df_2['u_1_center'] = 2 * np.pi * (df_2['r'] + 2 * df_2['d_eff'])
         df_2['u_1_edge'] = np.pi * (df_2['r'] + 2 * df_2['d_eff'])
         df_2['u_1_corner'] = np.pi * (df_2['r'] + 2 * df_2['d_eff']) / 2
         df_2['c_rdc'] = 0.1
-        df_2['v_rd'] = df_2['c_rdc'] * df_2['k_ec2'] * (100 * df_2['ro_l'] * df_2['f_ck'])**(1 / 3)
-        df_2['v_min'] = 0.035 * df_2['k_ec2']**(3 / 2) * df_2['f_ck']**(1 / 2)
+        df_2['v_rd'] = df_2['c_rdc'] * df_2['k_ec2'] * (100 * df_2['ro_l'] * df_2['f_ck']) ** (1 / 3)
+        df_2['v_min'] = 0.035 * df_2['k_ec2'] ** (3 / 2) * df_2['f_ck'] ** (1 / 2)
         df_2.loc[df_2['v_rd'] > df_2['v_min'], 'v_rd_2'] = df_2['v_rd']
         df_2.loc[df_2['v_rd'] <= df_2['v_min'], 'v_rd_2'] = df_2['v_min']
-        df_2['v_ed_1_center'] = df_2['v_rd_2'] * df_2['u_1_center'] *df_2['d_eff']
-        df_2['v_ed_1_edge'] = df_2['v_rd_2'] * df_2['u_1_edge'] *df_2['d_eff']
-        df_2['v_ed_1_corner'] = df_2['v_rd_2'] * df_2['u_1_corner'] *df_2['d_eff']
+        df_2['v_ed_1_center'] = df_2['v_rd_2'] * df_2['u_1_center'] * df_2['d_eff']
+        df_2['v_ed_1_edge'] = df_2['v_rd_2'] * df_2['u_1_edge'] * df_2['d_eff']
+        df_2['v_ed_1_corner'] = df_2['v_rd_2'] * df_2['u_1_corner'] * df_2['d_eff']
         df_2['u_0_center'] = 2 * np.pi * df_2['r']
         df_2['u_0_edge'] = np.pi * df_2['r']
         df_2['u_0_corner'] = np.pi * df_2['r'] / 2
         df_2['v_ed_0_center'] = df_2['v_rd_max'] * df_2['u_0_center'] * df_2['d_eff']
         df_2['v_ed_0_edge'] = df_2['v_rd_max'] * df_2['u_0_edge'] * df_2['d_eff']
         df_2['v_ed_0_corner'] = df_2['v_rd_max'] * df_2['u_0_corner'] * df_2['d_eff']
-        df_2['meyerhof_center'] = 6 * (1 + 2 * df_2['a'] / df_2['l_e']) * (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
-        df_2['meyerhof_edge'] = 3.5 * (1 + 3 * df_2['a'] / df_2['l_e']) * (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
-        df_2['meyerhof_corner'] = 2 * (1 + 4 * df_2['a'] / df_2['l_e']) * df_2['m_n'] / 10**3
+        df_2['meyerhof_center'] = 6 * (1 + 2 * df_2['a'] / df_2['l_e']) * (
+                    df_2['m_p'] / 10 ** 3 + df_2['m_n'] / 10 ** 3)
+        df_2['meyerhof_edge'] = 3.5 * (1 + 3 * df_2['a'] / df_2['l_e']) * (
+                    df_2['m_p'] / 10 ** 3 + df_2['m_n'] / 10 ** 3)
+        df_2['meyerhof_corner'] = 2 * (1 + 4 * df_2['a'] / df_2['l_e']) * df_2['m_n'] / 10 ** 3
         df_2['a_l_e_limit'] = df_2['a'] / df_2['l_e']
         df_2.loc[df_2['a_l_e_limit'] < 0.2, 'dual_point_load'] = (2 * np.pi + 1.8 * df_2['x'] / df_2['l_e']) * \
-                                                             (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
-        df_2.loc[df_2['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_2['a'] / 3 * df_2['l_e'])) +
-                                                              (1.8 * df_2['x'] / (df_2['l_e'] - df_2['a'] / 2))) * \
-                                                              (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
+                                                                 (df_2['m_p'] / 10 ** 3 + df_2['m_n'] / 10 ** 3)
+        df_2.loc[df_2['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_2['a'] / (3 * df_2['l_e']))) +
+                                                                   (1.8 * df_2['x'] / (df_2['l_e'] - df_2['a'] / 2))) * \
+                                                                  (df_2['m_p'] / 10 ** 3 + df_2['m_n'] / 10 ** 3)
         df_2.loc[df_2['a_l_e_limit'] < 0.2, 'quadruple_point_load'] = (2 * np.pi + 1.8 * (df_2['x'] + df_2['y']) /
-                                                                   df_2['l_e']) * (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
-        df_2.loc[df_2['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (1 - df_2['a'] / 3 * df_2['l_e'])) +
-                                                                    (1.8 * (df_2['x'] + df_2['y']) /
-                                                                     (df_2['l_e'] - df_2['a'] / 2))) * \
-                                                                      (df_2['m_p'] / 10**3 + df_2['m_n'] / 10**3)
+                                                                       df_2['l_e']) * (df_2['m_p'] / 10 ** 3 + df_2[
+            'm_n'] / 10 ** 3)
+        df_2.loc[df_2['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (
+                    1 - df_2['a'] / (3 * df_2['l_e']))) +
+                                                                        (1.8 * (df_2['x'] + df_2['y']) /
+                                                                         (df_2['l_e'] - df_2['a'] / 2))) * \
+                                                                       (df_2['m_p'] / 10 ** 3 + df_2['m_n'] / 10 ** 3)
     except:
         print('feil, input2')
 
 
 def input_calc_3(concrete_price_m40, concrete_price_m45, concrete_price_m60, concrete_gwp_m40,
-               concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
-               x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness, fiber_price, fiber_gwp):
+                 concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
+                 x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness, fiber_price, fiber_gwp):
     try:
         # User input
         df_3.loc[df_3['concrete_quality'] == 'B45 M40', 'concrete_price_input'] = float(concrete_price_m40.get())
@@ -329,65 +340,72 @@ def input_calc_3(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
         df_3['rebar_gwp'] = df_3['rebar_gwp_input'] * df_3['rebar_per_square_meter_sum']
         df_3['fiber_gwp'] = df_3['fiber_gwp_input'] * df_3['fiber_per_square_meter']
         df_3['gwp_sum'] = df_3['concrete_gwp'] + df_3['rebar_gwp'] + df_3['fiber_gwp']
-        df_3.loc[df_3['r'] < df_3['r_limit'], 'a'] = (1.6*df_3['r']**2+df_3['thickness']**2)**(1 / 2) - (0.675*df_3['thickness'])
+        df_3.loc[df_3['r'] < df_3['r_limit'], 'a'] = (1.6 * df_3['r'] ** 2 + df_3['thickness'] ** 2) ** (1 / 2) - (
+                    0.675 * df_3['thickness'])
         df_3.loc[df_3['r'] >= df_3['r_limit'], 'a'] = df_3['r']
-        df_3.loc[df_3['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_3['w'] * (df_3['reduction_factor_sigma_s2'])**2
+        df_3.loc[df_3['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_3['w'] * (df_3['reduction_factor_sigma_s2']) ** 2
         df_3.loc[df_3['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_3['w']
-        df_3['l_e'] = (df_3['capital_d'] / df_3['k'])**(1 / 4)
-        df_3['westergaard_center'] = df_3['f_ck'] * df_3['thickness']**2 / (1.32 * np.log10(1.43 * df_3['l_e'] / df_3['a']))
-        df_3['westergaard_edge'] = df_3['f_ck'] * df_3['thickness']**2 / (2.34 * np.log10(1.23 * df_3['l_e'] / df_3['a']))
-        df_3['westergaard_corner'] = df_3['f_ck'] * df_3['thickness']**2 / (3 * (1 - (1.23 * (df_3['a'] / df_3['l_e'])**0.6)))
+        df_3['l_e'] = (df_3['capital_d'] / df_3['k']) ** (1 / 4)
+        df_3['westergaard_center'] = df_3['f_ck'] * df_3['thickness'] ** 2 / (
+                    1.32 * np.log10(1.43 * df_3['l_e'] / df_3['a']))
+        df_3['westergaard_edge'] = df_3['f_ck'] * df_3['thickness'] ** 2 / (
+                    2.34 * np.log10(1.23 * df_3['l_e'] / df_3['a']))
+        df_3['westergaard_corner'] = df_3['f_ck'] * df_3['thickness'] ** 2 / (
+                    3 * (1 - (1.23 * (df_3['a'] / df_3['l_e']) ** 0.6)))
         df_3.loc[df_3['rebar_size_lower'] == 0, 'd_eff'] = df_3['c_nom'] + df_3['rebar_size_upper']
         df_3.loc[df_3['rebar_size_lower'] != 0, 'd_eff'] = df_3['thickness'] - df_3['c_nom'] - df_3['rebar_size_lower']
         df_3['ro_l'] = df_3['a_s_total'] / (df_3['d_eff'] * 1000)
-        df_3['k_ec2'] = 1 + (200 / df_3['d_eff'])**(1 / 2)
+        df_3['k_ec2'] = 1 + (200 / df_3['d_eff']) ** (1 / 2)
         df_3.loc[df_3['k_ec2'] > 2, 'k_ec2'] = 2
         df_3['u_1_center'] = 2 * np.pi * (df_3['r'] + 2 * df_3['d_eff'])
         df_3['u_1_edge'] = np.pi * (df_3['r'] + 2 * df_3['d_eff'])
         df_3['u_1_corner'] = np.pi * (df_3['r'] + 2 * df_3['d_eff']) / 2
         df_3['c_rdc'] = 0.1
-        df_3['v_rd'] = 0.75 * df_3['c_rdc'] * df_3['k_ec2'] * (100 * df_3['ro_l'] * df_3['f_ck'])**(1 / 3) + 0.6 * \
+        df_3['v_rd'] = 0.75 * df_3['c_rdc'] * df_3['k_ec2'] * (100 * df_3['ro_l'] * df_3['f_ck']) ** (1 / 3) + 0.6 * \
                        df_3['f_ftdr25'] * (df_3['a'] + df_3['d_eff']) / (df_3['a'] + 4 * df_3['d_eff'])
-        df_3['v_min'] = 0.035 * df_3['k_ec2']**(3 / 2) * df_3['f_ck']**(1 / 2)
+        df_3['v_min'] = 0.035 * df_3['k_ec2'] ** (3 / 2) * df_3['f_ck'] ** (1 / 2)
         df_3.loc[df_3['v_rd'] > df_3['v_min'], 'v_rd_2'] = df_3['v_rd']
         df_3.loc[df_3['v_rd'] <= df_3['v_min'], 'v_rd_2'] = df_3['v_min']
-        df_3['v_ed_1_center'] = df_3['v_rd_2'] * df_3['u_1_center'] *df_3['d_eff']
-        df_3['v_ed_1_edge'] = df_3['v_rd_2'] * df_3['u_1_edge'] *df_3['d_eff']
-        df_3['v_ed_1_corner'] = df_3['v_rd_2'] * df_3['u_1_corner'] *df_3['d_eff']
+        df_3['v_ed_1_center'] = df_3['v_rd_2'] * df_3['u_1_center'] * df_3['d_eff']
+        df_3['v_ed_1_edge'] = df_3['v_rd_2'] * df_3['u_1_edge'] * df_3['d_eff']
+        df_3['v_ed_1_corner'] = df_3['v_rd_2'] * df_3['u_1_corner'] * df_3['d_eff']
         df_3['u_0_center'] = 2 * np.pi * df_3['r']
         df_3['u_0_edge'] = np.pi * df_3['r']
         df_3['u_0_corner'] = np.pi * df_3['r'] / 2
         df_3['v_ed_0_center'] = df_3['v_rd_max'] * df_3['u_0_center'] * df_3['d_eff']
         df_3['v_ed_0_edge'] = df_3['v_rd_max'] * df_3['u_0_edge'] * df_3['d_eff']
         df_3['v_ed_0_corner'] = df_3['v_rd_max'] * df_3['u_0_corner'] * df_3['d_eff']
-        df_3['meyerhof_center'] = 6 * (1 + 2 * df_3['a'] / df_3['l_e']) * (df_3['m_p'] / 10**3 + df_3['m_n'] / 10**3
-                                                                           + 2 * df_3['m_f'] / 10**3)
-        df_3['meyerhof_edge'] = 3.5 * (1 + 3 * df_3['a'] / df_3['l_e']) * (df_3['m_p'] / 10**3 + df_3['m_n'] / 10**3
-                                                                           + 2 * df_3['m_f'] / 10**3)
-        df_3['meyerhof_corner'] = 2 * (1 + 4 * df_3['a'] / df_3['l_e']) * (df_3['m_n'] / 10**3 + df_3['m_f'] / 10**3)
+        df_3['meyerhof_center'] = 6 * (1 + 2 * df_3['a'] / df_3['l_e']) * (df_3['m_p'] / 10 ** 3 + df_3['m_n'] / 10 ** 3
+                                                                           + 2 * df_3['m_f'] / 10 ** 3)
+        df_3['meyerhof_edge'] = 3.5 * (1 + 3 * df_3['a'] / df_3['l_e']) * (df_3['m_p'] / 10 ** 3 + df_3['m_n'] / 10 ** 3
+                                                                           + 2 * df_3['m_f'] / 10 ** 3)
+        df_3['meyerhof_corner'] = 2 * (1 + 4 * df_3['a'] / df_3['l_e']) * (
+                    df_3['m_n'] / 10 ** 3 + df_3['m_f'] / 10 ** 3)
         df_3['a_l_e_limit'] = df_3['a'] / df_3['l_e']
         df_3.loc[df_3['a_l_e_limit'] < 0.2, 'dual_point_load'] = (2 * np.pi + 1.8 * df_3['x'] / df_3['l_e']) * \
-                                                             (df_3['m_p'] / 10**3 + df_3['m_n'] / 10**3 + 2 *
-                                                              df_3['m_f'] / 10**3)
-        df_3.loc[df_3['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_3['a'] / 3 * df_3['l_e'])) +
-                                                              (1.8 * df_3['x'] / (df_3['l_e'] - df_3['a'] / 2))) * \
-                                                              (df_3['m_p'] / 10**3 + df_3['m_n'] / 10**3 + 2 *
-                                                               df_3['m_f'] / 10**3)
+                                                                 (df_3['m_p'] / 10 ** 3 + df_3['m_n'] / 10 ** 3 + 2 *
+                                                                  df_3['m_f'] / 10 ** 3)
+        df_3.loc[df_3['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_3['a'] / (3 * df_3['l_e']))) +
+                                                                   (1.8 * df_3['x'] / (df_3['l_e'] - df_3['a'] / 2))) * \
+                                                                  (df_3['m_p'] / 10 ** 3 + df_3['m_n'] / 10 ** 3 + 2 *
+                                                                   df_3['m_f'] / 10 ** 3)
         df_3.loc[df_3['a_l_e_limit'] < 0.2, 'quadruple_point_load'] = (2 * np.pi + 1.8 * (df_3['x'] + df_3['y']) /
-                                                                   df_3['l_e']) * (df_3['m_p'] / 10**3 + df_3['m_n'] /
-                                                                                   10**3 + 2 * df_3['m_f'] / 10**3)
-        df_3.loc[df_3['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (1 - df_3['a'] / 3 * df_3['l_e'])) +
-                                                                    (1.8 * (df_3['x'] + df_3['y']) /
-                                                                     (df_3['l_e'] - df_3['a'] / 2))) * \
-                                                                      (df_3['m_p'] / 10**3 + df_3['m_n'] / 10**3
-                                                                       + 2 * df_3['m_f'] / 10**3)
+                                                                       df_3['l_e']) * (
+                                                                                  df_3['m_p'] / 10 ** 3 + df_3['m_n'] /
+                                                                                  10 ** 3 + 2 * df_3['m_f'] / 10 ** 3)
+        df_3.loc[df_3['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (
+                    1 - df_3['a'] / (3 * df_3['l_e']))) +
+                                                                        (1.8 * (df_3['x'] + df_3['y']) /
+                                                                         (df_3['l_e'] - df_3['a'] / 2))) * \
+                                                                       (df_3['m_p'] / 10 ** 3 + df_3['m_n'] / 10 ** 3
+                                                                        + 2 * df_3['m_f'] / 10 ** 3)
     except:
         print('feil, input3')
 
 
 def input_calc_4(concrete_price_m40, concrete_price_m45, concrete_price_m60, concrete_gwp_m40,
-               concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
-               x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness, fiber_price, fiber_gwp):
+                 concrete_gwp_m45, concrete_gwp_m60, rebar_price, rebar_gwp, red_factor, stiffness,
+                 x, y, c_nom, k_dict, k_pick, iso_dict, iso_pick, iso_thickness, fiber_price, fiber_gwp):
     try:
         # User input
         df_4.loc[df_4['concrete_quality'] == 'B45 M40', 'concrete_price_input'] = float(concrete_price_m40.get())
@@ -421,58 +439,65 @@ def input_calc_4(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
         df_4['rebar_gwp'] = df_4['rebar_gwp_input'] * df_4['rebar_per_square_meter_sum']
         df_4['fiber_gwp'] = df_4['fiber_gwp_input'] * df_4['fiber_per_square_meter']
         df_4['gwp_sum'] = df_4['concrete_gwp'] + df_4['rebar_gwp'] + df_4['fiber_gwp']
-        df_4.loc[df_4['r'] < df_4['r_limit'], 'a'] = (1.6*df_4['r']**2+df_4['thickness']**2)**(1 / 2) - (0.675*df_4['thickness'])
+        df_4.loc[df_4['r'] < df_4['r_limit'], 'a'] = (1.6 * df_4['r'] ** 2 + df_4['thickness'] ** 2) ** (1 / 2) - (
+                    0.675 * df_4['thickness'])
         df_4.loc[df_4['r'] >= df_4['r_limit'], 'a'] = df_4['r']
-        df_4.loc[df_4['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_4['w'] * (df_4['reduction_factor_sigma_s2'])**2
+        df_4.loc[df_4['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_4['w'] * (df_4['reduction_factor_sigma_s2']) ** 2
         df_4.loc[df_4['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_4['w']
-        df_4['l_e'] = (df_4['capital_d'] / df_4['k'])**(1 / 4)
-        df_4['westergaard_center'] = df_4['f_ck'] * df_4['thickness']**2 / (1.32 * np.log10(1.43 * df_4['l_e'] / df_4['a']))
-        df_4['westergaard_edge'] = df_4['f_ck'] * df_4['thickness']**2 / (2.34 * np.log10(1.23 * df_4['l_e'] / df_4['a']))
-        df_4['westergaard_corner'] = df_4['f_ck'] * df_4['thickness']**2 / (3 * (1 - (1.23 * (df_4['a'] / df_4['l_e'])**0.6)))
+        df_4['l_e'] = (df_4['capital_d'] / df_4['k']) ** (1 / 4)
+        df_4['westergaard_center'] = df_4['f_ck'] * df_4['thickness'] ** 2 / (
+                    1.32 * np.log10(1.43 * df_4['l_e'] / df_4['a']))
+        df_4['westergaard_edge'] = df_4['f_ck'] * df_4['thickness'] ** 2 / (
+                    2.34 * np.log10(1.23 * df_4['l_e'] / df_4['a']))
+        df_4['westergaard_corner'] = df_4['f_ck'] * df_4['thickness'] ** 2 / (
+                    3 * (1 - (1.23 * (df_4['a'] / df_4['l_e']) ** 0.6)))
         df_4.loc[df_4['rebar_size_lower'] == 0, 'd_eff'] = df_4['c_nom'] + df_4['rebar_size_upper']
         df_4.loc[df_4['rebar_size_lower'] != 0, 'd_eff'] = df_4['thickness'] - df_4['c_nom'] - df_4['rebar_size_lower']
         df_4['ro_l'] = df_4['a_s_total'] / (df_4['d_eff'] * 1000)
-        df_4['k_ec2'] = 1 + (200 / df_4['d_eff'])**(1 / 2)
+        df_4['k_ec2'] = 1 + (200 / df_4['d_eff']) ** (1 / 2)
         df_4.loc[df_4['k_ec2'] > 2, 'k_ec2'] = 2
         df_4['u_1_center'] = 2 * np.pi * (df_4['r'] + 2 * df_4['d_eff'])
         df_4['u_1_edge'] = np.pi * (df_4['r'] + 2 * df_4['d_eff'])
         df_4['u_1_corner'] = np.pi * (df_4['r'] + 2 * df_4['d_eff']) / 2
         df_4['c_rdc'] = 0.1
-        df_4['v_rd'] = 0.75 * df_4['c_rdc'] * df_4['k_ec2'] * (100 * df_4['ro_l'] * df_4['f_ck'])**(1 / 3) + 0.6 * \
+        df_4['v_rd'] = 0.75 * df_4['c_rdc'] * df_4['k_ec2'] * (100 * df_4['ro_l'] * df_4['f_ck']) ** (1 / 3) + 0.6 * \
                        df_4['f_ftdr25'] * (df_4['a'] + df_4['d_eff']) / (df_4['a'] + 4 * df_4['d_eff'])
-        df_4['v_min'] = 0.035 * df_4['k_ec2']**(3 / 2) * df_4['f_ck']**(1 / 2)
+        df_4['v_min'] = 0.035 * df_4['k_ec2'] ** (3 / 2) * df_4['f_ck'] ** (1 / 2)
         df_4.loc[df_4['v_rd'] > df_4['v_min'], 'v_rd_2'] = df_4['v_rd']
         df_4.loc[df_4['v_rd'] <= df_4['v_min'], 'v_rd_2'] = df_4['v_min']
-        df_4['v_ed_1_center'] = df_4['v_rd_2'] * df_4['u_1_center'] *df_4['d_eff']
-        df_4['v_ed_1_edge'] = df_4['v_rd_2'] * df_4['u_1_edge'] *df_4['d_eff']
-        df_4['v_ed_1_corner'] = df_4['v_rd_2'] * df_4['u_1_corner'] *df_4['d_eff']
+        df_4['v_ed_1_center'] = df_4['v_rd_2'] * df_4['u_1_center'] * df_4['d_eff']
+        df_4['v_ed_1_edge'] = df_4['v_rd_2'] * df_4['u_1_edge'] * df_4['d_eff']
+        df_4['v_ed_1_corner'] = df_4['v_rd_2'] * df_4['u_1_corner'] * df_4['d_eff']
         df_4['u_0_center'] = 2 * np.pi * df_4['r']
         df_4['u_0_edge'] = np.pi * df_4['r']
         df_4['u_0_corner'] = np.pi * df_4['r'] / 2
         df_4['v_ed_0_center'] = df_4['v_rd_max'] * df_4['u_0_center'] * df_4['d_eff']
         df_4['v_ed_0_edge'] = df_4['v_rd_max'] * df_4['u_0_edge'] * df_4['d_eff']
         df_4['v_ed_0_corner'] = df_4['v_rd_max'] * df_4['u_0_corner'] * df_4['d_eff']
-        df_4['meyerhof_center'] = 6 * (1 + 2 * df_4['a'] / df_4['l_e']) * (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3
-                                                                           + 2 * df_4['m_f'] / 10**3)
-        df_4['meyerhof_edge'] = 3.5 * (1 + 3 * df_4['a'] / df_4['l_e']) * (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3
-                                                                           + 2 * df_4['m_f'] / 10**3)
-        df_4['meyerhof_corner'] = 2 * (1 + 4 * df_4['a'] / df_4['l_e']) * (df_4['m_n'] / 10**3 + df_4['m_f'] / 10**3)
+        df_4['meyerhof_center'] = 6 * (1 + 2 * df_4['a'] / df_4['l_e']) * (df_4['m_p'] / 10 ** 3 + df_4['m_n'] / 10 ** 3
+                                                                           + 2 * df_4['m_f'] / 10 ** 3)
+        df_4['meyerhof_edge'] = 3.5 * (1 + 3 * df_4['a'] / df_4['l_e']) * (df_4['m_p'] / 10 ** 3 + df_4['m_n'] / 10 ** 3
+                                                                           + 2 * df_4['m_f'] / 10 ** 3)
+        df_4['meyerhof_corner'] = 2 * (1 + 4 * df_4['a'] / df_4['l_e']) * (
+                    df_4['m_n'] / 10 ** 3 + df_4['m_f'] / 10 ** 3)
         df_4['a_l_e_limit'] = df_4['a'] / df_4['l_e']
         df_4.loc[df_4['a_l_e_limit'] < 0.2, 'dual_point_load'] = (2 * np.pi + 1.8 * df_4['x'] / df_4['l_e']) * \
-                                                             (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3 + 2 *
-                                                              df_4['m_f'] / 10**3)
-        df_4.loc[df_4['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_4['a'] / 3 * df_4['l_e'])) +
-                                                              (1.8 * df_4['x'] / (df_4['l_e'] - df_4['a'] / 2))) * \
-                                                              (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3 + 2 *
-                                                               df_4['m_f'] / 10**3)
+                                                                 (df_4['m_p'] / 10 ** 3 + df_4['m_n'] / 10 ** 3 + 2 *
+                                                                  df_4['m_f'] / 10 ** 3)
+        df_4.loc[df_4['a_l_e_limit'] >= 0.2, 'dual_point_load'] = ((4 * np.pi / (1 - df_4['a'] / (3 * df_4['l_e']))) +
+                                                                   (1.8 * df_4['x'] / (df_4['l_e'] - df_4['a'] / 2))) * \
+                                                                  (df_4['m_p'] / 10 ** 3 + df_4['m_n'] / 10 ** 3 + 2 *
+                                                                   df_4['m_f'] / 10 ** 3)
         df_4.loc[df_4['a_l_e_limit'] < 0.2, 'quadruple_point_load'] = (2 * np.pi + 1.8 * (df_4['x'] + df_4['y']) /
-                                                                   df_4['l_e']) * (df_4['m_p'] / 10**3 + df_4['m_n'] /
-                                                                                   10**3 + 2 * df_4['m_f'] / 10**3)
-        df_4.loc[df_4['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (1 - df_4['a'] / 3 * df_4['l_e'])) +
-                                                                    (1.8 * (df_4['x'] + df_4['y']) /
-                                                                     (df_4['l_e'] - df_4['a'] / 2))) * \
-                                                                      (df_4['m_p'] / 10**3 + df_4['m_n'] / 10**3
-                                                                       + 2 * df_4['m_f'] / 10**3)
+                                                                       df_4['l_e']) * (
+                                                                                  df_4['m_p'] / 10 ** 3 + df_4['m_n'] /
+                                                                                  10 ** 3 + 2 * df_4['m_f'] / 10 ** 3)
+        df_4.loc[df_4['a_l_e_limit'] >= 0.2, 'quadruple_point_load'] = ((4 * np.pi / (
+                    1 - df_4['a'] / (3 * df_4['l_e']))) +
+                                                                        (1.8 * (df_4['x'] + df_4['y']) /
+                                                                         (df_4['l_e'] - df_4['a'] / 2))) * \
+                                                                       (df_4['m_p'] / 10 ** 3 + df_4['m_n'] / 10 ** 3
+                                                                        + 2 * df_4['m_f'] / 10 ** 3)
     except:
         print('feil, input4')
 
@@ -481,7 +506,8 @@ def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_
     try:
         global df_temp
         if str(fast_pick.get()) == 'Fastholdt gulv':
-            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(rebar_pick.get()) != 0:
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(
+                    rebar_pick.get()) != 0:
                 gk_valg = int(gk_pick.get())
                 gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
                            2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
@@ -509,7 +535,8 @@ def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_
                                                       ' krav\n\nTips: Velg "Ingen krav" så vil alle valgene i menyen '
                                                       'velges!', master=window)
         elif str(fast_pick.get()) == 'Flytende gulv':
-            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(rebar_pick.get()) != 0:
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(
+                    rebar_pick.get()) != 0:
                 gk_valg = int(gk_pick.get())
                 gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
                            2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
@@ -543,11 +570,13 @@ def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_
         print('feil, df filtering')
 
 
-def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_dict, tykk_pick, tykk_dict, fast_pick):
+def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_dict, tykk_pick, tykk_dict,
+                   fast_pick):
     try:
         global df_2_temp
         if str(fast_pick.get()) == 'Fastholdt gulv':
-            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(rebar_pick.get()) != 0:
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(
+                    rebar_pick.get()) != 0:
                 gk_valg = int(gk_pick.get())
                 gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
                            2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
@@ -570,7 +599,8 @@ def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Armeringsnett er ikke fylt ut!', master=window)
         elif str(fast_pick.get()) == 'Flytende gulv':
-            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(rebar_pick.get()) != 0:
+            if len(str(gk_pick.get())) != 0 and str(gk_pick.get()) != 'Manuell inntasting' and len(
+                    rebar_pick.get()) != 0:
                 gk_valg = int(gk_pick.get())
                 gk_data = {1: {'riss': 0.3, 'as': 3, 't': 100, 'betong': 'B45 M40'},
                            2: {'riss': 0.5, 'as': 2, 't': 120, 'betong': 'B30 M60|B45 M40|B35 M45'},
@@ -731,28 +761,33 @@ def df_filtering_load(last_plassering_pick, lasttilfelle_pick):
     try:
         if last_plassering_pick.get() == 'Senter':
             if lasttilfelle_pick.get() == 'Single-point' or len(lasttilfelle_pick.get()) == 0:
-                df_temp2 = df_temp[(df_temp['westergaard_center'] >= q_ed) & (df_temp['meyerhof_center'] >= q_ed * 1.5) &
-                                   (df_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_temp['v_ed_0_center'] >= q_ed * 1.5)]
+                df_temp2 = df_temp[
+                    (df_temp['westergaard_center'] >= q_ed) & (df_temp['meyerhof_center'] >= q_ed * 1.5) &
+                    (df_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_temp['v_ed_0_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Dual-point':
-                df_temp2 = df_temp[(df_temp['westergaard_center'] >= q_ed) & (df_temp['dual_point_load'] >= q_ed * 1.5) &
-                                   (df_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_temp2 = df_temp[
+                    (df_temp['westergaard_center'] >= q_ed) & (df_temp['dual_point_load'] >= q_ed * 1.5) &
+                    (df_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_temp['meyerhof_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Quadruple-point':
-                df_temp2 = df_temp[(df_temp['westergaard_center'] >= q_ed) & (df_temp['quadruple_point_load'] >= q_ed * 1.5)
-                                   & (df_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_temp2 = df_temp[
+                    (df_temp['westergaard_center'] >= q_ed) & (df_temp['quadruple_point_load'] >= q_ed * 1.5)
+                    & (df_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_temp['meyerhof_center'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Kant':
             df_temp2 = df_temp[(df_temp['westergaard_edge'] >= q_ed) & (df_temp['meyerhof_edge'] >= q_ed * 1.5) &
                                (df_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_temp['v_ed_0_edge'] >= q_ed * 1.5)]
             if lasttilfelle_pick.get() == 'Dual-point' or lasttilfelle_pick.get() == 'Quadruple-point':
-                tk.messagebox.showinfo('Feilmelding', 'Dual-point og quadruple-point lasttilfelle gjelder bare for last '
-                                                      'plassert i senter!', master=window)
+                tk.messagebox.showinfo('Feilmelding',
+                                       'Dual-point og quadruple-point lasttilfelle gjelder bare for last '
+                                       'plassert i senter!', master=window)
         elif last_plassering_pick.get() == 'Hjørne':
             df_temp2 = df_temp[(df_temp['westergaard_corner'] >= q_ed) & (df_temp['meyerhof_corner'] >= q_ed * 1.5) &
                                (df_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_temp['v_ed_0_corner'] >= q_ed * 1.5)]
             if lasttilfelle_pick.get() == 'Dual-point' or lasttilfelle_pick.get() == 'Quadruple-point':
-                tk.messagebox.showinfo('Feilmelding', 'Dual-point og quadruple-point lasttilfelle gjelder bare for last '
-                                                      'plassert i senter!', master=window)
+                tk.messagebox.showinfo('Feilmelding',
+                                       'Dual-point og quadruple-point lasttilfelle gjelder bare for last '
+                                       'plassert i senter!', master=window)
         else:
             tk.messagebox.showinfo('Feilmelding', 'Last plassering må fylles ut!', master=window)
     except:
@@ -771,22 +806,27 @@ def df_2_filtering_load(last_plassering_pick, lasttilfelle_pick):
     try:
         if last_plassering_pick.get() == 'Senter':
             if lasttilfelle_pick.get() == 'Single-point' or len(lasttilfelle_pick.get()) == 0:
-                df_2_temp2 = df_2_temp[(df_2_temp['westergaard_center'] >= q_ed) & (df_2_temp['meyerhof_center'] >= q_ed * 1.5) &
-                                   (df_2_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_center'] >= q_ed * 1.5)]
+                df_2_temp2 = df_2_temp[
+                    (df_2_temp['westergaard_center'] >= q_ed) & (df_2_temp['meyerhof_center'] >= q_ed * 1.5) &
+                    (df_2_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Dual-point':
-                df_2_temp2 = df_2_temp[(df_2_temp['westergaard_center'] >= q_ed) & (df_2_temp['dual_point_load'] >= q_ed * 1.5) &
-                                   (df_2_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_2_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_2_temp2 = df_2_temp[
+                    (df_2_temp['westergaard_center'] >= q_ed) & (df_2_temp['dual_point_load'] >= q_ed * 1.5) &
+                    (df_2_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_2_temp['meyerhof_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Quadruple-point':
-                df_2_temp2 = df_2_temp[(df_2_temp['westergaard_center'] >= q_ed) & (df_2_temp['quadruple_point_load'] >= q_ed * 1.5)
-                                   & (df_2_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_2_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_2_temp2 = df_2_temp[
+                    (df_2_temp['westergaard_center'] >= q_ed) & (df_2_temp['quadruple_point_load'] >= q_ed * 1.5)
+                    & (df_2_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_2_temp['meyerhof_center'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Kant':
-            df_2_temp2 = df_2_temp[(df_2_temp['westergaard_edge'] >= q_ed) & (df_2_temp['meyerhof_edge'] >= q_ed * 1.5) &
-                               (df_2_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_edge'] >= q_ed * 1.5)]
+            df_2_temp2 = df_2_temp[
+                (df_2_temp['westergaard_edge'] >= q_ed) & (df_2_temp['meyerhof_edge'] >= q_ed * 1.5) &
+                (df_2_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_edge'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Hjørne':
-            df_2_temp2 = df_2_temp[(df_2_temp['westergaard_corner'] >= q_ed) & (df_2_temp['meyerhof_corner'] >= q_ed * 1.5) &
-                               (df_2_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_corner'] >= q_ed * 1.5)]
+            df_2_temp2 = df_2_temp[
+                (df_2_temp['westergaard_corner'] >= q_ed) & (df_2_temp['meyerhof_corner'] >= q_ed * 1.5) &
+                (df_2_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_2_temp['v_ed_0_corner'] >= q_ed * 1.5)]
     except:
         print('feil, df 2 filtering load')
 
@@ -796,22 +836,27 @@ def df_3_filtering_load(last_plassering_pick, lasttilfelle_pick):
     try:
         if last_plassering_pick.get() == 'Senter':
             if lasttilfelle_pick.get() == 'Single-point' or len(lasttilfelle_pick.get()) == 0:
-                df_3_temp2 = df_3_temp[(df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['meyerhof_center'] >= q_ed * 1.5) &
-                                   (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5)]
+                df_3_temp2 = df_3_temp[
+                    (df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['meyerhof_center'] >= q_ed * 1.5) &
+                    (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Dual-point':
-                df_3_temp2 = df_3_temp[(df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['dual_point_load'] >= q_ed * 1.5) &
-                                   (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_3_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_3_temp2 = df_3_temp[
+                    (df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['dual_point_load'] >= q_ed * 1.5) &
+                    (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_3_temp['meyerhof_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Quadruple-point':
-                df_3_temp2 = df_3_temp[(df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['quadruple_point_load'] >= q_ed * 1.5)
-                                   & (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_3_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_3_temp2 = df_3_temp[
+                    (df_3_temp['westergaard_center'] >= q_ed) & (df_3_temp['quadruple_point_load'] >= q_ed * 1.5)
+                    & (df_3_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_3_temp['meyerhof_center'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Kant':
-            df_3_temp2 = df_3_temp[(df_3_temp['westergaard_edge'] >= q_ed) & (df_3_temp['meyerhof_edge'] >= q_ed * 1.5) &
-                               (df_3_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_edge'] >= q_ed * 1.5)]
+            df_3_temp2 = df_3_temp[
+                (df_3_temp['westergaard_edge'] >= q_ed) & (df_3_temp['meyerhof_edge'] >= q_ed * 1.5) &
+                (df_3_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_edge'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Hjørne':
-            df_3_temp2 = df_3_temp[(df_3_temp['westergaard_corner'] >= q_ed) & (df_3_temp['meyerhof_corner'] >= q_ed * 1.5) &
-                               (df_3_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_corner'] >= q_ed * 1.5)]
+            df_3_temp2 = df_3_temp[
+                (df_3_temp['westergaard_corner'] >= q_ed) & (df_3_temp['meyerhof_corner'] >= q_ed * 1.5) &
+                (df_3_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_3_temp['v_ed_0_corner'] >= q_ed * 1.5)]
     except:
         print('feil, df 3 filtering load')
 
@@ -821,22 +866,27 @@ def df_4_filtering_load(last_plassering_pick, lasttilfelle_pick):
     try:
         if last_plassering_pick.get() == 'Senter':
             if lasttilfelle_pick.get() == 'Single-point' or len(lasttilfelle_pick.get()) == 0:
-                df_4_temp2 = df_4_temp[(df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['meyerhof_center'] >= q_ed * 1.5) &
-                                   (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5)]
+                df_4_temp2 = df_4_temp[
+                    (df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['meyerhof_center'] >= q_ed * 1.5) &
+                    (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Dual-point':
-                df_4_temp2 = df_4_temp[(df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['dual_point_load'] >= q_ed * 1.5) &
-                                   (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_4_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_4_temp2 = df_4_temp[
+                    (df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['dual_point_load'] >= q_ed * 1.5) &
+                    (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_4_temp['meyerhof_center'] >= q_ed * 1.5)]
             elif lasttilfelle_pick.get() == 'Quadruple-point':
-                df_4_temp2 = df_4_temp[(df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['quadruple_point_load'] >= q_ed * 1.5)
-                                   & (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5) &
-                                   (df_4_temp['meyerhof_center'] >= q_ed * 1.5)]
+                df_4_temp2 = df_4_temp[
+                    (df_4_temp['westergaard_center'] >= q_ed) & (df_4_temp['quadruple_point_load'] >= q_ed * 1.5)
+                    & (df_4_temp['v_ed_1_center'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_center'] >= q_ed * 1.5) &
+                    (df_4_temp['meyerhof_center'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Kant':
-            df_4_temp2 = df_4_temp[(df_4_temp['westergaard_edge'] >= q_ed) & (df_4_temp['meyerhof_edge'] >= q_ed * 1.5) &
-                               (df_4_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_edge'] >= q_ed * 1.5)]
+            df_4_temp2 = df_4_temp[
+                (df_4_temp['westergaard_edge'] >= q_ed) & (df_4_temp['meyerhof_edge'] >= q_ed * 1.5) &
+                (df_4_temp['v_ed_1_edge'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_edge'] >= q_ed * 1.5)]
         elif last_plassering_pick.get() == 'Hjørne':
-            df_4_temp2 = df_4_temp[(df_4_temp['westergaard_corner'] >= q_ed) & (df_4_temp['meyerhof_corner'] >= q_ed * 1.5) &
-                               (df_4_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_corner'] >= q_ed * 1.5)]
+            df_4_temp2 = df_4_temp[
+                (df_4_temp['westergaard_corner'] >= q_ed) & (df_4_temp['meyerhof_corner'] >= q_ed * 1.5) &
+                (df_4_temp['v_ed_1_corner'] >= q_ed * 1.5) & (df_4_temp['v_ed_0_corner'] >= q_ed * 1.5)]
     except:
         print('feil, df 4 filtering load')
 
@@ -889,9 +939,9 @@ def df_4_sorting_price_gwp(sort_pick):
 
 def load_next_frames():
     if q_ed != 0 and 'check' in globals() and 'df_temp' in globals() and 'df_temp2' in globals() \
-            and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals()\
-            and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals()\
-            and 'df_3_final' in globals() and 'df_4' in globals() and 'df_4_temp' in globals() and 'df_4_temp2' in globals()\
+            and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals() \
+            and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals() \
+            and 'df_3_final' in globals() and 'df_4' in globals() and 'df_4_temp' in globals() and 'df_4_temp2' in globals() \
             and 'df_4_final' in globals():
         raise_frame(frame3, frame4)
 
@@ -899,16 +949,19 @@ def load_next_frames():
 def show_result():
     try:
         global tykkelse_resultat_df
-        tykkelse_resultat_df = tk.Label(master=frame31, text=f'{df_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
+        tykkelse_resultat_df = tk.Label(master=frame31, text=f'{df_final.iloc[0]["thickness"]}mm ',
+                                        font=('Calibri', 11))
         tykkelse_resultat_df.grid(row=2, column=1, sticky='e')
         global armering_resultat_ok_df
         armering_resultat_ok_df = tk.Label(master=frame31, text=f'Ø {df_final.iloc[0]["rebar_size_upper"]} C '
-                                                                f'{df_final.iloc[0]["cc_upper"]}mm ', font=('Calibri', 11))
+                                                                f'{df_final.iloc[0]["cc_upper"]}mm ',
+                                           font=('Calibri', 11))
         armering_resultat_ok_df.grid(row=3, column=1, sticky='e')
         global armering_resultat_uk_df
         if df_final.iloc[0]["rebar_size_lower"] != 0:
             armering_resultat_uk_df = tk.Label(master=frame31, text=f'Ø {df_final.iloc[0]["rebar_size_lower"]} C '
-                                                                    f'{df_final.iloc[0]["cc_lower"]}mm ', font=('Calibri', 11))
+                                                                    f'{df_final.iloc[0]["cc_lower"]}mm ',
+                                               font=('Calibri', 11))
             armering_resultat_uk_df.grid(row=4, column=1, sticky='e')
         else:
             armering_resultat_uk_df = tk.Label(master=frame31, text='Ingen ', font=('Calibri', 11))
@@ -932,14 +985,17 @@ def show_result():
 def show_result_2():
     try:
         global tykkelse_resultat_df_2
-        tykkelse_resultat_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
+        tykkelse_resultat_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["thickness"]}mm ',
+                                          font=('Calibri', 11))
         tykkelse_resultat_df_2.grid(row=2, column=1, sticky='e')
         global armering_resultat_ok_df_2
-        armering_resultat_ok_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_upper"]} ', font=('Calibri', 11))
+        armering_resultat_ok_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_upper"]} ',
+                                             font=('Calibri', 11))
         armering_resultat_ok_df_2.grid(row=3, column=1, sticky='e')
         global armering_resultat_uk_df_2
         if df_2_final.iloc[0]["rebar_name_lower"] != '0':
-            armering_resultat_uk_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_lower"]} ', font=('Calibri', 11))
+            armering_resultat_uk_df_2 = tk.Label(master=frame33, text=f'{df_2_final.iloc[0]["rebar_name_lower"]} ',
+                                                 font=('Calibri', 11))
             armering_resultat_uk_df_2.grid(row=4, column=1, sticky='e')
         else:
             armering_resultat_uk_df_2 = tk.Label(master=frame33, text='Ingen ', font=('Calibri', 11))
@@ -954,7 +1010,7 @@ def show_result_2():
         pris_resultat_df_2.grid(row=6, column=1, sticky='e')
         global gwp_resultat_df_2
         gwp_resultat_df_2 = tk.Label(master=frame33, text=f'{round(df_2_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
-                                   font=('Calibri', 11))
+                                     font=('Calibri', 11))
         gwp_resultat_df_2.grid(row=7, column=1, sticky='e')
     except:
         print('feil result2')
@@ -963,35 +1019,39 @@ def show_result_2():
 def show_result_3():
     try:
         global tykkelse_resultat_df_3
-        tykkelse_resultat_df_3 = tk.Label(master=frame32, text=f'{df_3_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
+        tykkelse_resultat_df_3 = tk.Label(master=frame32, text=f'{df_3_final.iloc[0]["thickness"]}mm ',
+                                          font=('Calibri', 11))
         tykkelse_resultat_df_3.grid(row=3, column=1, sticky='e')
         global armering_resultat_ok_df_3
         armering_resultat_ok_df_3 = tk.Label(master=frame32, text=f'Ø {df_3_final.iloc[0]["rebar_size_upper"]} C '
-                                                                f'{df_3_final.iloc[0]["cc_upper"]}mm ', font=('Calibri', 11))
+                                                                  f'{df_3_final.iloc[0]["cc_upper"]}mm ',
+                                             font=('Calibri', 11))
         armering_resultat_ok_df_3.grid(row=4, column=1, sticky='e')
         global armering_resultat_uk_df_3
         if df_3_final.iloc[0]["rebar_size_lower"] != 0:
             armering_resultat_uk_df_3 = tk.Label(master=frame32, text=f'Ø {df_3_final.iloc[0]["rebar_size_lower"]} C '
-                                                                    f'{df_3_final.iloc[0]["cc_lower"]}mm ', font=('Calibri', 11))
+                                                                      f'{df_3_final.iloc[0]["cc_lower"]}mm ',
+                                                 font=('Calibri', 11))
             armering_resultat_uk_df_3.grid(row=5, column=1, sticky='e')
         else:
             armering_resultat_uk_df_3 = tk.Label(master=frame32, text='Ingen ', font=('Calibri', 11))
             armering_resultat_uk_df_3.grid(row=5, column=1, sticky='e')
         global armering_resultat_fiber_df_3
         armering_resultat_fiber_df_3 = tk.Label(master=frame32, text=f'R {df_3_final.iloc[0]["f_r_1_k"]},0 '
-                                                                     f'{df_3_final.iloc[0]["ductility"]} ', font=('Calibri', 11))
+                                                                     f'{df_3_final.iloc[0]["ductility"]} ',
+                                                font=('Calibri', 11))
         armering_resultat_fiber_df_3.grid(row=6, column=1, sticky='e')
         global betongkvalitet_resultat_df_3
         betongkvalitet_resultat_df_3 = tk.Label(master=frame32, text=f'{df_3_final.iloc[0]["concrete_quality"]} ',
-                                              font=('Calibri', 11))
+                                                font=('Calibri', 11))
         betongkvalitet_resultat_df_3.grid(row=7, column=1, sticky='e')
         global pris_resultat_df_3
         pris_resultat_df_3 = tk.Label(master=frame32, text=f'{round(df_3_final.iloc[0]["price_sum"], 1)} NOK ',
-                                    font=('Calibri', 11))
+                                      font=('Calibri', 11))
         pris_resultat_df_3.grid(row=8, column=1, sticky='e')
         global gwp_resultat_df_3
         gwp_resultat_df_3 = tk.Label(master=frame32, text=f'{round(df_3_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
-                                   font=('Calibri', 11))
+                                     font=('Calibri', 11))
         gwp_resultat_df_3.grid(row=9, column=1, sticky='e')
     except:
         print('feil result3')
@@ -1000,33 +1060,37 @@ def show_result_3():
 def show_result_4():
     try:
         global tykkelse_resultat_df_4
-        tykkelse_resultat_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["thickness"]}mm ', font=('Calibri', 11))
+        tykkelse_resultat_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["thickness"]}mm ',
+                                          font=('Calibri', 11))
         tykkelse_resultat_df_4.grid(row=3, column=1, sticky='e')
         global armering_resultat_ok_df_4
-        armering_resultat_ok_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["rebar_name_upper"]} ', font=('Calibri', 11))
+        armering_resultat_ok_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["rebar_name_upper"]} ',
+                                             font=('Calibri', 11))
         armering_resultat_ok_df_4.grid(row=4, column=1, sticky='e')
         global armering_resultat_uk_df_4
         if df_4_final.iloc[0]["rebar_size_lower"] != 0:
-            armering_resultat_uk_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["rebar_name_lower"]} ', font=('Calibri', 11))
+            armering_resultat_uk_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["rebar_name_lower"]} ',
+                                                 font=('Calibri', 11))
             armering_resultat_uk_df_4.grid(row=5, column=1, sticky='e')
         else:
             armering_resultat_uk_df_4 = tk.Label(master=frame34, text='Ingen ', font=('Calibri', 11))
             armering_resultat_uk_df_4.grid(row=5, column=1, sticky='e')
         global armering_resultat_fiber_df_4
         armering_resultat_fiber_df_4 = tk.Label(master=frame34, text=f'R {df_4_final.iloc[0]["f_r_1_k"]},0 '
-                                                                     f'{df_4_final.iloc[0]["ductility"]} ', font=('Calibri', 11))
+                                                                     f'{df_4_final.iloc[0]["ductility"]} ',
+                                                font=('Calibri', 11))
         armering_resultat_fiber_df_4.grid(row=6, column=1, sticky='e')
         global betongkvalitet_resultat_df_4
         betongkvalitet_resultat_df_4 = tk.Label(master=frame34, text=f'{df_4_final.iloc[0]["concrete_quality"]} ',
-                                              font=('Calibri', 11))
+                                                font=('Calibri', 11))
         betongkvalitet_resultat_df_4.grid(row=7, column=1, sticky='e')
         global pris_resultat_df_4
         pris_resultat_df_4 = tk.Label(master=frame34, text=f'{round(df_4_final.iloc[0]["price_sum"], 1)} NOK ',
-                                    font=('Calibri', 11))
+                                      font=('Calibri', 11))
         pris_resultat_df_4.grid(row=8, column=1, sticky='e')
         global gwp_resultat_df_4
         gwp_resultat_df_4 = tk.Label(master=frame34, text=f'{round(df_4_final.iloc[0]["gwp_sum"], 1)} kg CO2-eq ',
-                                   font=('Calibri', 11))
+                                     font=('Calibri', 11))
         gwp_resultat_df_4.grid(row=9, column=1, sticky='e')
     except:
         print('feil result4')
@@ -1646,13 +1710,16 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                          command=lambda: [loads(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
                                                 billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
                                                 egendef_punktlast_pick, lastflate_pick),
-                                          loads_2(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
+                                          loads_2(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick,
+                                                  dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
                                                   egendef_punktlast_pick, lastflate_pick),
-                                          loads_3(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
+                                          loads_3(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick,
+                                                  dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
                                                   egendef_punktlast_pick, lastflate_pick),
-                                          loads_4(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
+                                          loads_4(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick,
+                                                  dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
                                                   egendef_punktlast_pick, lastflate_pick),
                                           input_calc(betong_pris_m40_pick, betong_pris_m45_pick, betong_pris_m60_pick,
@@ -1678,7 +1745,8 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                                        grunnstivhet_pick, x_pick, y_pick,
                                                        nominell_overdekning_pick, grunnforhold_options_dict,
                                                        grunnforhold_pick, isolasjon_option_dict, isolasjon_pick,
-                                                       isolasjon_tykkelse_pick, staalfiber_pris_pick, staalfiber_gwp_pick),
+                                                       isolasjon_tykkelse_pick, staalfiber_pris_pick,
+                                                       staalfiber_gwp_pick),
                                           input_calc_4(betong_pris_m40_pick, betong_pris_m45_pick, betong_pris_m60_pick,
                                                        betong_gwp_m40_pick, betong_gwp_m45_pick, betong_gwp_m60_pick,
                                                        nettarmering_pris_pick,
@@ -1686,7 +1754,8 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                                        grunnstivhet_pick, x_pick, y_pick,
                                                        nominell_overdekning_pick, grunnforhold_options_dict,
                                                        grunnforhold_pick, isolasjon_option_dict, isolasjon_pick,
-                                                       isolasjon_tykkelse_pick, staalfiber_pris_pick, staalfiber_gwp_pick),
+                                                       isolasjon_tykkelse_pick, staalfiber_pris_pick,
+                                                       staalfiber_gwp_pick),
                                           df_filtering(gulvklasse_pick, bestandighetsklasse_pick,
                                                        bestandighetsklasse_dict,
                                                        slakkarmeringsdiameter_pick, slakkarmeringsdiameter_dict,
@@ -1712,9 +1781,12 @@ fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), p
                                                          fiberarmering_pick, fiberarmering_dict, duktilitet_pick,
                                                          duktilitet_dict),
                                           df_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
-                                          df_2_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
-                                          df_3_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
-                                          df_4_filtering_load(plassering_last_pick, lasttilfelle_egendef_punktlast_pick),
+                                          df_2_filtering_load(plassering_last_pick,
+                                                              lasttilfelle_egendef_punktlast_pick),
+                                          df_3_filtering_load(plassering_last_pick,
+                                                              lasttilfelle_egendef_punktlast_pick),
+                                          df_4_filtering_load(plassering_last_pick,
+                                                              lasttilfelle_egendef_punktlast_pick),
                                           df_sorting_price_gwp(gulv_sortering_pick),
                                           df_2_sorting_price_gwp(gulv_sortering_pick),
                                           df_3_sorting_price_gwp(gulv_sortering_pick),
@@ -1810,7 +1882,91 @@ resultat1_btn = tk.Button(master=frame31, text='Rapport', font=('Calibri', 14), 
                                   lastplassering=plassering_last_pick.get()
                               )
                           ])
-resultat2_btn = tk.Button(master=frame32, text='Rapport', font=('Calibri', 14), padx=40, pady=5)
+resultat2_btn = tk.Button(master=frame32, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
+                          command=lambda: [
+                              create_pdf_fiber(
+                                  tittel='Rapport for slakk- + fiberarmert gulv på grunn.pdf',
+                                  tykkelse=get_df_value(df_3_final, "thickness"),
+                                  betong=get_df_value(df_3_final, "concrete_quality"),
+                                  armeringstype=get_df_value(df_3_final, "rebar_type"),
+                                  senteravstand_over=get_df_value(df_3_final, "cc_upper"),
+                                  senteravstand_under=get_df_value(df_3_final, "cc_lower"),
+                                  last=q_ed,
+                                  grunnstivhet=get_df_value(df_3_final, "k"),
+                                  radius=get_df_value(df_3_final, "r"),
+                                  overdekning=get_df_value(df_3_final, "c_nom"),
+                                  x=get_df_value(df_3_final, "x"),
+                                  y=get_df_value(df_3_final, "y"),
+                                  l_b=get_df_value(df_3_final, "l_b"),
+                                  sigma_s2=get_df_value(df_3_final, "sigma_s2"),
+                                  rebar_size_over=get_df_value(df_3_final, "rebar_size_upper"),
+                                  rebar_size_under=get_df_value(df_3_final, "rebar_size_lower"),
+                                  f_ctm=get_df_value(df_3_final, "f_ctm"),
+                                  a_c=get_df_value(df_3_final, "a_c"),
+                                  a_s_upper=get_df_value(df_3_final, "a_s_upper"),
+                                  a_s_lower=get_df_value(df_3_final, "a_s_lower"),
+                                  a_s_total=get_df_value(df_3_final, "a_s_total"),
+                                  w=get_df_value(df_3_final, "w_2"),
+                                  f_ck=get_df_value(df_3_final, "f_ck"),
+                                  l_e=get_df_value(df_3_final, "l_e"),
+                                  a=get_df_value(df_3_final, "a"),
+                                  westergaard_senter=get_df_value(df_3_final, "westergaard_center"),
+                                  westergaard_kant=get_df_value(df_3_final, "westergaard_edge"),
+                                  westergaard_hjorne=get_df_value(df_3_final, "westergaard_corner"),
+                                  stor_d=get_df_value(df_3_final, "capital_d"),
+                                  e_cm=get_df_value(df_3_final, "concrete_e_modulus"),
+                                  m_n=get_df_value(df_3_final, "m_n"),
+                                  m_p=get_df_value(df_3_final, "m_p"),
+                                  meyerhof_senter=get_df_value(df_3_final, "meyerhof_center"),
+                                  meyerhof_kant=get_df_value(df_3_final, "meyerhof_edge"),
+                                  meyerhof_hjorne=get_df_value(df_3_final, "meyerhof_corner"),
+                                  d_eff=get_df_value(df_3_final, "d_eff"),
+                                  z=get_df_value(df_3_final, "z"),
+                                  rho=get_df_value(df_3_final, "ro_l"),
+                                  dual_point=get_df_value(df_3_final, "dual_point_load"),
+                                  quadruple_point=get_df_value(df_3_final, "quadruple_point_load"),
+                                  v_rd_2=get_df_value(df_3_final, "v_rd_2"),
+                                  u_1_senter=get_df_value(df_3_final, "u_1_center"),
+                                  u_1_kant=get_df_value(df_3_final, "u_1_edge"),
+                                  u_1_hjorne=get_df_value(df_3_final, "u_1_corner"),
+                                  v_ed_1_senter=get_df_value(df_3_final, "v_ed_1_center"),
+                                  v_ed_1_kant=get_df_value(df_3_final, "v_ed_1_edge"),
+                                  v_ed_1_hjorne=get_df_value(df_3_final, "v_ed_1_corner"),
+                                  c_rdc=get_df_value(df_3_final, "c_rdc"),
+                                  v_min=get_df_value(df_3_final, "v_min"),
+                                  k_ec2=get_df_value(df_3_final, "k_ec2"),
+                                  v_rd_max=get_df_value(df_3_final, "v_rd_max"),
+                                  v_ed_0_senter=get_df_value(df_3_final, "v_ed_0_center"),
+                                  v_ed_0_kant=get_df_value(df_3_final, "v_ed_0_edge"),
+                                  v_ed_0_hjorne=get_df_value(df_3_final, "v_ed_0_corner"),
+                                  u_0_senter=get_df_value(df_3_final, "u_0_center"),
+                                  u_0_kant=get_df_value(df_3_final, "u_0_edge"),
+                                  u_0_hjorne=get_df_value(df_3_final, "u_0_corner"),
+                                  v_2=get_df_value(df_3_final, "v_2"),
+                                  f_cd=get_df_value(df_3_final, "f_cd"),
+                                  a_s_min=get_df_value(df_3_final, "a_s_min"),
+                                  reduksjonsfaktor=get_df_value(df_3_final, "reduction_factor_sigma_s2"),
+                                  as_per_square_meter=get_df_value(df_3_final, 'rebar_per_square_meter_sum'),
+                                  concrete_per_square_meter=get_df_value(df_3_final, 'concrete_per_square_meter'),
+                                  rebar_price_input=get_df_value(df_3_final, 'rebar_price_input'),
+                                  concrete_price_input=get_df_value(df_3_final, 'concrete_price_input'),
+                                  rebar_gwp_input=get_df_value(df_3_final, 'rebar_gwp_input'),
+                                  concrete_gwp_input=get_df_value(df_3_final, 'concrete_gwp_input'),
+                                  price_sum=get_df_value(df_3_final, 'price_sum'),
+                                  gwp_sum=get_df_value(df_3_final, 'gwp_sum'),
+                                  gulvklasse=gulvklasse_pick.get(),
+                                  f_ctd=get_df_value(df_3_final, 'f_ctd'),
+                                  fastholding=fastholding_pick.get(),
+                                  lastplassering=plassering_last_pick.get(),
+                                  f_r_1_k=get_df_value(df_3_final, 'f_r_1_k'),
+                                  duktilitet=get_df_value(df_3_final, 'ductility'),
+                                  f_ftk_r05=get_df_value(df_3_final, 'f_ftmr05'),
+                                  f_ftk_r25=get_df_value(df_3_final, 'f_ftmr25'),
+                                  m_f=get_df_value(df_3_final, 'm_f'),
+                                  f_ftd_r25=get_df_value(df_3_final, 'f_ftdr25'),
+                                  f_r_3_k=get_df_value(df_3_final, 'f_r_3_k'),
+                              )
+                          ])
 resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
                           command=lambda: [
                               create_pdf(
@@ -1818,7 +1974,8 @@ resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), 
                                   tykkelse=get_df_value(df_2_final, "thickness"),
                                   betong=get_df_value(df_2_final, "concrete_quality"),
                                   armeringstype=get_df_value(df_2_final, "rebar_type"),
-                                  senteravstand=get_df_value(df_2_final, "cc"),
+                                  senteravstand_over=get_df_value(df_2_final, "cc_upper"),
+                                  senteravstand_under=get_df_value(df_2_final, "cc_lower"),
                                   last=q_ed,
                                   grunnstivhet=get_df_value(df_2_final, "k"),
                                   radius=get_df_value(df_2_final, "r"),
@@ -1827,11 +1984,13 @@ resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), 
                                   y=get_df_value(df_2_final, "y"),
                                   l_b=get_df_value(df_2_final, "l_b"),
                                   sigma_s2=get_df_value(df_2_final, "sigma_s2"),
-                                  e_s=get_df_value(df_2_final, "rebar_e_modulus"),
-                                  rebar_size=get_df_value(df_2_final, "rebar_size"),
+                                  rebar_size_over=get_df_value(df_2_final, "rebar_size_upper"),
+                                  rebar_size_under=get_df_value(df_2_final, "rebar_size_lower"),
                                   f_ctm=get_df_value(df_2_final, "f_ctm"),
                                   a_c=get_df_value(df_2_final, "a_c"),
-                                  a_s=get_df_value(df_2_final, "a_s"),
+                                  a_s_upper=get_df_value(df_2_final, "a_s_upper"),
+                                  a_s_lower=get_df_value(df_2_final, "a_s_lower"),
+                                  a_s_total=get_df_value(df_2_final, "a_s_total"),
                                   w=get_df_value(df_2_final, "w_2"),
                                   f_ck=get_df_value(df_2_final, "f_ck"),
                                   l_e=get_df_value(df_2_final, "l_e"),
@@ -1888,7 +2047,93 @@ resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), 
                                   lastplassering=plassering_last_pick.get()
                               )
                           ])
-resultat4_btn = tk.Button(master=frame34, text='Rapport', font=('Calibri', 14), padx=40, pady=5)
+resultat4_btn = tk.Button(master=frame34, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
+                          command=lambda: [
+                              create_pdf_fiber(
+                                  tittel='Rapport for nett- + fiberarmert gulv på grunn.pdf',
+                                  tykkelse=get_df_value(df_4_final, "thickness"),
+                                  betong=get_df_value(df_4_final, "concrete_quality"),
+                                  armeringstype=get_df_value(df_4_final, "rebar_type"),
+                                  senteravstand_over=get_df_value(df_4_final, "cc_upper"),
+                                  senteravstand_under=get_df_value(df_4_final, "cc_lower"),
+                                  last=q_ed,
+                                  grunnstivhet=get_df_value(df_4_final, "k"),
+                                  radius=get_df_value(df_4_final, "r"),
+                                  overdekning=get_df_value(df_4_final, "c_nom"),
+                                  x=get_df_value(df_4_final, "x"),
+                                  y=get_df_value(df_4_final, "y"),
+                                  l_b=get_df_value(df_4_final, "l_b"),
+                                  sigma_s2=get_df_value(df_4_final, "sigma_s2"),
+                                  rebar_size_over=get_df_value(df_4_final, "rebar_size_upper"),
+                                  rebar_size_under=get_df_value(df_4_final, "rebar_size_lower"),
+                                  f_ctm=get_df_value(df_4_final, "f_ctm"),
+                                  a_c=get_df_value(df_4_final, "a_c"),
+                                  a_s_upper=get_df_value(df_4_final, "a_s_upper"),
+                                  a_s_lower=get_df_value(df_4_final, "a_s_lower"),
+                                  a_s_total=get_df_value(df_4_final, "a_s_total"),
+                                  w=get_df_value(df_4_final, "w_2"),
+                                  f_ck=get_df_value(df_4_final, "f_ck"),
+                                  l_e=get_df_value(df_4_final, "l_e"),
+                                  a=get_df_value(df_4_final, "a"),
+                                  westergaard_senter=get_df_value(df_4_final, "westergaard_center"),
+                                  westergaard_kant=get_df_value(df_4_final, "westergaard_edge"),
+                                  westergaard_hjorne=get_df_value(df_4_final, "westergaard_corner"),
+                                  stor_d=get_df_value(df_4_final, "capital_d"),
+                                  e_cm=get_df_value(df_4_final, "concrete_e_modulus"),
+                                  m_n=get_df_value(df_4_final, "m_n"),
+                                  m_p=get_df_value(df_4_final, "m_p"),
+                                  meyerhof_senter=get_df_value(df_4_final, "meyerhof_center"),
+                                  meyerhof_kant=get_df_value(df_4_final, "meyerhof_edge"),
+                                  meyerhof_hjorne=get_df_value(df_4_final, "meyerhof_corner"),
+                                  d_eff=get_df_value(df_4_final, "d_eff"),
+                                  z=get_df_value(df_4_final, "z"),
+                                  rho=get_df_value(df_4_final, "ro_l"),
+                                  dual_point=get_df_value(df_4_final, "dual_point_load"),
+                                  quadruple_point=get_df_value(df_4_final, "quadruple_point_load"),
+                                  v_rd_2=get_df_value(df_4_final, "v_rd_2"),
+                                  u_1_senter=get_df_value(df_4_final, "u_1_center"),
+                                  u_1_kant=get_df_value(df_4_final, "u_1_edge"),
+                                  u_1_hjorne=get_df_value(df_4_final, "u_1_corner"),
+                                  v_ed_1_senter=get_df_value(df_4_final, "v_ed_1_center"),
+                                  v_ed_1_kant=get_df_value(df_4_final, "v_ed_1_edge"),
+                                  v_ed_1_hjorne=get_df_value(df_4_final, "v_ed_1_corner"),
+                                  c_rdc=get_df_value(df_4_final, "c_rdc"),
+                                  v_min=get_df_value(df_4_final, "v_min"),
+                                  k_ec2=get_df_value(df_4_final, "k_ec2"),
+                                  v_rd_max=get_df_value(df_4_final, "v_rd_max"),
+                                  v_ed_0_senter=get_df_value(df_4_final, "v_ed_0_center"),
+                                  v_ed_0_kant=get_df_value(df_4_final, "v_ed_0_edge"),
+                                  v_ed_0_hjorne=get_df_value(df_4_final, "v_ed_0_corner"),
+                                  u_0_senter=get_df_value(df_4_final, "u_0_center"),
+                                  u_0_kant=get_df_value(df_4_final, "u_0_edge"),
+                                  u_0_hjorne=get_df_value(df_4_final, "u_0_corner"),
+                                  v_2=get_df_value(df_4_final, "v_2"),
+                                  f_cd=get_df_value(df_4_final, "f_cd"),
+                                  a_s_min=get_df_value(df_4_final, "a_s_min"),
+                                  reduksjonsfaktor=get_df_value(df_4_final, "reduction_factor_sigma_s2"),
+                                  as_per_square_meter=get_df_value(df_4_final, 'rebar_per_square_meter_sum'),
+                                  concrete_per_square_meter=get_df_value(df_4_final, 'concrete_per_square_meter'),
+                                  rebar_price_input=get_df_value(df_4_final, 'rebar_price_input'),
+                                  concrete_price_input=get_df_value(df_4_final, 'concrete_price_input'),
+                                  rebar_gwp_input=get_df_value(df_4_final, 'rebar_gwp_input'),
+                                  concrete_gwp_input=get_df_value(df_4_final, 'concrete_gwp_input'),
+                                  price_sum=get_df_value(df_4_final, 'price_sum'),
+                                  gwp_sum=get_df_value(df_4_final, 'gwp_sum'),
+                                  gulvklasse=gulvklasse_pick.get(),
+                                  armeringsnavn_over=get_df_value(df_4_final, 'rebar_name_upper'),
+                                  armeringsnavn_under=get_df_value(df_4_final, 'rebar_name_lower'),
+                                  f_ctd=get_df_value(df_4_final, 'f_ctd'),
+                                  fastholding=fastholding_pick.get(),
+                                  lastplassering=plassering_last_pick.get(),
+                                  f_r_1_k=get_df_value(df_4_final, 'f_r_1_k'),
+                                  duktilitet=get_df_value(df_4_final, 'ductility'),
+                                  f_ftk_r05=get_df_value(df_4_final, 'f_ftmr05'),
+                                  f_ftk_r25=get_df_value(df_4_final, 'f_ftmr25'),
+                                  m_f=get_df_value(df_4_final, 'm_f'),
+                                  f_ftd_r25=get_df_value(df_4_final, 'f_ftdr25'),
+                                  f_r_3_k=get_df_value(df_4_final, 'f_r_3_k'),
+                              )
+                          ])
 resultat5_btn = tk.Button(master=frame41, text='Rapport', font=('Calibri', 14), padx=40, pady=5)
 tilbake_btn = tk.Button(master=frame4, text='Tilbake  ', font=('Calibri', 14), padx=25, pady=8,
                         command=lambda: [raise_frame(frame1, frame2), clear_frames1(), clear_frames2(),
@@ -1902,10 +2147,10 @@ tilbake_btn.place(x=260, y=700)
 
 window.mainloop()
 
-#df_temp2.to_csv('Steg 11.csv', sep=';')
-#df_2_temp2.to_csv('Steg 12.csv', sep=';')
-#df_3_temp2.to_csv('Steg 13.csv', sep=';')
-#df_2_temp.to_csv('Steg 2.csv', sep=';')
-#df_2_temp2.to_csv('Steg 3.csv', sep=';')
-#df_2_final.to_csv('Final.csv', sep=';')
-#df_4_final.to_csv('test.csv', sep=';')
+# df_temp2.to_csv('Steg 11.csv', sep=';')
+# df_2_temp2.to_csv('Steg 12.csv', sep=';')
+# df_3_temp2.to_csv('Steg 13.csv', sep=';')
+# df_2_temp.to_csv('Steg 2.csv', sep=';')
+# df_2_temp2.to_csv('Steg 3.csv', sep=';')
+# df_2_final.to_csv('Final.csv', sep=';')
+# df_4_final.to_csv('test.csv', sep=';')
