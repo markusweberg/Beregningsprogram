@@ -32,7 +32,7 @@ Neste og siste valg er hvilken parameter som gulvene skal sorteres etter. Her ka
 
 Når alt er klart trykker du på fortsett og kalkulasjonen starter. Merk at denne prosessen kan ta noen sekunder og programmet kan få status som "svarer ikke". Dette går helt fint, la programmet jobbe seg ferdig.
 
-Neste side viser det optimale gulvet basert på din input. Vi har valgt å dele opp armeringstypene så du enkelt kan se forskjellene i pris og gwp mellom disse. 
+Neste side vises det optimale gulvet basert på din input. Vi har valgt å dele opp armeringstypene så du enkelt kan se forskjellene i pris og gwp mellom disse. 
 
 Videre kan du trykke på "Rapport" og en pdf vil åpnes som viser alle utregninger for det gitte gulvet. Rapporten går gjennom alle kontroller i detalj og viser mellomutregninger. Merk at rapporten også blir lagret i mappen sammen med programmet under "Rapporter" hvis du ønsker å ta vare på filen.
 

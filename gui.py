@@ -139,7 +139,10 @@ def input_calc(concrete_price_m40, concrete_price_m45, concrete_price_m60, concr
         df['reduction_factor_sigma_s2'] = float(red_factor.get())
         df['x'] = float(x.get())
         df['y'] = float(y.get())
-        df['c_nom'] = float(c_nom.get())
+        if float(c_nom.get()) != 0:
+            df['c_nom'] = float(c_nom.get())
+        else:
+            tk.messagebox.showinfo('Feilmelding', 'Vennligst fyll ut "Nominell overdekning"', master=window)
         if len(k_pick.get()) == 0 or float(k_dict[k_pick.get()]) == 0:
             df['k'] = float(stiffness.get())
             if len(iso_pick.get()) == 0 or float(iso_dict[iso_pick.get()]) == 0 or float(iso_thickness.get()) == 0:
@@ -942,7 +945,7 @@ def load_next_frames():
             and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals() \
             and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals() \
             and 'df_3_final' in globals() and 'df_4' in globals() and 'df_4_temp' in globals() and 'df_4_temp2' in globals() \
-            and 'df_4_final' in globals():
+            and 'df_4_final' in globals() and float(nominell_overdekning_pick.get()) != 0:
         raise_frame(frame3, frame4)
 
 
@@ -1178,10 +1181,10 @@ def raise_frame(f1, f2):
     f2.tkraise()
 
 
-df = pd.read_csv('data\\csv\\slakkarmering.csv', sep=';')
-df_2 = pd.read_csv('data\\csv\\nettarmering.csv', sep=';')
-df_3 = pd.read_csv('data\\csv\\slakk- + fiberarmering.csv', sep=';')
-df_4 = pd.read_csv('data\\csv\\nett- + fiberarmering.csv', sep=';')
+df = pd.read_csv('csv\\slakkarmering.csv', sep=';')
+df_2 = pd.read_csv('csv\\nettarmering.csv', sep=';')
+df_3 = pd.read_csv('csv\\slakk- + fiberarmering.csv', sep=';')
+df_4 = pd.read_csv('csv\\nett- + fiberarmering.csv', sep=';')
 
 window = tk.Tk()
 window.title('Beregningsverktøy - Gulv på grunn')
@@ -1292,20 +1295,24 @@ bestandighetsklasse_dict = {'B45 M40': 'B45 M40', 'B35 M45': 'B35 M45|B45 M40', 
                             'Ingen krav': 'B30 M60|B35 M45|B45 M40'}
 slakkarmeringsdiameter_options = ['8', '10', '12', '14', '16', 'Ingen krav']
 slakkarmeringsdiameter_pick = tk.StringVar(frame1)
+slakkarmeringsdiameter_pick.set(slakkarmeringsdiameter_options[5])
 slakkarmeringsdiameter_option_menu = tk.OptionMenu(frame1, slakkarmeringsdiameter_pick, *slakkarmeringsdiameter_options)
 slakkarmeringsdiameter_dict = {'8': [8], '10': [10], '12': [12], '14': [14], '16': [16],
                                'Ingen krav': [8, 10, 12, 14, 16, 0]}
 armeringsnett_options = ['K131', 'K189', 'K257', 'K335', 'K402', 'K503', 'Ingen krav']
 armeringsnett_pick = tk.StringVar(frame1)
+armeringsnett_pick.set(armeringsnett_options[6])
 armeringsnett_option_menu = tk.OptionMenu(frame1, armeringsnett_pick, *armeringsnett_options)
 armeringsnett_dict = {'K131': 'K131', 'K189': 'K189', 'K257': 'K257', 'K335': 'K335', 'K402': 'K402',
                       'K503': 'K503', 'Ingen krav': 'K131|K189|K257|K335|K402|K503|0'}
 fiberarmering_options = ['2,0', '3,0', '4,0', '5,0', 'Ingen krav']
 fiberarmering_pick = tk.StringVar(frame14)
+fiberarmering_pick.set(fiberarmering_options[4])
 fiberarmering_option_menu = tk.OptionMenu(frame14, fiberarmering_pick, *fiberarmering_options)
 fiberarmering_dict = {'2,0': [2], '3,0': [3], '4,0': [4], '5,0': [5], 'Ingen krav': [2, 3, 4, 5]}
 duktilitet_options = ['b', 'd', 'Ingen krav']
 duktilitet_pick = tk.StringVar(frame14)
+duktilitet_pick.set(duktilitet_options[2])
 duktilitet_option_menu = tk.OptionMenu(frame14, duktilitet_pick, *duktilitet_options)
 duktilitet_dict = {'b': 'b', 'd': 'd', 'Ingen krav': 'b|d'}
 rissvidde_options = ['≤ 0,2', '≤ 0,3', '≤ 0,4', '≤ 0,5', '≤ 0,6', '≤ 0,7', '≤ 0,8', '≤ 0,9', '≤ 1,0', 'Ingen krav']
@@ -1324,6 +1331,7 @@ tykkelse_dict = {'100': [100], '110': [110], '120': [120], '130': [130], '140': 
                                 280, 290, 300]}
 fastholding_options = ['Flytende gulv', 'Fastholdt gulv']
 fastholding_pick = tk.StringVar(frame1)
+fastholding_pick.set(fastholding_options[0])
 fastholding_option_menu = tk.OptionMenu(frame1, fastholding_pick, *fastholding_options)
 gaffeltruck_klasse_options = ['FL1', 'FL2', 'FL3', 'FL4', 'FL5', 'FL6', 'Ingen krav']
 gaffeltruck_klasse_pick = tk.StringVar(frame13)
