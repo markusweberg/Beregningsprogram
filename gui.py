@@ -37,7 +37,6 @@ def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytt
         else:
             q_ed = float(egendef_last.get()) * 1000
             df['r'] = float(rd.get())
-        print(q_ed)
     except ValueError:
         tk.messagebox.showinfo('Feilmelding', '- Fyll inn alle felt \n- Bruk punktum som desimalskille'
                                               '\n- Utfyllbare felt skal bare inneholde tall', master=window)
@@ -148,7 +147,10 @@ def input_calc(concrete_price_m40, concrete_price_m45, concrete_price_m60, concr
             if len(iso_pick.get()) == 0 or float(iso_dict[iso_pick.get()]) == 0 or float(iso_thickness.get()) == 0:
                 df['k'] = float(stiffness.get())
             else:
-                df['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                if float(iso_thickness.get()) <= 150:
+                    df['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                else:
+                    df['k'] = float(iso_dict[iso_pick.get()]) / 150
         else:
             df['k'] = float(k_dict[k_pick.get()])
         # Calculations, filling the csv file with data
@@ -164,12 +166,12 @@ def input_calc(concrete_price_m40, concrete_price_m45, concrete_price_m60, concr
         df.loc[df['reduction_factor_sigma_s2'] != 1, 'w_2'] = df['w'] * (df['reduction_factor_sigma_s2']) ** 2
         df.loc[df['reduction_factor_sigma_s2'] == 1, 'w_2'] = df['w']
         df['l_e'] = (df['capital_d'] / df['k']) ** (1 / 4)
-        df['westergaard_center'] = df['f_ck'] * df['thickness'] ** 2 / (1.32 * np.log10(1.43 * df['l_e'] / df['a']))
-        df['westergaard_edge'] = df['f_ck'] * df['thickness'] ** 2 / (2.34 * np.log10(1.23 * df['l_e'] / df['a']))
-        df['westergaard_corner'] = df['f_ck'] * df['thickness'] ** 2 / (3 * (1 - (1.23 * (df['a'] / df['l_e']) ** 0.6)))
+        df['westergaard_center'] = df['f_ck'] * 0.85 * df['thickness'] ** 2 / (1.32 * np.log10(1.43 * df['l_e'] / df['a']))
+        df['westergaard_edge'] = df['f_ck'] * 0.85 * df['thickness'] ** 2 / (2.34 * np.log10(1.23 * df['l_e'] / df['a']))
+        df['westergaard_corner'] = df['f_ck'] * 0.85 * df['thickness'] ** 2 / (3 * (1 - (1.23 * (df['a'] / df['l_e']) ** 0.6)))
         df.loc[df['rebar_size_lower'] == 0, 'd_eff'] = df['c_nom'] + df['rebar_size_upper']
         df.loc[df['rebar_size_lower'] != 0, 'd_eff'] = df['thickness'] - df['c_nom'] - df['rebar_size_lower']
-        df['ro_l'] = df['a_s_total'] / (df['d_eff'] * 1000)
+        df['ro_l'] = df['a_s_lower'] / (df['d_eff'] * 1000)
         df['k_ec2'] = 1 + (200 / df['d_eff']) ** (1 / 2)
         df.loc[df['k_ec2'] > 2, 'k_ec2'] = 2
         df['u_1_center'] = 2 * np.pi * (df['r'] + 2 * df['d_eff'])
@@ -240,7 +242,10 @@ def input_calc_2(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
             if len(iso_pick.get()) == 0 or float(iso_dict[iso_pick.get()]) == 0 or float(iso_thickness.get()) == 0:
                 df_2['k'] = float(stiffness.get())
             else:
-                df_2['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                if float(iso_thickness.get()) <= 150:
+                    df_2['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                else:
+                    df_2['k'] = float(iso_dict[iso_pick.get()]) / 150
         else:
             df_2['k'] = float(k_dict[k_pick.get()])
         # Calculations, filling the csv file with data
@@ -256,15 +261,15 @@ def input_calc_2(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
         df_2.loc[df_2['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_2['w'] * (df_2['reduction_factor_sigma_s2']) ** 2
         df_2.loc[df_2['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_2['w']
         df_2['l_e'] = (df_2['capital_d'] / df_2['k']) ** (1 / 4)
-        df_2['westergaard_center'] = df_2['f_ck'] * df_2['thickness'] ** 2 / (
+        df_2['westergaard_center'] = df_2['f_ck'] * 0.85 * df_2['thickness'] ** 2 / (
                     1.32 * np.log10(1.43 * df_2['l_e'] / df_2['a']))
-        df_2['westergaard_edge'] = df_2['f_ck'] * df_2['thickness'] ** 2 / (
+        df_2['westergaard_edge'] = df_2['f_ck'] * 0.85 * df_2['thickness'] ** 2 / (
                     2.34 * np.log10(1.23 * df_2['l_e'] / df_2['a']))
-        df_2['westergaard_corner'] = df_2['f_ck'] * df_2['thickness'] ** 2 / (
+        df_2['westergaard_corner'] = df_2['f_ck'] * 0.85 * df_2['thickness'] ** 2 / (
                     3 * (1 - (1.23 * (df_2['a'] / df_2['l_e']) ** 0.6)))
         df_2.loc[df_2['rebar_size_lower'] == 0, 'd_eff'] = df_2['c_nom'] + df_2['rebar_size_upper']
         df_2.loc[df_2['rebar_size_lower'] != 0, 'd_eff'] = df_2['thickness'] - df_2['c_nom'] - df_2['rebar_size_lower']
-        df_2['ro_l'] = df_2['a_s_total'] / (df_2['d_eff'] * 1000)
+        df_2['ro_l'] = df_2['a_s_lower'] / (df_2['d_eff'] * 1000)
         df_2['k_ec2'] = 1 + (200 / df_2['d_eff']) ** (1 / 2)
         df_2.loc[df_2['k_ec2'] > 2, 'k_ec2'] = 2
         df_2['u_1_center'] = 2 * np.pi * (df_2['r'] + 2 * df_2['d_eff'])
@@ -331,7 +336,10 @@ def input_calc_3(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
             if len(iso_pick.get()) == 0 or float(iso_dict[iso_pick.get()]) == 0 or float(iso_thickness.get()) == 0:
                 df_3['k'] = float(stiffness.get())
             else:
-                df_3['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                if float(iso_thickness.get()) <= 150:
+                    df_3['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                else:
+                    df_3['k'] = float(iso_dict[iso_pick.get()]) / 150
         else:
             df_3['k'] = float(k_dict[k_pick.get()])
         # Calculations, filling the csv file with data
@@ -349,15 +357,15 @@ def input_calc_3(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
         df_3.loc[df_3['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_3['w'] * (df_3['reduction_factor_sigma_s2']) ** 2
         df_3.loc[df_3['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_3['w']
         df_3['l_e'] = (df_3['capital_d'] / df_3['k']) ** (1 / 4)
-        df_3['westergaard_center'] = df_3['f_ck'] * df_3['thickness'] ** 2 / (
+        df_3['westergaard_center'] = df_3['f_ck'] * 0.85 * df_3['thickness'] ** 2 / (
                     1.32 * np.log10(1.43 * df_3['l_e'] / df_3['a']))
-        df_3['westergaard_edge'] = df_3['f_ck'] * df_3['thickness'] ** 2 / (
+        df_3['westergaard_edge'] = df_3['f_ck'] * 0.85 * df_3['thickness'] ** 2 / (
                     2.34 * np.log10(1.23 * df_3['l_e'] / df_3['a']))
-        df_3['westergaard_corner'] = df_3['f_ck'] * df_3['thickness'] ** 2 / (
+        df_3['westergaard_corner'] = df_3['f_ck'] * 0.85 * df_3['thickness'] ** 2 / (
                     3 * (1 - (1.23 * (df_3['a'] / df_3['l_e']) ** 0.6)))
         df_3.loc[df_3['rebar_size_lower'] == 0, 'd_eff'] = df_3['c_nom'] + df_3['rebar_size_upper']
         df_3.loc[df_3['rebar_size_lower'] != 0, 'd_eff'] = df_3['thickness'] - df_3['c_nom'] - df_3['rebar_size_lower']
-        df_3['ro_l'] = df_3['a_s_total'] / (df_3['d_eff'] * 1000)
+        df_3['ro_l'] = df_3['a_s_lower'] / (df_3['d_eff'] * 1000)
         df_3['k_ec2'] = 1 + (200 / df_3['d_eff']) ** (1 / 2)
         df_3.loc[df_3['k_ec2'] > 2, 'k_ec2'] = 2
         df_3['u_1_center'] = 2 * np.pi * (df_3['r'] + 2 * df_3['d_eff'])
@@ -430,7 +438,10 @@ def input_calc_4(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
             if len(iso_pick.get()) == 0 or float(iso_dict[iso_pick.get()]) == 0 or float(iso_thickness.get()) == 0:
                 df_4['k'] = float(stiffness.get())
             else:
-                df_4['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                if float(iso_thickness.get()) <= 150:
+                    df_4['k'] = float(iso_dict[iso_pick.get()]) / float(iso_thickness.get())
+                else:
+                    df_4['k'] = float(iso_dict[iso_pick.get()]) / 150
         else:
             df_4['k'] = float(k_dict[k_pick.get()])
         # Calculations, filling the csv file with data
@@ -448,15 +459,15 @@ def input_calc_4(concrete_price_m40, concrete_price_m45, concrete_price_m60, con
         df_4.loc[df_4['reduction_factor_sigma_s2'] != 1, 'w_2'] = df_4['w'] * (df_4['reduction_factor_sigma_s2']) ** 2
         df_4.loc[df_4['reduction_factor_sigma_s2'] == 1, 'w_2'] = df_4['w']
         df_4['l_e'] = (df_4['capital_d'] / df_4['k']) ** (1 / 4)
-        df_4['westergaard_center'] = df_4['f_ck'] * df_4['thickness'] ** 2 / (
+        df_4['westergaard_center'] = df_4['f_ck'] * 0.85 * df_4['thickness'] ** 2 / (
                     1.32 * np.log10(1.43 * df_4['l_e'] / df_4['a']))
-        df_4['westergaard_edge'] = df_4['f_ck'] * df_4['thickness'] ** 2 / (
+        df_4['westergaard_edge'] = df_4['f_ck'] * 0.85 * df_4['thickness'] ** 2 / (
                     2.34 * np.log10(1.23 * df_4['l_e'] / df_4['a']))
-        df_4['westergaard_corner'] = df_4['f_ck'] * df_4['thickness'] ** 2 / (
+        df_4['westergaard_corner'] = df_4['f_ck'] * 0.85 * df_4['thickness'] ** 2 / (
                     3 * (1 - (1.23 * (df_4['a'] / df_4['l_e']) ** 0.6)))
         df_4.loc[df_4['rebar_size_lower'] == 0, 'd_eff'] = df_4['c_nom'] + df_4['rebar_size_upper']
         df_4.loc[df_4['rebar_size_lower'] != 0, 'd_eff'] = df_4['thickness'] - df_4['c_nom'] - df_4['rebar_size_lower']
-        df_4['ro_l'] = df_4['a_s_total'] / (df_4['d_eff'] * 1000)
+        df_4['ro_l'] = df_4['a_s_lower'] / (df_4['d_eff'] * 1000)
         df_4['k_ec2'] = 1 + (200 / df_4['d_eff']) ** (1 / 2)
         df_4.loc[df_4['k_ec2'] > 2, 'k_ec2'] = 2
         df_4['u_1_center'] = 2 * np.pi * (df_4['r'] + 2 * df_4['d_eff'])
@@ -519,9 +530,11 @@ def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_
                 df_temp = df[(df['thickness'] >= gk_data[gk_valg]['t']) &
                              (df['w_2'] <= gk_data[gk_valg]['riss']) &
                              (df['a_s_upper'] >= gk_data[gk_valg]['as'] * df['a_s_min']) &
+                             (df['a_s_lower'] >= gk_data[gk_valg]['as'] * df['a_s_min']) &
                              (df['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
                              (df['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
                              (df['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
+                             (df['sigma_s2'] <= 500) &
                              (df['a_s_total'] >= df['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_temp = df[(df['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
@@ -529,6 +542,7 @@ def df_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, rv_
                              (df['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
                              (df['w_2'] <= rv_dict[rv_pick.get()]) &
                              (df['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                             (df['sigma_s2'] <= 500) &
                              (df['a_s_total'] >= df['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Gulv egenskaper er ikke fylt ut!\n'
@@ -588,9 +602,11 @@ def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                 df_2_temp = df_2[(df_2['thickness'] >= gk_data[gk_valg]['t']) &
                                  (df_2['w_2'] <= gk_data[gk_valg]['riss']) &
                                  (df_2['a_s_upper'] >= gk_data[gk_valg]['as'] * df_2['a_s_min']) &
+                                 (df_2['a_s_lower'] >= gk_data[gk_valg]['as'] * df_2['a_s_min']) &
                                  (df_2['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
                                  (df_2['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
                                  (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
+                                 (df_2['sigma_s2'] <= 500) &
                                  (df_2['a_s_total'] >= df_2['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_2_temp = df_2[(df_2['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
@@ -598,6 +614,7 @@ def df_2_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                                  (df_2['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
                                  (df_2['w_2'] <= rv_dict[rv_pick.get()]) &
                                  (df_2['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_2['sigma_s2'] <= 500) &
                                  (df_2['a_s_total'] >= df_2['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Armeringsnett er ikke fylt ut!', master=window)
@@ -644,11 +661,13 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                 df_3_temp = df_3[(df_3['thickness'] >= gk_data[gk_valg]['t']) &
                                  (df_3['w_2'] <= gk_data[gk_valg]['riss']) &
                                  (df_3['a_s_upper'] >= gk_data[gk_valg]['as'] * df_3['a_s_min']) &
+                                 (df_3['a_s_lower'] >= gk_data[gk_valg]['as'] * df_3['a_s_min']) &
                                  (df_3['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
                                  (df_3['rebar_size_upper'].isin(rebar_dict[rebar_pick.get()])) &
                                  (df_3['rebar_size_lower'].isin(rebar_dict[rebar_pick.get()])) &
                                  (df_3['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
                                  (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_3['sigma_s2'] <= 500) &
                                  (df_3['a_s_total'] >= df_3['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_3_temp = df_3[(df_3['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
@@ -658,6 +677,7 @@ def df_3_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                                  (df_3['ductility'].str.contains(duct_dict[duct_pick.get()])) &
                                  (df_3['w_2'] <= rv_dict[rv_pick.get()]) &
                                  (df_3['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_3['sigma_s2'] <= 500) &
                                  (df_3['a_s_total'] >= df_3['a_s_min'])]
             else:
                 tk.messagebox.showinfo('Feilmelding', 'Fiberarmerings klasse eller duktilitet er ikke fylt ut!',
@@ -710,11 +730,13 @@ def df_4_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                 df_4_temp = df_4[(df_4['thickness'] >= gk_data[gk_valg]['t']) &
                                  (df_4['w_2'] <= gk_data[gk_valg]['riss']) &
                                  (df_4['a_s_upper'] >= gk_data[gk_valg]['as'] * df_4['a_s_min']) &
+                                 (df_4['a_s_lower'] >= gk_data[gk_valg]['as'] * df_4['a_s_min']) &
                                  (df_4['concrete_quality'].str.contains(gk_data[gk_valg]['betong'], case=False)) &
                                  (df_4['rebar_name_upper'].str.contains(rebar_dict[rebar_pick.get()])) &
                                  (df_4['rebar_name_lower'].str.contains(rebar_dict[rebar_pick.get()])) &
                                  (df_4['f_r_1_k'].isin(fiber_dict[fiber_pick.get()])) &
                                  (df_4['ductility'].str.contains(duct_dict[duct_pick.get()])) &
+                                 (df_4['sigma_s2'] <= 500) &
                                  (df_4['a_s_total'] >= df_4['a_s_min'])]
             elif len(str(gk_pick.get())) == 0 or str(gk_pick.get()) == 'Manuell inntasting':
                 df_4_temp = df_4[(df_4['concrete_quality'].str.contains(bk_dict[bk_pick.get()], case=False)) &
@@ -724,6 +746,7 @@ def df_4_filtering(gk_pick, bk_pick, bk_dict, rebar_pick, rebar_dict, rv_pick, r
                                  (df_4['ductility'].str.contains(duct_dict[duct_pick.get()])) &
                                  (df_4['w_2'] <= rv_dict[rv_pick.get()]) &
                                  (df_4['thickness'].isin(tykk_dict[tykk_pick.get()])) &
+                                 (df_4['sigma_s2'] <= 500) &
                                  (df_4['a_s_total'] >= df_4['a_s_min'])]
             else:
                 pass
@@ -1987,6 +2010,9 @@ resultat2_btn = tk.Button(master=frame32, text='Rapport', font=('Calibri', 14), 
                                   m_f=get_df_value(df_3_final, 'm_f'),
                                   f_ftd_r25=get_df_value(df_3_final, 'f_ftdr25'),
                                   f_r_3_k=get_df_value(df_3_final, 'f_r_3_k'),
+                                  fiber_pris=get_df_value(df_3_final, 'fiber_price_input'),
+                                  fiber_gwp=get_df_value(df_3_final, 'fiber_gwp_input'),
+                                  fiber_per_m2=get_df_value(df_3_final, 'fiber_per_square_meter')
                               )
                           ])
 resultat3_btn = tk.Button(master=frame33, text='Rapport', font=('Calibri', 14), padx=40, pady=5,
@@ -2154,6 +2180,9 @@ resultat4_btn = tk.Button(master=frame34, text='Rapport', font=('Calibri', 14), 
                                   m_f=get_df_value(df_4_final, 'm_f'),
                                   f_ftd_r25=get_df_value(df_4_final, 'f_ftdr25'),
                                   f_r_3_k=get_df_value(df_4_final, 'f_r_3_k'),
+                                  fiber_pris=get_df_value(df_4_final, 'fiber_price_input'),
+                                  fiber_gwp=get_df_value(df_4_final, 'fiber_gwp_input'),
+                                  fiber_per_m2=get_df_value(df_4_final, 'fiber_per_square_meter')
                               )
                           ])
 resultat5_btn = tk.Button(master=frame41, text='Rapport', font=('Calibri', 14), padx=40, pady=5)

@@ -2,19 +2,22 @@ import os
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 import tkinter.messagebox
+import numpy as np
 
 
-def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, senteravstand_over=0, senteravstand_under=0,
-               last=0, grunnstivhet=0, radius=0, reduksjonsfaktor=0, overdekning=0, x=0, y=0, l_b=0, sigma_s2=0,
-               rebar_size_over=0, rebar_size_under=0, f_ctm=0, a_c=0, a_s_upper=0, a_s_lower=0, a_s_total=0, w=0, f_ck=0,
-               l_e=1, a=1, westergaard_senter=0, westergaard_kant=0, westergaard_hjorne=0, stor_d=0, e_cm=0, m_n=0, m_p=0,
-               meyerhof_senter=0, meyerhof_kant=0, meyerhof_hjorne=0, d_eff=0, z=0, rho=0, dual_point=0, quadruple_point=0,
-               v_rd_2=0, u_1_senter=0, u_1_kant=0, u_1_hjorne=0, v_ed_1_senter=0, v_ed_1_kant=0, v_ed_1_hjorne=0, c_rdc=0,
-               v_min=0, k_ec2=0, v_rd_max=0, v_ed_0_senter=0, v_ed_0_kant=0, v_ed_0_hjorne=0, u_0_senter=0, u_0_kant=0,
-               u_0_hjorne=0, v_2=0, f_cd=0, a_s_min=1, as_per_square_meter=0, concrete_per_square_meter=0,
-               rebar_price_input=0, concrete_price_input=0, rebar_gwp_input=0, concrete_gwp_input=0, price_sum=0,
-               gwp_sum=0, gulvklasse=0, armeringsnavn_over=0, armeringsnavn_under=0, f_ctd=0, fastholding=0, lastplassering=0,
-               f_r_1_k=0, duktilitet=0, f_ftk_r05=0, f_ftk_r25=0, m_f=0, f_ftd_r25=0, f_r_3_k=0):
+def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, senteravstand_over=0,
+                     senteravstand_under=0, last=0, grunnstivhet=0, radius=0, reduksjonsfaktor=0, overdekning=0, x=0,
+                     y=0, l_b=0, sigma_s2=0, rebar_size_over=0, rebar_size_under=0, f_ctm=0, a_c=0, a_s_upper=0,
+                     a_s_lower=0, a_s_total=0, w=0, f_ck=0, l_e=1, a=1, westergaard_senter=0, westergaard_kant=0,
+                     westergaard_hjorne=0, stor_d=0, e_cm=0, m_n=0, m_p=0, meyerhof_senter=0, meyerhof_kant=0,
+                     meyerhof_hjorne=0, d_eff=0, z=0, rho=0, dual_point=0, quadruple_point=0, v_rd_2=0, u_1_senter=0,
+                     u_1_kant=0, u_1_hjorne=0, v_ed_1_senter=0, v_ed_1_kant=0, v_ed_1_hjorne=0, c_rdc=0, v_min=0,
+                     k_ec2=0, v_rd_max=0, v_ed_0_senter=0, v_ed_0_kant=0, v_ed_0_hjorne=0, u_0_senter=0, u_0_kant=0,
+                     u_0_hjorne=0, v_2=0, f_cd=0, a_s_min=1, as_per_square_meter=0, concrete_per_square_meter=0,
+                     rebar_price_input=0, concrete_price_input=0, rebar_gwp_input=0, concrete_gwp_input=0, price_sum=0,
+                     gwp_sum=0, gulvklasse=0, armeringsnavn_over=0, armeringsnavn_under=0, f_ctd=0, fastholding=0,
+                     lastplassering=0, f_r_1_k=0, duktilitet=0, f_ftk_r05=0, f_ftk_r25=0, m_f=0, f_ftd_r25=0,
+                     f_r_3_k=0, fiber_pris=0, fiber_gwp=0, fiber_per_m2=0):
     try:
         c = canvas.Canvas(tittel, bottomup=0)
 
@@ -122,7 +125,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            'Kontroll i bruksgrensetilstand:',
+            'Kontroll i bruksgrensetilstand: (materialfaktor = 1.0)',
             '',
             'Spenningsbegrensning, Westergaard: (Norsk betongforening publikasjon 15 s.64)',
             '',
@@ -198,14 +201,14 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            '= f_ck * t^2 / ( 1.32 * log ( 1.43 * l_e / a ))',
-            f'= {f_ck} * {tykkelse}^2 / ( 1.32 * log ( 1.43 * {round(l_e, 1)} / {round(a, 1)} ))',
+            '= f_cd * t^2 / ( 1.32 * log ( 1.43 * l_e / a ))',
+            f'= {f_ck * 0.85} * {tykkelse}^2 / ( 1.32 * log(1.43 * {round(l_e, 1)} / {round(a, 1)}))',
             '',
-            '= f_ck * t^2 / ( 2.34 * log ( 1.23 * l_e / a ))',
-            f'= {f_ck} * {tykkelse}^2 / ( 2.34 * log ( 1.23 * {round(l_e, 1)} / {round(a, 1)} ))',
+            '= f_cd * t^2 / ( 2.34 * log ( 1.23 * l_e / a ))',
+            f'= {f_ck * 0.85} * {tykkelse}^2 / ( 2.34 * log(1.23 * {round(l_e, 1)} / {round(a, 1)}))',
             '',
-            '= f_ck * t^2 / ( 3 * ( 1 - 1.23 * ( a / l_e )^0.6 ))',
-            f'= {f_ck} * {tykkelse}^2 / ( 3 * ( 1 - 1.23 * ',
+            '= f_cd * t^2 / ( 3 * ( 1 - 1.23 * ( a / l_e )^0.6 ))',
+            f'= {f_ck * 0.85} * {tykkelse}^2 / ( 3 * ( 1 - 1.23 * ',
             f'   ( {round(a, 2)} / {round(l_e, 2)} )^0.6 ))',
             '',
             f'{a_text}',
@@ -332,9 +335,9 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
         linje5.setFont('Helvetica', 12)
 
         linje5_text = [
-            'Kontroll i bruddgrensetilstand:',
+            'Kontroll i bruddgrensetilstand: (materialfaktor = 1.5)',
             '',
-            'Momentkapasitet, Meyerhof: (Norsk betongforening publikasjon 15 s.78)',
+            'Momentkapasitet, Meyerhof: (Norsk betongforening publikasjon 15 s.78 og 38 s.43)',
             '',
             'P_max,senter',
             '',
@@ -572,7 +575,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
         linje9.setFont('Helvetica', 12)
 
         linje9_text = [
-            'Skjærkapasitet: (Eurokode 2 s.102)',
+            'Skjærkapasitet: (Eurokode 2 s.102 og Norsk betongforening publikasjon 15 s.80)',
             '',
             'Skjærstrekk:',
             '',
@@ -653,7 +656,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '   + 0.6 * f_ftd,r2.5,gulv * ( a + d ) / ( a + 4d ) >= v_min',
             f'= 0.75 * {c_rdc} * {round(k_ec2, 3)} * ( 100 * {"{:.3e}".format(rho)} * {f_ck} )^(1/3) ',
             f'   + 0.6 * {round(f_ftd_r25, 3)} * ( {round(a, 2)} + {d_eff} ) /',
-            f'   ( {round(a, 2)} * 4 * {d_eff} >= {round(v_min, 4)}',
+            f'   ( {round(a, 2)} * 4 * {d_eff} ) >= {round(v_min, 4)}',
             '',
             '= 0.035 * k^(3/2) * f_ck^(1/2)',
             f'= 0.035 * {round(k_ec2, 3)}^(3/2) * {f_ck}^(1/2)',
@@ -676,8 +679,8 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             d_eff_linje,
             d_eff_linje2,
             '',
-            '= A_s / ( b * d_eff )',
-            f'= {round(a_s_total, 2)} / ( 1000 * {d_eff}',
+            '= A_s,underkant / ( b * d_eff )',
+            f'= {round(a_s_lower, 2)} / ( 1000 * {d_eff} )',
         ]
 
         for line in linje10_text:
@@ -785,8 +788,6 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             'u_0,hjørne',
             '',
             '',
-            '',
-            '',
             'Kontroll minimumsarmering: (Norsk betongforening publikasjon 38 s.57)',
             '',
             'A_s,min',
@@ -796,15 +797,20 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             'A_s,total / A_s,min',
             '',
-            '',
-            '',
-            '',
             'Pris',
             '',
             '',
             '',
             'GWP',
             '',
+            '',
+            '',
+            'Grunntrykk fra last og egenvekt i bruddgrensetilstand: (45 grader lastfordeling gjennom gulvet)',
+            '',
+            'sigma_gd',
+            '',
+            '',
+            'Kontrollér sigma_gd mot tillatt grunntrykk i bruddgrensetilstand for grunnen under gulvet ',
         ]
 
         for line in linje13_text:
@@ -845,8 +851,6 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            '',
-            '',
             '= 0.26 * ( f_ctm - 2.15 * 1.2 * f_ftk,r2.5,gulv ) / f_yk * b * t',
             '   > 0.13 * f_ctm * b * d / f_yk',
             f'= 0.26 * ( {f_ctm} - 2.15 * 1.2 * {round(f_ftk_r25, 4)} ) / 500 * 1000 * {tykkelse}',
@@ -854,18 +858,20 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             f'= {round(a_s_total, 2)} / {round(a_s_min, 2)}',
             '',
-            '',
-            '',
-            '',
             '= armeringspris * armering per m^2 + ',
-            '   betongpris * betong per m^2',
-            f'= {round(rebar_price_input, 2)} * {round(as_per_square_meter, 2)} + {round(concrete_price_input, 2)} *'
-            f' {round(concrete_per_square_meter, 2)}',
+            '   betongpris * betong per m^2 + fiberpris * fiber per m^2',
+            f'= {round(rebar_price_input, 3)} * {round(as_per_square_meter, 3)} + {round(concrete_price_input, 2)} *'
+            f' {round(concrete_per_square_meter, 3)} + {round(fiber_pris, 2)} * {round(fiber_per_m2, 3)}',
             '',
             '= armering gwp * armering per m^2 + ',
-            '   betong gwp * betong per m^2',
-            f'= {round(rebar_gwp_input, 2)} * {round(as_per_square_meter, 2)} + {round(concrete_gwp_input, 2)} *'
-            f' {round(concrete_per_square_meter, 2)}',
+            '   betong gwp * betong per m^2 + fiber gwp * fiber per m^2',
+            f'= {round(rebar_gwp_input, 3)} * {round(as_per_square_meter, 3)} + {round(concrete_gwp_input, 2)} *'
+            f' {round(concrete_per_square_meter, 3)} + {round(fiber_gwp, 2)} * {round(fiber_per_m2, 3)}',
+            '',
+            '',
+            '',
+            '= P * 1.5 / A + gamma * t * 1.2',
+            f'= {round(last/1000, 2)} * 1.5 / {round((np.pi*(tykkelse+radius)**2)/10**6, 4)} + 25 * {tykkelse/1000} * 1.2',
             '',
         ]
 
@@ -910,14 +916,9 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            '',
-            '',
             f'= {round(a_s_min, 2)} mm^2',
             '',
             f'= {round(a_s_total / a_s_min, 2)}',
-            '',
-            '',
-            '',
             '',
             '',
             '',
@@ -926,6 +927,11 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             f'= {round(gwp_sum, 2)} kg C02 eq. / m^2',
+            '',
+            '',
+            '',
+            '',
+            f'= {round((last/1000*1.5) / ((np.pi*(tykkelse+radius)**2)/10**6) + 25 * tykkelse / 1000 * 1.2, 2)} kN / m^2',
             '',
         ]
 
