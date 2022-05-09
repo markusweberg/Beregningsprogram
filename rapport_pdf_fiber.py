@@ -127,7 +127,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             'Kontroll i bruksgrensetilstand: (materialfaktor = 1.0)',
             '',
-            'Spenningsbegrensning, Westergaard: (Norsk betongforening publikasjon 15 s.64)',
+            'Spenningsbegrensning, Westergaard: (Norsk betongforening publikasjon 15 s.65)',
             '',
             'P_max,senter',
             '',
@@ -334,6 +334,26 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
         linje5.setTextOrigin(20 * mm, 20 * mm)
         linje5.setFont('Helvetica', 12)
 
+        if x == 0 and y == 0:
+            linje5_1 = ''
+            linje5_2 = ''
+            linje5_3 = ''
+            linje5_4 = ''
+            linje5_5 = ''
+            linje5_6 = ''
+            linje5_7 = ''
+            linje5_8 = ''
+        else:
+            linje5_1 = 'Kapasitet ved topunkts- og firepunkts lasttilfelle: (Technical Report 34 s.31)'
+            linje5_2 = ''
+            linje5_3 = 'P_max,dual'
+            linje5_4 = ''
+            linje5_5 = ''
+            linje5_6 = ''
+            linje5_7 = 'P_max,quad'
+            linje5_8 = ''
+
+
         linje5_text = [
             'Kontroll i bruddgrensetilstand: (materialfaktor = 1.5)',
             '',
@@ -379,14 +399,14 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            'Kapasitet ved topunkts- og firepunkts lasttilfelle: (Technical Report 34 s.31)',
-            '',
-            'P_max,dual',
-            '',
-            '',
-            '',
-            'P_max,quad',
-            '',
+            linje5_1,
+            linje5_2,
+            linje5_3,
+            linje5_4,
+            linje5_5,
+            linje5_6,
+            linje5_7,
+            linje5_8,
         ]
 
         for line in linje5_text:
@@ -396,24 +416,33 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
         linje6.setTextOrigin(62.5 * mm, 20 * mm)
         linje6.setFont('Helvetica', 12)
 
-        if a / l_e < 0.2:
+        if x == 0 and y == 0:
+            dual = ''
+            dual2 = ''
+            dual21 = ''
+            dual22 = ''
+            quad = ''
+            quad2 = ''
+            quad21 = ''
+            quad22 = ''
+        elif a / l_e < 0.2:
             dual = '= ( 2pi + 1.8 * x / l_e ) * ( M_p + M_n + 2 * M_f )'
             dual2 = f'= ( 2pi + 1.8 * {x} / {round(l_e, 1)} ) * '
-            dual21 = f'   ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )'
+            dual21 = f'   ( {round(m_p / 1000000, 2)} + {round(m_n / 1000000, 2)} + 2 * {round(m_f / 1000000, 2)} )'
             dual22 = ''
             quad = '= ( 2pi + 1.8 * ( x + y ) / l_e ) * ( M_p + M_n + 2 * M_f )'
             quad2 = f'= ( 2pi + 1.8 * ( {x} + {y} ) / {round(l_e, 1)} ) * '
-            quad21 = f'   ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )'
+            quad21 = f'   ( {round(m_p / 1000000, 2)} + {round(m_n / 1000000, 2)} + 2 * {round(m_f / 1000000, 2)} )'
             quad22 = ''
         else:
             dual = '= ( 4pi / ( 1 - a / (3 * l_e) ) + ( 1.8 * x / ( l_e - a / 2 )) * ( M_p + M_n + 2 * M_f)'
             dual2 = f'= ( 4pi / ( 1 - {round(a, 2)} / (3 * {round(l_e, 1)}) ) + (1.8 * {x}) / '
             dual21 = f'   ( ({round(l_e, 1)} - {round(a, 2)} / 2) )) * '
-            dual22 = f'   ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )'
+            dual22 = f'   ( {round(m_p / 1000000, 2)} + {round(m_n / 1000000, 2)} + 2 * {round(m_f / 1000000, 2)} )'
             quad = '= ( 4pi / ( 1 - a / (3 * l_e)) + ( 1.8 * ( x + y ) / (l_e - a / 2)) * (M_p + M_n + 2*M_f)'
             quad2 = f'= ( 4pi / ( 1 - {round(a, 2)} / (3 * {round(l_e, 1)}) ) + 1.8 * ( {x} + {y} ) / '
             quad21 = f'   ( ({round(l_e, 1)} - {round(a, 2)} / 2 )) * '
-            quad22 = f'   ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )'
+            quad22 = f'   ( {round(m_p / 1000000, 2)} + {round(m_n / 1000000, 2)} + 2 * {round(m_f / 1000000, 2)} )'
 
         if rebar_size_under == 0:
             linje6_mp = '= f_ctd * ( t^2 / 6 )'
@@ -421,7 +450,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             linje7_mp = f'= {"{:.3e}".format(m_p / 1000000)} kNm'
         elif rebar_size_under != 0:
             linje6_mp = '= f_sd * A_s,underkant * z'
-            linje6_mp2 = f'= {round(500 / 1.15, 2)} * {round(a_s_lower, 2)} / 2 * {z}'
+            linje6_mp2 = f'= {round(500 / 1.15, 2)} * {round(a_s_lower, 2)} * {z}'
             linje7_mp = f'= {round(m_p / 1000000, 2)} kNm'
         else:
             linje6_mp = ''
@@ -434,16 +463,16 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '= 6 * ( 1 + 2a / l_e ) * ( M_p + M_n )',
-            f'= 6 * ( 1 + 2 * {round(a, 2)} / {round(l_e, 2)} * ',
-            f'   ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )',
+            f'= 6 * ( 1 + 2 * {round(a, 2)} / {round(l_e, 2)} ) * ',
+            f'   ( {round(m_p / 1000000, 2)} + {round(m_n / 1000000, 2)} + 2 * {round(m_f / 1000000, 2)} )',
             '',
             '= 3.5 * ( 1 + 3a / l_e ) * ( M_p + M_n )',
-            f'= 3.5 * ( 1 + 3 * {round(a, 2)} / {round(l_e, 2)} * ',
-            f'   ( {"{:.3e}".format(m_p)} + {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )',
+            f'= 3.5 * ( 1 + 3 * {round(a, 2)} / {round(l_e, 2)} ) * ',
+            f'   ( {round(m_p / 1000000, 2)} + {round(m_n / 1000000, 2)} + 2 * {round(m_f / 1000000, 2)} )',
             '',
             '= 2 * ( 1 + 4a / l_e ) * M_n',
             f'= 2 * ( 1 + 4 * {round(a, 2)} / {round(l_e, 2)} ) * ',
-            f'   ( {"{:.3e}".format(m_n)} + 2 * {"{:.3e}".format(m_f)} )',
+            f'   ( {round(m_n / 1000000, 2)} + {round(m_f / 1000000, 2)} )',
             '',
             '= f_sd * A_s,overkant * z',
             f'= {round(500/1.15, 2)} * {round(a_s_upper, 2)} * {z}',
@@ -503,6 +532,13 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
         linje8.setTextOrigin(157.5 * mm, 20 * mm)
         linje8.setFont('Helvetica', 12)
 
+        if x == 0 and y == 0:
+            linje7_1 = ''
+            linje7_2 = ''
+        else:
+            linje7_1 = f'   = {round(dual_point / 1000, 2)} kN'
+            linje7_2 = f'   = {round(quadruple_point / 1000, 2)} kN'
+
         linje8_text = [
             '',
             '',
@@ -553,11 +589,11 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            f'= {round(dual_point / 1000, 2)} kN',
+            linje7_1,
             '',
             '',
             '',
-            f'= {round(quadruple_point / 1000, 2)} kN',
+            linje7_2,
             '',
         ]
 
@@ -851,7 +887,7 @@ def create_pdf_fiber(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0
             '',
             '',
             '',
-            '= 0.26 * ( f_ctm - 2.15 * 1.2 * f_ftk,r2.5,gulv ) / f_yk * b * t',
+            '= 0.26 * ( f_ctm - 2.15 * 1.2 * f_ftk,r2.5,gulv ) / f_yk * b * t  (d = t, NB15 s.15)',
             '   > 0.13 * f_ctm * b * d / f_yk',
             f'= 0.26 * ( {f_ctm} - 2.15 * 1.2 * {round(f_ftk_r25, 4)} ) / 500 * 1000 * {tykkelse}',
             f'   > 0.13 * {f_ctm} * 1000 * {d_eff} / 500',
