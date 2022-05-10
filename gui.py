@@ -1213,6 +1213,7 @@ window = tk.Tk()
 window.title('Beregningsverktøy - Gulv på grunn')
 window.rowconfigure(0, weight=0)
 window.columnconfigure(0, weight=0)
+window.iconbitmap('ikon.ico')
 
 frame1 = tk.Frame(window)
 # noinspection PyTypeChecker
