@@ -772,12 +772,12 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '',
             '',
             '',
-            'Grunntrykk fra last og egenvekt i bruddgrensetilstand: (45 grader lastfordeling gjennom gulvet)',
+            #'Grunntrykk fra last og egenvekt i bruddgrensetilstand: (45 grader lastfordeling gjennom gulvet)',
             '',
-            'sigma_gd',
+            #'sigma_gd',
             '',
             '',
-            'Kontrollér sigma_gd mot tillatt grunntrykk i bruddgrensetilstand for grunnen under gulvet ',
+            #'Kontrollér sigma_gd mot tillatt grunntrykk i bruddgrensetilstand for grunnen under gulvet ',
         ]
 
         for line in linje13_text:
@@ -835,8 +835,8 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '',
             '',
             '',
-            '= P * 1.5 / A + gamma * t * 1.2',
-            f'= {round(last/1000, 2)} * 1.5 / {round((np.pi*(tykkelse+radius)**2)/10**6, 4)} + 25 * {tykkelse/1000} * 1.2',
+            #'= P * 1.5 / A + gamma * t * 1.2',
+            #f'= {round(last/1000, 2)} * 1.5 / {round((np.pi*(tykkelse+radius)**2)/10**6, 4)} + 25 * {tykkelse/1000} * 1.2',
             '',
         ]
 
@@ -894,7 +894,7 @@ def create_pdf(tittel='Rapport.pdf', tykkelse=0, betong=0, armeringstype=0, sent
             '',
             '',
             '',
-            f'= {round((last/1000*1.5) / ((np.pi*(tykkelse+radius)**2)/10**6) + 25 * tykkelse / 1000 * 1.2, 2)} kN / m^2',
+           # f'= {round((last/1000*1.5) / ((np.pi*(tykkelse+radius)**2)/10**6) + 25 * tykkelse / 1000 * 1.2, 2)} kN / m^2',
             '',
         ]
 

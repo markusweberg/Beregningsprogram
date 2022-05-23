@@ -15,25 +15,46 @@ def velkomst():
                                         'velges!', master=window)
 
 
-def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
+def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd,
+          last_plassering):
     global q_ed
     try:
         if len(dekk_pick.get()) != 0 and len(truck_pick.get()) != 0 and truck_dict[truck_pick.get()] != 0:
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df['r'] = (200 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df['r'] = (200 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+            else:
+                df['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df['r'] = (100 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df['r'] = (100 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df['r'] = (2 ** (1 / 2) * 100 / np.pi ** (1 / 2))
+                else:
+                    df['r'] = (2 * 100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df['r'] = (200 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df['r'] = (200 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+                else:
+                    df['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df['r'] = (50 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df['r'] = (50 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df['r'] = (2 ** (1 / 2) * 50 / np.pi ** (1 / 2))
+            else:
+                df['r'] = (2 * 50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df['r'] = float(rd.get())
@@ -43,25 +64,47 @@ def loads(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytt
         print('feil, loads')
 
 
-def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
+def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd,
+            last_plassering):
     global q_ed
     try:
         if len(dekk_pick.get()) != 0 and len(truck_pick.get()) != 0 and truck_dict[truck_pick.get()] != 0:
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df_2['r'] = (200 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df_2['r'] = (200 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df_2['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+            else:
+                df_2['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df_2['r'] = (100 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df_2['r'] = (100 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df_2['r'] = (2 ** (1 / 2) * 100 / np.pi ** (1 / 2))
+                else:
+                    df_2['r'] = (2 * 100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df_2['r'] = (200 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df_2['r'] = (200 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df_2['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+                else:
+                    df_2['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
             df_2['r'] = (50 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df_2['r'] = (50 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df_2['r'] = (2 ** (1 / 2) * 50 / np.pi ** (1 / 2))
+            else:
+                df_2['r'] = (2 * 50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df_2['r'] = float(rd.get())
@@ -69,25 +112,46 @@ def loads_2(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
         print('feil, loads2')
 
 
-def loads_3(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
+def loads_3(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd,
+            last_plassering):
     global q_ed
     try:
         if len(dekk_pick.get()) != 0 and len(truck_pick.get()) != 0 and truck_dict[truck_pick.get()] != 0:
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df_3['r'] = (200 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df_3['r'] = (200 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df_3['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+            else:
+                df_3['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df_3['r'] = (100 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df_3['r'] = (100 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df_3['r'] = (2 ** (1 / 2) * 100 / np.pi ** (1 / 2))
+                else:
+                    df_3['r'] = (2 * 100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df_3['r'] = (200 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df_3['r'] = (200 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df_3['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+                else:
+                    df_3['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df_3['r'] = (50 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df_3['r'] = (50 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df_3['r'] = (2 ** (1 / 2) * 50 / np.pi ** (1 / 2))
+            else:
+                df_3['r'] = (2 * 50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df_3['r'] = float(rd.get())
@@ -95,25 +159,46 @@ def loads_3(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, ny
         print('feil, loads3')
 
 
-def loads_4(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd):
+def loads_4(truck_pick, truck_dict, dekk_pick, dekk_dict, bil_pick, bil_dict, nytte_pick, nytte_dict, egendef_last, rd,
+            last_plassering):
     global q_ed
     try:
         if len(dekk_pick.get()) != 0 and len(truck_pick.get()) != 0 and truck_dict[truck_pick.get()] != 0:
             dekk_faktor = float(dekk_dict[dekk_pick.get()])
             truck_q = float(truck_dict[truck_pick.get()])
             q_ed = truck_q * (dekk_faktor * 1000 / 2)
-            df_4['r'] = (200 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df_4['r'] = (200 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df_4['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+            else:
+                df_4['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(bil_pick.get()) != 0 and bil_dict[bil_pick.get()] != 0:
             bil_last = float(bil_dict[bil_pick.get()])
             q_ed = bil_last * 1000 / 2
             if bil_pick.get() == 'Kategori F':
-                df_4['r'] = (100 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df_4['r'] = (100 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df_4['r'] = (2 ** (1 / 2) * 100 / np.pi ** (1 / 2))
+                else:
+                    df_4['r'] = (2 * 100 / np.pi ** (1 / 2))
             if bil_pick.get() == 'Kategori G':
-                df_4['r'] = (200 / np.pi ** (1 / 2))
+                if last_plassering.get() == 'Senter':
+                    df_4['r'] = (200 / np.pi ** (1 / 2))
+                elif last_plassering.get() == 'Kant':
+                    df_4['r'] = (2 ** (1 / 2) * 200 / np.pi ** (1 / 2))
+                else:
+                    df_4['r'] = (2 * 200 / np.pi ** (1 / 2))
         elif len(nytte_pick.get()) != 0 and nytte_dict[nytte_pick.get()] != 0:
             nytte_last = float(nytte_dict[nytte_pick.get()])
             q_ed = nytte_last * 1000
-            df_4['r'] = (50 / np.pi ** (1 / 2))
+            if last_plassering.get() == 'Senter':
+                df_4['r'] = (50 / np.pi ** (1 / 2))
+            elif last_plassering.get() == 'Kant':
+                df_4['r'] = (2 ** (1 / 2) * 50 / np.pi ** (1 / 2))
+            else:
+                df_4['r'] = (2 * 50 / np.pi ** (1 / 2))
         else:
             q_ed = float(egendef_last.get()) * 1000
             df_4['r'] = float(rd.get())
@@ -964,13 +1049,15 @@ def df_4_sorting_price_gwp(sort_pick):
 
 
 def load_next_frames():
-    if q_ed != 0 and 'check' in globals() and 'df_temp' in globals() and 'df_temp2' in globals() \
-            and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals() \
-            and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals() \
-            and 'df_3_final' in globals() and 'df_4' in globals() and 'df_4_temp' in globals() and 'df_4_temp2' in globals() \
-            and 'df_4_final' in globals() and float(nominell_overdekning_pick.get()) != 0:
-        raise_frame(frame3, frame4)
-
+    try:
+        if q_ed != 0 and 'check' in globals() and 'df_temp' in globals() and 'df_temp2' in globals() \
+                and 'df_final' in globals() and 'df_2' in globals() and 'df_2_temp' in globals() and 'df_2_temp2' in globals() \
+                and 'df_2_final' in globals() and 'df_3' in globals() and 'df_3_temp' in globals() and 'df_3_temp2' in globals() \
+                and 'df_3_final' in globals() and 'df_4' in globals() and 'df_4_temp' in globals() and 'df_4_temp2' in globals() \
+                and 'df_4_final' in globals() and float(nominell_overdekning_pick.get()) != 0:
+            raise_frame(frame3, frame4)
+    except:
+        print('feil load next frames')
 
 def show_result():
     try:
@@ -1755,19 +1842,19 @@ gwp5_resultat.grid(row=6, column=0, columnspan=3, sticky='w')
 fortsett_btn = tk.Button(master=frame2, text='Fortsett', font=('Calibri', 14), padx=25, pady=8,
                          command=lambda: [loads(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick, dekk_dict,
                                                 billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
-                                                egendef_punktlast_pick, lastflate_pick),
+                                                egendef_punktlast_pick, lastflate_pick, plassering_last_pick),
                                           loads_2(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick,
                                                   dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
-                                                  egendef_punktlast_pick, lastflate_pick),
+                                                  egendef_punktlast_pick, lastflate_pick, plassering_last_pick),
                                           loads_3(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick,
                                                   dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
-                                                  egendef_punktlast_pick, lastflate_pick),
+                                                  egendef_punktlast_pick, lastflate_pick, plassering_last_pick),
                                           loads_4(gaffeltruck_klasse_pick, gaffeltruck_klasse_dict, dekk_pick,
                                                   dekk_dict,
                                                   billast_pick, billast_dict, nyttelast_pick, nyttelast_dict,
-                                                  egendef_punktlast_pick, lastflate_pick),
+                                                  egendef_punktlast_pick, lastflate_pick, plassering_last_pick),
                                           input_calc(betong_pris_m40_pick, betong_pris_m45_pick, betong_pris_m60_pick,
                                                      betong_gwp_m40_pick, betong_gwp_m45_pick, betong_gwp_m60_pick,
                                                      slakkarmering_pris_pick,
