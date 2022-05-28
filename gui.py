@@ -1402,7 +1402,7 @@ gulvklasse_option_menu = tk.OptionMenu(frame1, gulvklasse_pick, *gulvklasse_opti
 bestandighetsklasse_options = ['B45 M40', 'B35 M45', 'B30 M60', 'Ingen krav']
 bestandighetsklasse_pick = tk.StringVar(frame1)
 bestandighetsklasse_option_menu = tk.OptionMenu(frame1, bestandighetsklasse_pick, *bestandighetsklasse_options)
-bestandighetsklasse_dict = {'B45 M40': 'B45 M40', 'B35 M45': 'B35 M45|B45 M40', 'B30 M60': 'B30 M60|B35 M45|B45 M40',
+bestandighetsklasse_dict = {'B45 M40': 'B45 M40', 'B35 M45': 'B35 M45', 'B30 M60': 'B30 M60',
                             'Ingen krav': 'B30 M60|B35 M45|B45 M40'}
 slakkarmeringsdiameter_options = ['8', '10', '12', '14', '16', 'Ingen krav']
 slakkarmeringsdiameter_pick = tk.StringVar(frame1)
