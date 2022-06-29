@@ -1367,7 +1367,7 @@ rissvidde_lbl = tk.Label(master=frame1, text='Rissvidde', font=('Calibri', 12))
 tykkelse_lbl = tk.Label(master=frame1, text='Tykkelse', font=('Calibri', 12))
 geometri_lbl = tk.Label(master=frame1, text='Geometri', font=('Calibri', 12))
 fastholding_lbl = tk.Label(master=frame1, text='Forhold mellom gulv og grunn', font=('Calibri', 12))
-dimensjonerende_last_lbl = tk.Label(master=frame1, text='Dimensjonerende last (Bare fyll ut den dimensjonerende)',
+dimensjonerende_last_lbl = tk.Label(master=frame1, text='Dominerende last (Bare fyll ut den dominerende, uten lastfaktor)',
                                     font=('Calibri', 12))
 gaffeltruck_klasse_lbl = tk.Label(master=frame1, text='Gaffeltruck-klasse', font=('Calibri', 12))
 dekk_lbl = tk.Label(master=frame13, text='Dekk:', font=('Calibri', 12))
@@ -1437,9 +1437,8 @@ tykkelse_pick = tk.StringVar(frame1)
 tykkelse_option_menu = tk.OptionMenu(frame1, tykkelse_pick, *tykkelse_options)
 tykkelse_dict = {'100': [100], '110': [110], '120': [120], '130': [130], '140': [140], '150': [150], '160': [160],
                  '170': [170], '180': [180], '190': [190], '200': [200], '210': [210], '220': [220], '230': [230],
-                 '240': [240], '250': [250], '260': [260], '270': [270], '280': [280], '290': [290], '300': [300],
-                 'Ingen krav': [110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270,
-                                280, 290, 300]}
+                 '240': [240], '250': [250],
+                 'Ingen krav': [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250]}
 fastholding_options = ['Flytende gulv', 'Fastholdt gulv']
 fastholding_pick = tk.StringVar(frame1)
 fastholding_pick.set(fastholding_options[0])
@@ -2295,4 +2294,4 @@ window.mainloop()
 # df_2_temp.to_csv('Steg 2.csv', sep=';')
 # df_2_temp2.to_csv('Steg 3.csv', sep=';')
 # df_2_final.to_csv('Final.csv', sep=';')
-# df_4_final.to_csv('test.csv', sep=';')
+df_2.to_csv('test.csv', sep=';')
